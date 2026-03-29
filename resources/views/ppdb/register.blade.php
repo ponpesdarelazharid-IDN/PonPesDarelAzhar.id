@@ -96,7 +96,33 @@
                             <x-input-error :messages="$errors->get('origin_school_address')" class="mt-2" />
                         </div>
 
-                        <!-- Temporarily hidden file uploads as it requires Cloudinary setup which we will do in Admin side first -->
+                        <h4 class="font-semibold text-lg border-b border-gray-200 dark:border-gray-700 pb-2 mb-6 mt-10 text-indigo-600 dark:text-indigo-400">C. Unggah Dokumen (Cloudinary)</h4>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <x-input-label for="photo" :value="__('Pas Foto (3x4)')" />
+                                <input id="photo" name="photo" type="file" class="block mt-1 w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" accept="image/*" required />
+                                <x-input-error :messages="$errors->get('photo')" class="mt-2" />
+                            </div>
+                            
+                            <div>
+                                <x-input-label for="birth_cert" :value="__('Akta Kelahiran')" />
+                                <input id="birth_cert" name="birth_cert" type="file" class="block mt-1 w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" accept="image/*,application/pdf" required />
+                                <x-input-error :messages="$errors->get('birth_cert')" class="mt-2" />
+                            </div>
+
+                            <div>
+                                <x-input-label for="ijazah" :value="__('Ijazah Terakhir')" />
+                                <input id="ijazah" name="ijazah" type="file" class="block mt-1 w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" accept="image/*,application/pdf" required />
+                                <x-input-error :messages="$errors->get('ijazah')" class="mt-2" />
+                            </div>
+
+                            <div>
+                                <x-input-label for="skhu" :value="__('SKHU / Surat Keterangan Lulus')" />
+                                <input id="skhu" name="skhu" type="file" class="block mt-1 w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" accept="image/*,application/pdf" required />
+                                <x-input-error :messages="$errors->get('skhu')" class="mt-2" />
+                            </div>
+                        </div>
 
                         <div class="flex items-center justify-end mt-8 border-t border-gray-200 dark:border-gray-700 pt-6">
                             <a href="{{ route('ppdb.landing') }}" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mr-4">

@@ -1,40 +1,46 @@
-@extends('layouts.public')
+@extends('layouts.app')
 
 @section('title', $title)
 
 @section('content')
-<div class="hero" style="min-height: 40vh; align-items: flex-end; padding-bottom: 4rem;">
-    <div class="container">
-        <h1 class="text-gradient" style="font-size: 3rem; margin-bottom: 0;">{{ $title }}</h1>
-        <p style="color: var(--gray); font-size: 1.25rem;">Informasi terkini dari sekolah kami.</p>
+<!-- Header -->
+<div class="bg-gray-50 dark:bg-[#0a0a0a] py-16 sm:py-24 border-b border-gray-100 dark:border-gray-900 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl transition-colors duration-300">{{ $title }}</h1>
+        <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-500 dark:text-gray-400 transition-colors duration-300">Informasi terkini dari sekolah kami.</p>
     </div>
 </div>
 
-<section class="section section-alt" style="min-height: 50vh;">
-    <div class="container">
-        <div class="grid-3">
+<!-- Grid -->
+<section class="py-16 bg-white dark:bg-black min-h-[50vh] transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
             @forelse($posts as $post)
-            <div class="news-card">
+            <a href="{{ route('posts.show', $post) }}" class="group block bg-gray-50 dark:bg-[#0a0a0a] rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-800 hover:shadow-lg dark:hover:shadow-white/10 transition duration-300">
                 @if($post->image_url)
-                    <img src="{{ $post->image_url }}" alt="{{ $post->title }}" class="news-img">
+                    <div class="aspect-w-16 aspect-h-9 w-full bg-gray-200 dark:bg-gray-800">
+                        <img src="{{ $post->image_url }}" alt="{{ $post->title }}" class="object-cover w-full h-48 group-hover:scale-105 transition duration-500">
+                    </div>
                 @else
-                    <div class="news-img" style="display:flex;align-items:center;justify-content:center;color:var(--gray);font-size:3rem;">📰</div>
+                    <div class="aspect-w-16 aspect-h-9 w-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center h-48">
+                        <span class="text-4xl opacity-50">📰</span>
+                    </div>
                 @endif
-                <div class="news-content">
-                    <div class="news-meta">{{ $post->published_at->format('d M Y') }}</div>
-                    <a href="{{ route('posts.show', $post) }}" style="text-decoration:none;color:inherit;">
-                        <h3 style="font-size: 1.25rem;">{{ $post->title }}</h3>
-                        <p style="color: var(--gray); font-size: 0.95rem;">{{ Str::limit($post->excerpt ?? strip_tags($post->content), 80) }}</p>
-                    </a>
+                <div class="p-6">
+                    <div class="text-sm text-blue-600 dark:text-gray-400 font-semibold mb-2 transition-colors">{{ $post->published_at->format('d M Y') }}</div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-gray-300 transition-colors">{{ $post->title }}</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm transition-colors">{{ Str::limit($post->excerpt ?? strip_tags($post->content), 80) }}</p>
                 </div>
-            </div>
+            </a>
             @empty
-            <p style="color:var(--gray);text-align:center;grid-column:1/-1;">Belum ada postingan terbaru.</p>
+            <div class="col-span-1 md:col-span-3 text-center py-12">
+                <p class="text-gray-500 dark:text-gray-400 transition-colors">Belum ada postingan terbaru.</p>
+            </div>
             @endforelse
         </div>
         
-        <div style="margin-top: 3rem; display: flex; justify-content: center;">
-            {{ $posts->links('pagination::bootstrap-4') }}
+        <div class="mt-12 flex justify-center">
+            {{ $posts->links('pagination::tailwind') }}
         </div>
     </div>
 </section>

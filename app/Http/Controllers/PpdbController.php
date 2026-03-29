@@ -61,13 +61,31 @@ class PpdbController extends Controller
             'origin_school' => 'required|string|max:255',
             'origin_school_address' => 'required|string',
             'graduation_year' => 'required|digits:4',
-            // File validation temporarily mocked or implemented later
+            'photo' => 'required|image|max:2048',
+            'birth_cert' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'ijazah' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'skhu' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
         ]);
 
         $registration = new Registration($validated);
         $registration->user_id = auth()->id();
         $registration->ppdb_setting_id = $ppdb->id;
         $registration->status = 'pending';
+
+        // Upload to Cloudinary
+        if ($request->hasFile('photo')) {
+            $registration->photo_url = $request->file('photo')->storeOnCloudinary('ppdb/photos')->getSecurePath();
+        }
+        if ($request->hasFile('birth_cert')) {
+            $registration->birth_cert_url = $request->file('birth_cert')->storeOnCloudinary('ppdb/documents')->getSecurePath();
+        }
+        if ($request->hasFile('ijazah')) {
+            $registration->ijazah_url = $request->file('ijazah')->storeOnCloudinary('ppdb/documents')->getSecurePath();
+        }
+        if ($request->hasFile('skhu')) {
+            $registration->skhu_url = $request->file('skhu')->storeOnCloudinary('ppdb/documents')->getSecurePath();
+        }
+
         $registration->save();
 
         return redirect()->route('ppdb.status')->with('success', 'Pendaftaran berhasil disubmit!');
