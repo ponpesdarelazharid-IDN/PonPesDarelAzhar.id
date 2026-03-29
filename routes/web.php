@@ -48,6 +48,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 // ==== ADMIN AREA ====
 Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/migrate', [AdminDashboardController::class, 'migrate'])->name('migrate');
     Route::resource('posts', AdminPostController::class);
     Route::resource('school-profiles', AdminSchoolProfileController::class)->only(['index', 'store']);
     Route::resource('ppdb-settings', AdminPpdbSettingController::class)->only(['index', 'store']);

@@ -26,4 +26,15 @@ class DashboardController extends Controller
         
         return view('admin.dashboard', compact('stats', 'recent_registrations', 'recent_posts'));
     }
+
+    public function migrate()
+    {
+        try {
+            \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+            $output = \Illuminate\Support\Facades\Artisan::output();
+            return "Database Migration Success! <br><pre>$output</pre><br><a href='".route('admin.dashboard')."'>Back to Dashboard</a>";
+        } catch (\Exception $e) {
+            return "Migration Failed: " . $e->getMessage();
+        }
+    }
 }
