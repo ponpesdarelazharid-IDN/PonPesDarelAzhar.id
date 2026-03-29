@@ -53,6 +53,7 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
     Route::resource('ppdb-settings', AdminPpdbSettingController::class)->only(['index', 'store']);
     Route::resource('registrations', AdminRegistrationController::class)->only(['index', 'show', 'update']);
     Route::resource('users', AdminUserController::class);
+    Route::resource('ekstrakurikuler', AdminEkstrakurikulerController::class);
 });
 
 require __DIR__.'/auth.php';
