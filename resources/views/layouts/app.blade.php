@@ -55,6 +55,14 @@
                                 Berita
                                 <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#1e293b] dark:bg-white group-hover:w-full transition-all duration-300"></span>
                             </a>
+                            <a href="{{ route('prestasi.index') }}" class="text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-[#1e293b] dark:text-gray-400 dark:hover:text-white transition-colors relative group">
+                                Prestasi
+                                <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#1e293b] dark:bg-white group-hover:w-full transition-all duration-300"></span>
+                            </a>
+                            <a href="{{ route('ekstrakurikuler.index') }}" class="text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-[#1e293b] dark:text-gray-400 dark:hover:text-white transition-colors relative group">
+                                Ekskul
+                                <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#1e293b] dark:bg-white group-hover:w-full transition-all duration-300"></span>
+                            </a>
                             <a href="{{ route('ppdb.landing') }}" class="text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-[#1e293b] dark:text-gray-400 dark:hover:text-white transition-colors relative group">
                                 PPDB
                                 <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#1e293b] dark:bg-white group-hover:w-full transition-all duration-300"></span>
@@ -74,10 +82,10 @@
 
                         @auth
                             <div class="flex items-center gap-3">
-                                @if(auth()->check() && strtolower(auth()->user()->role) === 'admin')
+                                @if(auth()->check() && strtolower(auth()->user()->role) === 'admin' && request()->is('admin*'))
                                     <div x-data="{ adminDropdown: false }" class="relative">
-                                        <button @click="adminDropdown = !adminDropdown" @click.away="adminDropdown = false" class="flex items-center gap-2 px-4 py-2 text-xs font-black uppercase tracking-widest text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition shadow-lg">
-                                            Admin
+                                        <button @click="adminDropdown = !adminDropdown" @click.away="adminDropdown = false" class="flex items-center gap-2 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-[#1e293b] dark:text-white bg-slate-100 dark:bg-white/10 rounded-lg hover:bg-slate-200 dark:hover:bg-white/20 transition shadow-sm border border-slate-200 dark:border-gray-800">
+                                            Admin Menu
                                             <svg class="w-3 h-3 transition-transform" :class="adminDropdown ? 'rotate-180' : ''" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
                                         </button>
                                         
@@ -135,11 +143,13 @@
                     <a href="/" class="block pl-6 pr-4 py-3 text-base font-bold text-slate-600 hover:text-[#1e293b] hover:bg-slate-50 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-900 transition">Beranda</a>
                     <a href="/#profil" class="block pl-6 pr-4 py-3 text-base font-bold text-slate-600 hover:text-[#1e293b] hover:bg-slate-50 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-900 transition">Profil</a>
                     <a href="{{ route('berita.index') }}" class="block pl-6 pr-4 py-3 text-base font-bold text-slate-600 hover:text-[#1e293b] hover:bg-slate-50 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-900 transition">Berita</a>
+                    <a href="{{ route('prestasi.index') }}" class="block pl-6 pr-4 py-3 text-base font-bold text-slate-600 hover:text-[#1e293b] hover:bg-slate-50 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-900 transition">Prestasi</a>
+                    <a href="{{ route('ekstrakurikuler.index') }}" class="block pl-6 pr-4 py-3 text-base font-bold text-slate-600 hover:text-[#1e293b] hover:bg-slate-50 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-900 transition">Ekskul</a>
                     <a href="{{ route('ppdb.landing') }}" class="block pl-6 pr-4 py-3 text-base font-bold text-slate-600 hover:text-[#1e293b] hover:bg-slate-50 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-900 transition">PPDB</a>
                 </div>
                 <div class="pt-6 pb-8 border-t border-slate-100 dark:border-gray-900 px-6 space-y-4">
                     @auth
-                        @if(auth()->check() && strtolower(auth()->user()->role) === 'admin')
+                        @if(auth()->check() && strtolower(auth()->user()->role) === 'admin' && request()->is('admin*'))
                             <div class="space-y-2 mb-6">
                                 <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-gray-500 mb-4 px-2">Manajemen Sekolah</p>
                                 <a href="{{ route('admin.dashboard') }}" class="block w-full py-3 px-6 rounded-2xl bg-blue-600 text-white font-bold text-center shadow-lg transition">Panel Admin</a>
