@@ -80,18 +80,25 @@
 
                         @auth
                             <div class="flex items-center gap-4">
-                                @if(auth()->check() && strtolower(auth()->user()->role) === 'admin')
-                                    <a href="{{ route('admin.posts.index') }}" class="text-sm font-bold text-slate-600 dark:text-gray-400 hover:text-[#1e293b] dark:hover:text-white transition-all uppercase tracking-widest">
+                                @if(auth()->check() && strtolower(auth()->user()->role) === 'admin' && request()->is('admin*'))
+                                    <a href="{{ route('admin.posts.index') }}" class="text-[10px] font-black text-slate-400 dark:text-gray-500 hover:text-[#1e293b] dark:hover:text-white transition-all uppercase tracking-widest">
                                         Post
                                     </a>
-                                    <a href="{{ route('admin.school-profiles.index') }}" class="text-sm font-bold text-slate-600 dark:text-gray-400 hover:text-[#1e293b] dark:hover:text-white transition-all uppercase tracking-widest">
+                                    <a href="{{ route('admin.school-profiles.index') }}" class="text-[10px] font-black text-slate-400 dark:text-gray-500 hover:text-[#1e293b] dark:hover:text-white transition-all uppercase tracking-widest">
                                         Profil Sekolah
                                     </a>
-                                    <a href="{{ route('admin.ppdb-settings.index') }}" class="text-sm font-bold text-[#1e293b] dark:text-white underline decoration-2 transition-all uppercase tracking-widest">
+                                    <a href="{{ route('admin.ppdb-settings.index') }}" class="text-[10px] font-black text-[#1e293b] dark:text-white underline decoration-2 transition-all uppercase tracking-widest">
                                         Aktifasi PPDB
                                     </a>
-                                    <a href="{{ route('admin.dashboard') }}" class="text-sm font-bold text-slate-600 dark:text-gray-400 hover:text-[#1e293b] dark:hover:text-white transition-all uppercase tracking-widest">
+                                    <a href="{{ route('admin.dashboard') }}" class="text-[10px] font-black text-slate-400 dark:text-gray-500 hover:text-[#1e293b] dark:hover:text-white transition-all uppercase tracking-widest">
                                         Admin Panel
+                                    </a>
+                                @endif
+                                
+                                {{-- Always show Admin Dashboard link for admins on public pages, but more subtle --}}
+                                @if(auth()->check() && strtolower(auth()->user()->role) === 'admin' && !request()->is('admin*'))
+                                    <a href="{{ route('admin.dashboard') }}" class="text-[10px] font-black text-blue-600 dark:text-gray-400 hover:text-[#1e293b] dark:hover:text-white transition-all uppercase tracking-widest">
+                                        Ke Halaman Admin &rarr;
                                     </a>
                                 @endif
                                 <a href="{{ route('dashboard') }}" class="px-6 py-2.5 text-sm font-bold rounded-full text-white bg-[#1e293b] hover:bg-black dark:bg-white dark:text-black dark:hover:bg-gray-200 shadow-xl transition-all duration-300">
