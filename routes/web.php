@@ -28,9 +28,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get('/ppdb/register', [PpdbController::class, 'create'])->name('ppdb.register');
-    Route::post('/ppdb/register', [PpdbController::class, 'store'])->name('ppdb.store');
-    Route::get('/ppdb/status', [PpdbController::class, 'status'])->name('ppdb.status');
+    Route::get('/ppdb/register', [App\Http\Controllers\RegistrationController::class, 'index'])->name('ppdb.register');
+    Route::post('/ppdb/register/step1', [App\Http\Controllers\RegistrationController::class, 'storeStep1'])->name('ppdb.register.store1');
+    Route::get('/ppdb/register/step2', [App\Http\Controllers\RegistrationController::class, 'step2'])->name('ppdb.register.step2');
+    Route::post('/ppdb/register/step2', [App\Http\Controllers\RegistrationController::class, 'storeStep2'])->name('ppdb.register.store2');
+    Route::get('/ppdb/register/step3', [App\Http\Controllers\RegistrationController::class, 'step3'])->name('ppdb.register.step3');
+    Route::post('/ppdb/register/step3', [App\Http\Controllers\RegistrationController::class, 'storeStep3'])->name('ppdb.register.store3');
+    Route::get('/ppdb/status', function () {
+        $registration = \App\Models\Registration::where('user_id', auth()->id())->first();
+        return view('ppdb.status', compact('registration'));
+    })->name('ppdb.status');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
