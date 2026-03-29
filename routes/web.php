@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\SchoolProfileController as AdminSchoolProfileCont
 use App\Http\Controllers\Admin\PpdbSettingController as AdminPpdbSettingController;
 use App\Http\Controllers\Admin\RegistrationController as AdminRegistrationController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\EkstrakurikulerController as AdminEkstrakurikulerController;
 use Illuminate\Support\Facades\Route;
 
 // ==== PUBLIC WEBSITE ====

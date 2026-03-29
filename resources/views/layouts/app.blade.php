@@ -92,6 +92,7 @@
                                         <div x-show="adminDropdown" x-transition class="absolute right-0 mt-2 w-56 bg-white dark:bg-[#0a0a0a] border border-slate-100 dark:border-gray-800 rounded-2xl shadow-2xl py-2 z-50">
                                             <a href="{{ route('admin.dashboard') }}" class="block px-6 py-3 text-xs font-bold text-slate-600 dark:text-gray-400 hover:bg-slate-50 dark:hover:bg-white/5 uppercase tracking-widest transition">Overview Panel</a>
                                             <a href="{{ route('admin.school-profiles.index') }}" class="block px-6 py-3 text-xs font-bold text-slate-600 dark:text-gray-400 hover:bg-slate-50 dark:hover:bg-white/5 uppercase tracking-widest transition">Profil Sekolah</a>
+                                            <a href="{{ route('admin.ekstrakurikuler.index') }}" class="block px-6 py-3 text-xs font-bold text-slate-600 dark:text-gray-400 hover:bg-slate-50 dark:hover:bg-white/5 uppercase tracking-widest transition">Kelola Ekskul</a>
                                             <a href="{{ route('admin.ppdb-settings.index') }}" class="block px-6 py-3 text-xs font-bold text-blue-600 dark:text-white hover:bg-slate-50 dark:hover:bg-white/5 uppercase tracking-widest transition">Aktifasi PPDB</a>
                                             <a href="{{ route('admin.posts.index') }}" class="block px-6 py-3 text-xs font-bold text-slate-600 dark:text-gray-400 hover:bg-slate-50 dark:hover:bg-white/5 uppercase tracking-widest transition">Kelola Berita</a>
                                             <div class="border-t border-slate-100 dark:border-gray-800 my-1"></div>
@@ -154,6 +155,7 @@
                                 <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-gray-500 mb-4 px-2">Manajemen Sekolah</p>
                                 <a href="{{ route('admin.dashboard') }}" class="block w-full py-3 px-6 rounded-2xl bg-blue-600 text-white font-bold text-center shadow-lg transition">Panel Admin</a>
                                 <a href="{{ route('admin.school-profiles.index') }}" class="block w-full py-3 px-6 rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-gray-800 text-slate-700 dark:text-white font-bold text-center transition">Profil Sekolah</a>
+                                <a href="{{ route('admin.ekstrakurikuler.index') }}" class="block w-full py-3 px-6 rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-gray-800 text-slate-700 dark:text-white font-bold text-center transition">Kelola Ekskul</a>
                                 <a href="{{ route('admin.ppdb-settings.index') }}" class="block w-full py-3 px-6 rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-gray-800 text-slate-700 dark:text-white font-bold text-center transition">Aktifasi PPDB</a>
                             </div>
                         @endif
