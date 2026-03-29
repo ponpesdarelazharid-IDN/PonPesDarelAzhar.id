@@ -17,4 +17,21 @@ require __DIR__.'/../vendor/autoload.php';
 /** @var Application $app */
 $app = require_once __DIR__.'/../bootstrap/app.php';
 
-$app->handleRequest(Request::capture());
+try {
+    $app->handleRequest(Request::capture());
+} catch (\Throwable $e) {
+    if (isset($_ENV['VERCEL']) || isset($_SERVER['VERCEL'])) {
+        header('Content-Type: text/plain');
+        echo "=== VERCEL LARAVEL CRASH ===\n";
+        echo "Message: " . $e->getMessage() . "\n";
+        echo "File: " . $e->getFile() . ":" . $e->getLine() . "\n";
+        echo "Trace:\n" . $e->getTraceAsString() . "\n\n";
+        if ($prev = $e->getPrevious()) {
+            echo "=== PREVIOUS EXCEPTION ===\n";
+            echo "Message: " . $prev->getMessage() . "\n";
+            echo "File: " . $prev->getFile() . ":" . $prev->getLine() . "\n";
+        }
+        exit(1);
+    }
+    throw $e;
+}
