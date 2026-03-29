@@ -45,11 +45,11 @@
             <div class="lg:w-1/2 mb-10 lg:mb-0 text-center lg:text-left">
                 <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl transition-colors duration-300 mb-6">Tentang Kami</h2>
                 <div class="prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-400">
-                    <p class="mb-4">
-                        {{ $profiles['profil_sekolah'] ?? 'Sekolah kami adalah lembaga pendidikan yang berdedikasi untuk mencetak generasi pemimpin masa depan yang bertaqwa, cerdas, dan kompetitif.' }}
+                    <p class="mb-4 text-justify">
+                        {{ $profiles['tentang_kami'] ?? 'Sekolah kami adalah lembaga pendidikan yang berdedikasi untuk mencetak generasi pemimpin masa depan yang bertaqwa, cerdas, dan kompetitif.' }}
                     </p>
                     <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Sejarah Singkat</h3>
-                    <p>
+                    <p class="text-justify">
                         {{ $profiles['sejarah'] ?? 'Didirikan dengan semangat mencerdaskan anak bangsa melalui pendidikan berkualitas tinggi yang mengintegrasikan nilai-nilai luhur dan teknologi modern.' }}
                     </p>
                 </div>
@@ -67,39 +67,51 @@
 <!-- Visi, Misi & Tujuan -->
 <section class="py-16 bg-white dark:bg-black transition-colors duration-300 border-b border-gray-100 dark:border-gray-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">Visi, Misi & Tujuan</h2>
+        <div class="text-center mb-16 uppercase tracking-tighter">
+            <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-5xl">Visi & Misi</h2>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-            <div class="relative p-8 bg-gray-50 dark:bg-[#0a0a0a] rounded-3xl border border-gray-100 dark:border-gray-800 group hover:-translate-y-2 transition duration-500">
-                <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-blue-600 dark:bg-white rounded-2xl flex items-center justify-center text-white dark:text-black shadow-lg">
-                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div class="relative p-10 bg-gray-50 dark:bg-[#0a0a0a] rounded-3xl border border-gray-100 dark:border-gray-800 group hover:-translate-y-2 transition duration-500 shadow-xl">
+                <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-14 h-14 bg-[#1e293b] dark:bg-white rounded-2xl flex items-center justify-center text-white dark:text-black shadow-lg">
+                    <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
                 </div>
-                <h3 class="text-2xl font-bold text-center mt-4 mb-4 text-gray-900 dark:text-white">Visi</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-center leading-relaxed">
+                <h3 class="text-3xl font-black text-center mt-6 mb-6 text-[#1e293b] dark:text-white uppercase tracking-tight">Visi</h3>
+                <p class="text-lg text-slate-600 dark:text-gray-400 text-center leading-relaxed font-medium">
                     {{ $profiles['visi'] ?? 'Menjadi pusat keunggulan pendidikan yang menghasilkan lulusan berkarakter, inovatif, dan berwawasan global.' }}
                 </p>
             </div>
             
-            <div class="relative p-8 bg-gray-50 dark:bg-[#0a0a0a] rounded-3xl border border-gray-100 dark:border-gray-800 group hover:-translate-y-2 transition duration-500">
-                <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-blue-600 dark:bg-white rounded-2xl flex items-center justify-center text-white dark:text-black shadow-lg">
-                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" /></svg>
+            <div class="relative p-10 bg-gray-50 dark:bg-[#0a0a0a] rounded-3xl border border-gray-100 dark:border-gray-800 group hover:-translate-y-2 transition duration-500 shadow-xl">
+                <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-14 h-14 bg-[#1e293b] dark:bg-white rounded-2xl flex items-center justify-center text-white dark:text-black shadow-lg">
+                    <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" /></svg>
                 </div>
-                <h3 class="text-2xl font-bold text-center mt-4 mb-4 text-gray-900 dark:text-white">Misi</h3>
-                <div class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                    {!! nl2br(e($profiles['misi'] ?? "- Menyelenggarakan pendidikan yang berkualitas.\n- Membentuk karakter siswa yang religius.\n- Mengembangkan potensi minat dan bakat.")) !!}
+                <h3 class="text-3xl font-black text-center mt-6 mb-6 text-[#1e293b] dark:text-white uppercase tracking-tight">Misi</h3>
+                <div class="text-slate-600 dark:text-gray-400 text-base leading-relaxed font-medium space-y-3">
+                    @if(isset($profiles['misi']))
+                        @foreach(explode("\n", $profiles['misi']) as $misi_point)
+                            @if(trim($misi_point))
+                                <div class="flex items-start gap-3">
+                                    <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#1e293b] dark:bg-white flex-shrink-0"></span>
+                                    <span>{{ trim($misi_point) }}</span>
+                                </div>
+                            @endif
+                        @endforeach
+                    @else
+                        <div class="flex items-start gap-3">
+                            <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#1e293b] dark:bg-white flex-shrink-0"></span>
+                            <span>Menyelenggarakan pendidikan yang berkualitas.</span>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#1e293b] dark:bg-white flex-shrink-0"></span>
+                            <span>Membentuk karakter siswa yang religius.</span>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#1e293b] dark:bg-white flex-shrink-0"></span>
+                            <span>Mengembangkan potensi minat dan bakat.</span>
+                        </div>
+                    @endif
                 </div>
-            </div>
-
-            <div class="relative p-8 bg-gray-50 dark:bg-[#0a0a0a] rounded-3xl border border-gray-100 dark:border-gray-800 group hover:-translate-y-2 transition duration-500">
-                <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-blue-600 dark:bg-white rounded-2xl flex items-center justify-center text-white dark:text-black shadow-lg">
-                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                </div>
-                <h3 class="text-2xl font-bold text-center mt-4 mb-4 text-gray-900 dark:text-white">Tujuan</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-center leading-relaxed">
-                    {{ $profiles['tujuan'] ?? 'Terciptanya lingkungan belajar yang kondusif untuk tumbuh kembang siswa secara holistik.' }}
-                </p>
             </div>
         </div>
     </div>

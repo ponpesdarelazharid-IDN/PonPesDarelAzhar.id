@@ -1,97 +1,137 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Kelola Profil Sekolah') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            @if(session('success'))
-                <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-                    <span class="block sm:inline">{{ session('success') }}</span>
+@section('title', 'Kelola Profil Sekolah')
+
+@section('content')
+<div class="px-4 py-8 max-w-5xl mx-auto">
+    <div class="mb-10 flex justify-between items-end">
+        <div>
+            <h1 class="text-4xl font-black text-[#1e293b] dark:text-white tracking-tighter uppercase">Profil Sekolah</h1>
+            <p class="text-slate-500 dark:text-gray-400 mt-2 font-medium">Perbarui informasi dasar, visi, misi, dan kontak sekolah Anda.</p>
+        </div>
+    </div>
+
+    @if(session('success'))
+        <div class="mb-8 p-5 rounded-2xl bg-emerald-50 dark:bg-emerald-900/10 border border-emerald-100 dark:border-emerald-900/20 flex items-center gap-4 animate-in fade-in slide-in-from-top-4 duration-500">
+            <div class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center shadow-lg">✓</div>
+            <p class="text-emerald-800 dark:text-emerald-400 font-bold tracking-tight">{{ session('success') }}</p>
+        </div>
+    @endif
+
+    <form action="{{ route('admin.school-profiles.store') }}" method="POST" class="space-y-10">
+        @csrf
+        
+        <!-- Identitas Sekolah -->
+        <div class="bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-100 dark:border-gray-900 overflow-hidden">
+            <div class="p-8 border-b border-slate-50 dark:border-gray-900 bg-slate-50/50 dark:bg-white/5">
+                <h3 class="text-xl font-black text-[#1e293b] dark:text-white flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-[#1e293b] dark:bg-white text-white dark:text-black flex items-center justify-center text-sm">01</span>
+                    Identitas & Kontak Dasar
+                </h3>
+            </div>
+            <div class="p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="md:col-span-2">
+                    <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-3">Nama Sekolah</label>
+                    <input type="text" name="nama_sekolah" value="{{ $profiles['nama_sekolah'] ?? '' }}" required
+                        class="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-gray-900 border-none focus:ring-2 focus:ring-[#1e293b] dark:focus:ring-white text-slate-900 dark:text-white transition-all shadow-sm font-bold">
                 </div>
-            @endif
+                
+                <div>
+                    <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-3">Nomor Telepon</label>
+                    <input type="text" name="tlp" value="{{ $profiles['tlp'] ?? '' }}" required
+                        class="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-gray-900 border-none focus:ring-2 focus:ring-[#1e293b] dark:focus:ring-white text-slate-900 dark:text-white transition-all shadow-sm font-bold">
+                </div>
 
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <form action="{{ route('admin.school-profiles.store') }}" method="POST">
-                        @csrf
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                            <div>
-                                <x-input-label for="nama_sekolah" :value="__('Nama Sekolah')" />
-                                <x-text-input id="nama_sekolah" class="block mt-1 w-full" type="text" name="nama_sekolah" :value="$profiles['nama_sekolah'] ?? ''" required />
-                            </div>
-                            
-                            <div>
-                                <x-input-label for="tlp" :value="__('Nomor Telepon')" />
-                                <x-text-input id="tlp" class="block mt-1 w-full" type="text" name="tlp" :value="$profiles['tlp'] ?? ''" required />
-                            </div>
+                <div>
+                    <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-3">Email Resmi</label>
+                    <input type="email" name="email" value="{{ $profiles['email'] ?? '' }}" required
+                        class="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-gray-900 border-none focus:ring-2 focus:ring-[#1e293b] dark:focus:ring-white text-slate-900 dark:text-white transition-all shadow-sm font-bold">
+                </div>
 
-                            <div>
-                                <x-input-label for="email" :value="__('Email Kontak')" />
-                                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="$profiles['email'] ?? ''" required />
-                            </div>
-                            
-                            <div class="md:col-span-2">
-                                <x-input-label for="alamat" :value="__('Alamat Sekolah')" />
-                                <textarea id="alamat" name="alamat" rows="2" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" required>{{ $profiles['alamat'] ?? '' }}</textarea>
-                            </div>
-                        </div>
-
-                        <div class="mb-6 border-t border-gray-200 dark:border-gray-700 pt-6">
-                            <h3 class="text-lg font-bold pb-2 mb-4 text-indigo-600 dark:text-indigo-400">Visi & Misi</h3>
-                            
-                            <div class="mb-4">
-                                <x-input-label for="visi" :value="__('Visi Sekolah')" />
-                                <textarea id="visi" name="visi" rows="3" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">{{ $profiles['visi'] ?? '' }}</textarea>
-                            </div>
-
-                            <div class="mb-4">
-                                <x-input-label for="misi_singkat" :value="__('Misi Singkat (Untuk Footer)')" />
-                                <x-text-input id="misi_singkat" class="block mt-1 w-full" type="text" name="misi_singkat" :value="$profiles['misi_singkat'] ?? ''" />
-                            </div>
-                        </div>
-
-                        <div class="mb-6 border-t border-gray-200 dark:border-gray-700 pt-6">
-                            <h3 class="text-lg font-bold pb-2 mb-4 text-indigo-600 dark:text-indigo-400">Sejarah & Tujuan</h3>
-                            
-                            <div class="mb-4">
-                                <x-input-label for="sejarah" :value="__('Sejarah Singkat')" />
-                                <textarea id="sejarah" name="sejarah" rows="5" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">{{ $profiles['sejarah'] ?? '' }}</textarea>
-                            </div>
-
-                            <div class="mb-4">
-                                <x-input-label for="tujuan" :value="__('Tujuan Sekolah')" />
-                                <textarea id="tujuan" name="tujuan" rows="5" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">{{ $profiles['tujuan'] ?? '' }}</textarea>
-                            </div>
-                        </div>
-
-                        <div class="mb-6 border-t border-gray-200 dark:border-gray-700 pt-6">
-                            <h3 class="text-lg font-bold pb-2 mb-4 text-indigo-600 dark:text-indigo-400">Lokasi & Google Maps</h3>
-                            
-                            <div class="mb-4">
-                                <x-input-label for="google_maps_url" :value="__('Link Google Maps (Share Link)')" />
-                                <x-text-input id="google_maps_url" class="block mt-1 w-full" type="text" name="google_maps_url" :value="$profiles['google_maps_url'] ?? ''" placeholder="https://www.google.com/maps/place/..." />
-                                <p class="text-sm text-gray-500 mt-1">Gunakan link ini untuk tombol 'Buka di Maps'.</p>
-                            </div>
-
-                            <div class="mb-4">
-                                <x-input-label for="google_maps_embed" :value="__('Maps Embed URL (src iframe)')" />
-                                <textarea id="google_maps_embed" name="google_maps_embed" rows="3" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" placeholder="https://www.google.com/maps/embed?pb=...">{{ $profiles['google_maps_embed'] ?? '' }}</textarea>
-                                <p class="text-sm text-gray-500 mt-1">Hanya masukkan bagian <code>src="..."</code> dari kode embed Google Maps.</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center justify-end mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                            <x-primary-button class="ml-4 py-3 px-6">
-                                {{ __('Simpan Perubahan') }}
-                            </x-primary-button>
-                        </div>
-                    </form>
+                <div class="md:col-span-2">
+                    <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-3">Alamat Lengkap</label>
+                    <textarea name="alamat" rows="3" required
+                        class="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-gray-900 border-none focus:ring-2 focus:ring-[#1e293b] dark:focus:ring-white text-slate-900 dark:text-white transition-all shadow-sm font-bold">{{ $profiles['alamat'] ?? '' }}</textarea>
                 </div>
             </div>
         </div>
-    </div>
-</x-app-layout>
+
+        <!-- Visi, Misi & Tentang -->
+        <div class="bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-100 dark:border-gray-900 overflow-hidden">
+            <div class="p-8 border-b border-slate-50 dark:border-gray-900 bg-slate-50/50 dark:bg-white/5">
+                <h3 class="text-xl font-black text-[#1e293b] dark:text-white flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-[#1e293b] dark:bg-white text-white dark:text-black flex items-center justify-center text-sm">02</span>
+                    Konten Profil & Filosofi
+                </h3>
+            </div>
+            <div class="p-8 space-y-8">
+                <div>
+                    <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-3">Tentang Kami / Sambutan</label>
+                    <textarea name="tentang_kami" rows="4" placeholder="Jelaskan secara singkat mengenai sekolah Anda..."
+                        class="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-gray-900 border-none focus:ring-2 focus:ring-[#1e293b] dark:focus:ring-white text-slate-900 dark:text-white transition-all shadow-sm font-bold">{{ $profiles['tentang_kami'] ?? '' }}</textarea>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-3">Visi Sekolah</label>
+                        <textarea name="visi" rows="5"
+                            class="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-gray-900 border-none focus:ring-2 focus:ring-[#1e293b] dark:focus:ring-white text-slate-900 dark:text-white transition-all shadow-sm font-bold">{{ $profiles['visi'] ?? '' }}</textarea>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-3">Misi Sekolah (Poin-poin)</label>
+                        <textarea name="misi" rows="5" placeholder="Gunakan baris baru untuk setiap poin misi..."
+                            class="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-gray-900 border-none focus:ring-2 focus:ring-[#1e293b] dark:focus:ring-white text-slate-900 dark:text-white transition-all shadow-sm font-bold">{{ $profiles['misi'] ?? '' }}</textarea>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-3">Misi Singkat (Untuk Footer)</label>
+                    <input type="text" name="misi_singkat" value="{{ $profiles['misi_singkat'] ?? '' }}"
+                        class="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-gray-900 border-none focus:ring-2 focus:ring-[#1e293b] dark:focus:ring-white text-slate-900 dark:text-white transition-all shadow-sm font-bold">
+                </div>
+
+                <div>
+                    <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-3">Sejarah Singkat</label>
+                    <textarea name="sejarah" rows="6"
+                        class="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-gray-900 border-none focus:ring-2 focus:ring-[#1e293b] dark:focus:ring-white text-slate-900 dark:text-white transition-all shadow-sm font-bold">{{ $profiles['sejarah'] ?? '' }}</textarea>
+                </div>
+
+                <div>
+                    <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-3">Tujuan Sekolah</label>
+                    <textarea name="tujuan" rows="6" placeholder="Sebutkan tujuan strategis sekolah Anda..."
+                        class="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-gray-900 border-none focus:ring-2 focus:ring-[#1e293b] dark:focus:ring-white text-slate-900 dark:text-white transition-all shadow-sm font-bold">{{ $profiles['tujuan'] ?? '' }}</textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lokasi & Peta -->
+        <div class="bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-100 dark:border-gray-900 overflow-hidden">
+            <div class="p-8 border-b border-slate-50 dark:border-gray-900 bg-slate-50/50 dark:bg-white/5">
+                <h3 class="text-xl font-black text-[#1e293b] dark:text-white flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-[#1e293b] dark:bg-white text-white dark:text-black flex items-center justify-center text-sm">03</span>
+                    Lokasi & Google Maps
+                </h3>
+            </div>
+            <div class="p-8 space-y-8">
+                <div>
+                    <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-3">Link Google Maps (Share Link)</label>
+                    <input type="text" name="google_maps_url" value="{{ $profiles['google_maps_url'] ?? '' }}" placeholder="https://www.google.com/maps/place/..."
+                        class="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-gray-900 border-none focus:ring-2 focus:ring-[#1e293b] dark:focus:ring-white text-slate-900 dark:text-white transition-all shadow-sm font-bold">
+                </div>
+
+                <div>
+                    <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-3">Maps Embed URL (Bagian src="..." iframe)</label>
+                    <textarea name="google_maps_embed" rows="3" placeholder="https://www.google.com/maps/embed?pb=..."
+                        class="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-gray-900 border-none focus:ring-2 focus:ring-[#1e293b] dark:focus:ring-white text-slate-900 dark:text-white transition-all shadow-sm font-bold">{{ $profiles['google_maps_embed'] ?? '' }}</textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-end pt-6 pb-20">
+            <button type="submit" class="px-12 py-5 rounded-2xl bg-[#1e293b] dark:bg-white text-white dark:text-black font-extrabold text-sm uppercase tracking-widest shadow-2xl hover:scale-[1.02] active:scale-95 transition-all duration-300">
+                Simpan Semua Perubahan
+            </button>
+        </div>
+    </form>
+</div>
+@endsection

@@ -16,6 +16,11 @@ class RegistrationController extends Controller
 {
     public function index()
     {
+        $setting = PpdbSetting::where('is_open', true)->first();
+        if (!$setting) {
+            return redirect()->route('ppdb.landing')->with('error', 'Pendaftaran PPDB sedang ditutup.');
+        }
+
         $registration = Registration::where('user_id', auth()->id())->first();
         if ($registration && $registration->status !== 'draft') {
             return redirect()->route('ppdb.status');
@@ -28,7 +33,7 @@ class RegistrationController extends Controller
     {
         $validated = $request->validated();
         
-        $setting = PpdbSetting::where('is_active', true)->first();
+        $setting = PpdbSetting::where('is_open', true)->first();
         if (!$setting) {
             return back()->with('error', 'Pendaftaran PPDB sedang ditutup.');
         }

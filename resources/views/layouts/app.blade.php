@@ -53,7 +53,15 @@
                                 Berita
                                 <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#1e293b] dark:bg-white group-hover:w-full transition-all duration-300"></span>
                             </a>
-                            <a href="{{ route('ppdb.landing') }}" class="text-sm font-semibold text-slate-600 hover:text-[#1e293b] dark:text-gray-400 dark:hover:text-white transition-colors relative group">
+                            <a href="{{ route('prestasi.index') }}" class="text-sm font-semibold text-slate-600 hover:text-[#1e293b] dark:text-gray-400 dark:hover:text-white transition-colors relative group">
+                                Prestasi
+                                <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#1e293b] dark:bg-white group-hover:w-full transition-all duration-300"></span>
+                            </a>
+                            <a href="{{ route('ekstrakurikuler.index') }}" class="text-sm font-semibold text-slate-600 hover:text-[#1e293b] dark:text-gray-400 dark:hover:text-white transition-colors relative group">
+                                Ekskul
+                                <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#1e293b] dark:bg-white group-hover:w-full transition-all duration-300"></span>
+                            </a>
+                            <a href="{{ (auth()->check() && strtolower(auth()->user()->role) === 'admin') ? route('admin.ppdb-settings.index') : route('ppdb.landing') }}" class="text-sm font-semibold text-slate-600 hover:text-[#1e293b] dark:text-gray-400 dark:hover:text-white transition-colors relative group">
                                 PPDB
                                 <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#1e293b] dark:bg-white group-hover:w-full transition-all duration-300"></span>
                             </a>
@@ -71,9 +79,25 @@
                         </button>
 
                         @auth
-                            <a href="{{ route('dashboard') }}" class="px-6 py-2.5 text-sm font-bold rounded-full text-white bg-[#1e293b] hover:bg-black dark:bg-white dark:text-black dark:hover:bg-gray-200 shadow-xl transition-all duration-300">
-                                Dashboard
-                            </a>
+                            <div class="flex items-center gap-4">
+                                @if(auth()->check() && strtolower(auth()->user()->role) === 'admin')
+                                    <a href="{{ route('admin.posts.index') }}" class="text-sm font-bold text-slate-600 dark:text-gray-400 hover:text-[#1e293b] dark:hover:text-white transition-all uppercase tracking-widest">
+                                        Post
+                                    </a>
+                                    <a href="{{ route('admin.school-profiles.index') }}" class="text-sm font-bold text-slate-600 dark:text-gray-400 hover:text-[#1e293b] dark:hover:text-white transition-all uppercase tracking-widest">
+                                        Profil Sekolah
+                                    </a>
+                                    <a href="{{ route('admin.ppdb-settings.index') }}" class="text-sm font-bold text-[#1e293b] dark:text-white underline decoration-2 transition-all uppercase tracking-widest">
+                                        Aktifasi PPDB
+                                    </a>
+                                    <a href="{{ route('admin.dashboard') }}" class="text-sm font-bold text-slate-600 dark:text-gray-400 hover:text-[#1e293b] dark:hover:text-white transition-all uppercase tracking-widest">
+                                        Admin Panel
+                                    </a>
+                                @endif
+                                <a href="{{ route('dashboard') }}" class="px-6 py-2.5 text-sm font-bold rounded-full text-white bg-[#1e293b] hover:bg-black dark:bg-white dark:text-black dark:hover:bg-gray-200 shadow-xl transition-all duration-300">
+                                    Dashboard
+                                </a>
+                            </div>
                         @else
                             <div class="flex items-center gap-4">
                                 <a href="{{ route('login') }}" class="text-sm font-bold text-[#1e293b] dark:text-white hover:opacity-80 transition-opacity">Login</a>
@@ -110,7 +134,7 @@
                     <a href="/" class="block pl-6 pr-4 py-3 text-base font-bold text-slate-600 hover:text-[#1e293b] hover:bg-slate-50 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-900 transition">Beranda</a>
                     <a href="/#profil" class="block pl-6 pr-4 py-3 text-base font-bold text-slate-600 hover:text-[#1e293b] hover:bg-slate-50 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-900 transition">Profil</a>
                     <a href="{{ route('berita.index') }}" class="block pl-6 pr-4 py-3 text-base font-bold text-slate-600 hover:text-[#1e293b] hover:bg-slate-50 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-900 transition">Berita</a>
-                    <a href="{{ route('ppdb.landing') }}" class="block pl-6 pr-4 py-3 text-base font-bold text-slate-600 hover:text-[#1e293b] hover:bg-slate-50 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-900 transition">PPDB</a>
+                    <a href="{{ (auth()->check() && strtolower(auth()->user()->role) === 'admin') ? route('admin.ppdb-settings.index') : route('ppdb.landing') }}" class="block pl-6 pr-4 py-3 text-base font-bold text-slate-600 hover:text-[#1e293b] hover:bg-slate-50 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-900 transition">PPDB</a>
                 </div>
                 <div class="pt-6 pb-8 border-t border-slate-100 dark:border-gray-900 px-6 space-y-4">
                     @auth

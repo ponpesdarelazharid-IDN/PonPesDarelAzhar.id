@@ -26,7 +26,7 @@ class PpdbSettingController extends Controller
 
         if ($request->has('is_open')) {
             // Turn off other open settings
-            PpdbSetting::where('id', '>', 0)->update(['is_open' => false]);
+            PpdbSetting::where('is_open', true)->update(['is_open' => false]);
         }
 
         PpdbSetting::create([
@@ -38,6 +38,24 @@ class PpdbSettingController extends Controller
             'requirements' => $validated['requirements'],
         ]);
 
-        return back()->with('success', 'Pengaturan PPDB berhasil disimpan!');
+        return back()->with('success', 'Gelombang PPDB baru berhasil dibuka!');
+    }
+
+    public function update(Request $request, PpdbSetting $ppdbSetting)
+    {
+        if ($request->has('toggle_status')) {
+            // If activating, deactivate others
+            if (!$ppdbSetting->is_open) {
+                PpdbSetting::where('is_open', true)->update(['is_open' => false]);
+                $ppdbSetting->update(['is_open' => true]);
+                $msg = 'PPDB Berhasil Diaktifkan!';
+            } else {
+                $ppdbSetting->update(['is_open' => false]);
+                $msg = 'PPDB Berhasil Dinonaktifkan!';
+            }
+            return back()->with('success', $msg);
+        }
+
+        return back();
     }
 }

@@ -1,108 +1,124 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Pengaturan PPDB') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            @if(session('success'))
-                <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-                    <span class="block sm:inline">{{ session('success') }}</span>
-                </div>
-            @endif
+@section('title', 'Pengaturan PPDB')
 
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-8">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <h3 class="text-lg font-bold border-b border-gray-200 dark:border-gray-700 pb-2 mb-4 text-indigo-600 dark:text-indigo-400">Buka Gelombang Baru</h3>
-                    <form action="{{ route('admin.ppdb-settings.store') }}" method="POST">
-                        @csrf
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                            <div>
-                                <x-input-label for="academic_year" :value="__('Tahun Ajaran')" />
-                                <x-text-input id="academic_year" class="block mt-1 w-full" type="text" name="academic_year" placeholder="Contoh: 2024/2025" required />
-                            </div>
-                            
-                            <div>
-                                <x-input-label for="quota" :value="__('Kuota Siswa (Opsional)')" />
-                                <x-text-input id="quota" class="block mt-1 w-full" type="number" name="quota" min="1" />
-                            </div>
-
-                            <div>
-                                <x-input-label for="open_date" :value="__('Tanggal Buka')" />
-                                <x-text-input id="open_date" class="block mt-1 w-full" type="date" name="open_date" required />
-                            </div>
-
-                            <div>
-                                <x-input-label for="close_date" :value="__('Tanggal Tutup')" />
-                                <x-text-input id="close_date" class="block mt-1 w-full" type="date" name="close_date" required />
-                            </div>
-                            
-                            <div class="md:col-span-2">
-                                <x-input-label for="requirements" :value="__('Persyaratan Pendaftaran')" />
-                                <textarea id="requirements" name="requirements" rows="4" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" placeholder="1. Fotokopi Kartu Keluarga..."></textarea>
-                            </div>
-                            
-                            <div class="md:col-span-2 mt-4">
-                                <label for="is_open" class="inline-flex items-center">
-                                    <input id="is_open" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="is_open" value="1" checked>
-                                    <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Langsung Aktifkan Gelombang Ini') }}</span>
-                                </label>
-                                <p class="text-xs text-red-500 mt-1">*Hanya satu gelombang yang bisa aktif bersamaan.</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center justify-end">
-                            <x-primary-button>
-                                {{ __('Simpan Pengaturan') }}
-                            </x-primary-button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100 border-b border-gray-200 dark:border-gray-700 font-bold">
-                    Riwayat Gelombang PPDB
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                        <thead class="bg-gray-50 dark:bg-gray-800">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tahun Ajaran</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Periode</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800">
-                            @forelse($ppdbSettings as $setting)
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
-                                    {{ $setting->academic_year }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $setting->open_date ? $setting->open_date->format('d M Y') : '-' }} - 
-                                    {{ $setting->close_date ? $setting->close_date->format('d M Y') : '-' }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    @if($setting->is_open)
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Aktif</span>
-                                    @else
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">Non-Aktif</span>
-                                    @endif
-                                </td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="3" class="px-6 py-4 text-center text-gray-500">Belum ada pengaturan PPDB.</td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+@section('content')
+<div class="px-4 py-8 max-w-5xl mx-auto space-y-10">
+    <div class="mb-10 flex justify-between items-end">
+        <div>
+            <h1 class="text-4xl font-black text-[#1e293b] dark:text-white tracking-tighter uppercase">Pengaturan PPDB</h1>
+            <p class="text-slate-500 dark:text-gray-400 mt-2 font-medium">Aktifkan gelombang pendaftaran dan atur kuota penerimaan.</p>
         </div>
     </div>
-</x-app-layout>
+
+    @if(session('success'))
+        <div class="p-5 rounded-2xl bg-emerald-50 dark:bg-emerald-900/10 border border-emerald-100 dark:border-emerald-900/20 flex items-center gap-4 animate-in fade-in slide-in-from-top-4 duration-500">
+            <div class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center shadow-lg">✓</div>
+            <p class="text-emerald-800 dark:text-emerald-400 font-bold tracking-tight">{{ session('success') }}</p>
+        </div>
+    @endif
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        <!-- Form: Buka Gelombang -->
+        <div class="lg:col-span-1">
+            <div class="bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-100 dark:border-gray-900 overflow-hidden sticky top-8">
+                <div class="p-8 border-b border-slate-50 dark:border-gray-900 bg-slate-50/50 dark:bg-white/5">
+                    <h3 class="text-xl font-black text-[#1e293b] dark:text-white flex items-center gap-3">
+                        <span class="w-8 h-8 rounded-lg bg-[#1e293b] dark:bg-white text-white dark:text-black flex items-center justify-center text-sm">🆕</span>
+                        Gelombang Baru
+                    </h3>
+                </div>
+                <form action="{{ route('admin.ppdb-settings.store') }}" method="POST" class="p-8 space-y-6">
+                    @csrf
+                    <div>
+                        <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-2">Tahun Ajaran</label>
+                        <input type="text" name="academic_year" required placeholder="Contoh: 2026/2027"
+                            class="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-gray-900 border-none focus:ring-2 focus:ring-[#1e293b] dark:focus:ring-white text-slate-900 dark:text-white transition-all shadow-sm font-bold">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-2">Tgl Buka</label>
+                            <input type="date" name="open_date" required
+                                class="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-gray-900 border-none focus:ring-2 focus:ring-[#1e293b] dark:focus:ring-white text-slate-900 dark:text-white transition-all shadow-sm font-bold">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-2">Tgl Tutup</label>
+                            <input type="date" name="close_date" required
+                                class="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-gray-900 border-none focus:ring-2 focus:ring-[#1e293b] dark:focus:ring-white text-slate-900 dark:text-white transition-all shadow-sm font-bold">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-2">Kuota (Siswa)</label>
+                        <input type="number" name="quota" placeholder="Opsional"
+                            class="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-gray-900 border-none focus:ring-2 focus:ring-[#1e293b] dark:focus:ring-white text-slate-900 dark:text-white transition-all shadow-sm font-bold">
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-2">Syarat & Ketentuan</label>
+                        <textarea name="requirements" rows="4" placeholder="Tuliskan persyaratan pendaftaran..."
+                            class="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-gray-900 border-none focus:ring-2 focus:ring-[#1e293b] dark:focus:ring-white text-slate-900 dark:text-white transition-all shadow-sm font-bold"></textarea>
+                    </div>
+
+                    <div class="flex items-center gap-3 py-2">
+                        <input type="checkbox" name="is_open" value="1" id="is_open" checked class="rounded-lg border-slate-200 dark:border-gray-800 text-[#1e293b] focus:ring-[#1e293b]">
+                        <label for="is_open" class="text-xs font-bold text-slate-600 dark:text-gray-400">Aktifkan Sekarang</label>
+                    </div>
+
+                    <button type="submit" class="w-full py-5 rounded-2xl bg-[#1e293b] dark:bg-white text-white dark:text-black font-extrabold text-sm uppercase tracking-widest shadow-2xl hover:scale-[1.02] active:scale-95 transition-all duration-300">
+                        Buka Gelombang
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Riwayat Gelombang -->
+        <div class="lg:col-span-2 space-y-6">
+            <h3 class="text-xl font-black text-[#1e293b] dark:text-white uppercase tracking-tighter">Riwayat Gelombang</h3>
+            
+            @forelse($ppdbSettings as $setting)
+            <div class="bg-white dark:bg-[#0a0a0a] rounded-3xl p-8 border border-slate-100 dark:border-gray-900 shadow-xl flex items-center justify-between group">
+                <div class="flex items-center gap-6">
+                    <div @class([
+                        'w-14 h-14 rounded-2xl flex items-center justify-center text-2xl shadow-inner',
+                        'bg-emerald-500/10 text-emerald-600' => $setting->is_open,
+                        'bg-slate-100 text-slate-400' => !$setting->is_open
+                    ])>
+                        {{ $setting->is_open ? '🟢' : '⚪' }}
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-2xl font-black text-[#1e293b] dark:text-white tracking-tighter">{{ $setting->academic_year }}</span>
+                            @if($setting->is_open)
+                                <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-600 text-[10px] font-black uppercase tracking-widest">Aktif</span>
+                            @endif
+                        </div>
+                        <p class="text-sm font-medium text-slate-500 dark:text-gray-500 mt-1">
+                            {{ $setting->open_date->format('d M Y') }} - {{ $setting->close_date->format('d M Y') }} &bull; Kuota: {{ $setting->quota ?? '∞' }}
+                        </p>
+                    </div>
+                </div>
+                
+                <form action="{{ route('admin.ppdb-settings.update', $setting) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" name="toggle_status" value="1">
+                    <button type="submit" @class([
+                        'px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all',
+                        'bg-red-50 text-red-600 hover:bg-red-100' => $setting->is_open,
+                        'bg-[#1e293b] text-white hover:bg-black dark:bg-white dark:text-black dark:hover:bg-gray-200' => !$setting->is_open
+                    ])>
+                        {{ $setting->is_open ? 'Hentikan' : 'Aktifkan' }}
+                    </button>
+                </form>
+            </div>
+            @empty
+            <div class="text-center py-20 bg-slate-50 dark:bg-white/5 rounded-3xl border border-dashed border-slate-200 dark:border-gray-800">
+                <p class="text-slate-400 font-bold">Belum ada data gelombang.</p>
+            </div>
+            @endforelse
+        </div>
+    </div>
+</div>
+@endsection
