@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Registration;
 use App\Mail\AcceptedMail;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class RegistrationController extends Controller
 {
@@ -35,7 +36,7 @@ class RegistrationController extends Controller
             try {
                 Mail::to($registration->user->email)->send(new AcceptedMail($registration));
             } catch (\Exception $e) {
-                \Log::error('Gagal mengirim email kelulusan PPDB: ' . $e->getMessage());
+                Log::error('Gagal mengirim email kelulusan PPDB: ' . $e->getMessage());
             }
         }
 
