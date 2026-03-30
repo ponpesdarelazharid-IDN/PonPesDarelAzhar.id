@@ -32,7 +32,11 @@ class RegistrationController extends Controller
         $registration->update($validated);
 
         if ($oldStatus !== 'accepted' && $validated['status'] === 'accepted') {
-            Mail::to($registration->user->email)->send(new AcceptedMail($registration));
+            try {
+                Mail::to($registration->user->email)->send(new AcceptedMail($registration));
+            } catch (\Exception $e) {
+                \Log::error('Gagal mengirim email kelulusan PPDB: ' . $e->getMessage());
+            }
         }
 
         return back()->with('success', 'Status pendaftaran berhasil diperbarui!');

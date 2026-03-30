@@ -392,7 +392,7 @@
         <div class="body-front">
             <div class="photo-container">
                 @if(isset($registration) && $registration->photo_url)
-                    <img src="{{ url($registration->photo_url) }}" alt="Foto Siswa">
+                    <img src="{{ $registration->photo_url }}" alt="Foto Siswa">
                 @else
                     <div style="width:100%; height:100%; background:#222; display:flex; align-items:center; justify-content:center; color:#555;">FOTO</div>
                 @endif
