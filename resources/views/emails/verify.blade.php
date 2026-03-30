@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tanda Terima Registrasi PPDB - Darel Azhar</title>
+    <title>Pemberitahuan Verifikasi Pendaftaran</title>
     <style>
         body { font-family: 'Times New Roman', Times, serif; background-color: #f0f4f8; margin: 0; padding: 30px; color: #1e242a; }
         .surat-container { background-color: #ffffff; max-width: 650px; margin: 0 auto; padding: 40px; border: 1px solid #cbd5e1; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
@@ -30,15 +30,13 @@
         .isi-surat p { margin-bottom: 15px; }
         .salam-pembuka { font-weight: bold; margin-bottom: 15px; }
         
-        /* Box Data Singkat */
-        .lampiran-info { background-color: transparent; border: 1px dashed #cbd5e1; padding: 15px 20px; text-align: left; margin: 20px 0; font-family: 'Times New Roman', Times, serif; }
-        .lampiran-info h3 { margin: 0 0 10px 0; font-size: 15px; text-transform: uppercase; color: #1e242a; text-decoration: underline; }
-        .data-list { width: 100%; text-align: left; border-collapse: collapse; }
-        .data-list td { padding: 4px 0; vertical-align: top; font-size: 15px; }
-        .data-list td:first-child { width: 140px; font-weight: bold; }
-        
+        /* Tombol / Call to Action */
+        .area-tombol { text-align: center; margin: 35px 0; }
+        .btn-action { display: inline-block; background-color: #1e242a; color: #ffffff !important; text-decoration: none; padding: 14px 28px; font-weight: bold; font-family: 'Arial', sans-serif; font-size: 16px; border-radius: 4px; border-left: 6px solid #d1a34b; }
+        .info-link { font-size: 12px; color: #64748b; word-break: break-all; margin-top: 20px; font-family: 'Arial', sans-serif; }
+
         /* Tanda Tangan */
-        .area-tanda-tangan { margin-top: 50px; display: table; width: 100%; }
+        .area-tanda-tangan { margin-top: 40px; display: table; width: 100%; }
         .tanda-tangan { display: table-cell; width: 300px; text-align: center; font-size: 15px; vertical-align: top; float: right; }
         .tanda-tangan p { margin: 0 0 5px 0; }
         .space-ttd { height: 75px; }
@@ -76,9 +74,9 @@
         <!-- ATRIBUT SURAT -->
         <div class="atribut-surat">
             <div class="atribut-kiri">
-                <div class="baris-atribut"><span class="label-atribut">Nomor</span>: {{ date('Y') }}/PPDB/DA/BKT-{{ str_pad($registration->id, 4, '0', STR_PAD_LEFT) }}</div>
+                <div class="baris-atribut"><span class="label-atribut">Nomor</span>: {{ date('Y') }}/PPDB/DA/VERIF-{{ strtoupper(Str::random(4)) }}</div>
                 <div class="baris-atribut"><span class="label-atribut">Lampiran</span>: -</div>
-                <div class="baris-atribut"><span class="label-atribut">Perihal</span>: <strong>Tanda Terima Berkas PPDB</strong></div>
+                <div class="baris-atribut"><span class="label-atribut">Perihal</span>: <strong>Pemberitahuan Verifikasi Pendaftaran</strong></div>
             </div>
             <div class="atribut-kanan">
                 Banten, {{ date('d F Y') }}
@@ -90,41 +88,24 @@
         <div class="isi-surat">
             <div class="salam-pembuka">
                 Kepada Yth,<br>
-                <strong>Sdr/i. {{ strtoupper($registration->full_name) }}</strong><br>
+                <strong>Calon Santri / Orang Tua Wali</strong><br>
                 Di Tempat.
             </div>
 
             <p><strong><em>Assalamu'alaikum Warahmatullahi Wabarakatuh,</em></strong></p>
 
             <p>Dengan hormat,<br>
-            Puji syukur senantiasa kita panjatkan ke hadirat Allah SWT. Melalui surat (tanda terima) ini, Panitia Penerimaan Peserta Didik Baru (PPDB) Pondok Pesantren Modern Darel Azhar menyatakan bahwa kami telah menerima sepenuhnya pendaftaran formulir dan berkas elektronik atas nama Saudara/i:</p>
+            Puji syukur senantiasa kita panjatkan ke hadirat Allah SWT. Bersama surat (email) ini, kami memberitahukan bahwa Anda telah melakukan proses pendaftaran akun di portal Penerimaan Peserta Didik Baru (PPDB) Pondok Pesantren Modern Darel Azhar.</p>
             
-            <div class="lampiran-info">
-                <table class="data-list">
-                    <tr>
-                        <td>Nomor Registrasi</td>
-                        <td>: <strong>{{ $registration->registration_number }}</strong></td>
-                    </tr>
-                    <tr>
-                        <td>Nama Lengkap</td>
-                        <td>: {{ $registration->full_name }}</td>
-                    </tr>
-                    <tr>
-                        <td>Asal Sekolah</td>
-                        <td>: {{ $registration->origin_school ?? '-' }}</td>
-                    </tr>
-                    <tr>
-                        <td>Status Berkas</td>
-                        <td>: <strong>MENUNGGU PROSES VERIFIKASI</strong></td>
-                    </tr>
-                </table>
+            <p>Demi menjaga keamanan data pendaftaran, kami mewajibkan setiap calon santri untuk melakukan validasi alamat surat elektronik (Email) yang digunakan mendaftar. Mohon kesediaannya untuk <strong>menekan (klik) tombol pengesahan</strong> di bawah ini agar akun pendaftaran Anda dapat segera diaktifkan:</p>
+
+            <div class="area-tombol">
+                <a href="{{ $url }}" class="btn-action">Sah-kan Pendaftaran Sekarang</a>
             </div>
 
-            <p>Selanjutnya, panitia akan melakukan validasi dan peninjauan secara menyeluruh terhadap kelengkapan dan keabsahan dokumen persyaratan (Pas Foto, Ijazah, dll) Anda yang telah dikirimkan ke dalam sistem kami.</p>
-
-            <p>Mohon untuk senantiasa memantau menu Status Pendaftaran ('Dashboard') milik Anda di portal resmi secara berkala untuk mengetahui keputusan kelulusan. Segala bentuk pengumuman lanjutan akan kami terbitkan melalui akun tersebut.</p>
+            <p>Apabila Anda tidak merasa mendaftar di portal PPDB Darel Azhar, mohon abaikan surat (email) ini secara otomatis.</p>
             
-            <p>Demikian surat tanda terima penyetahan berkas elektronik ini diterbitkan untuk dipergunakan dengan penuh rasa tanggung jawab. Kami haturkan *jazakumullah khairan katsiran* atas kepercayaan Anda mendaftar di pondok pesantren ini.</p>
+            <p>Demikian surat pemberitahuan verifikasi ini kami sampaikan. Atas perhatian dan kerja samanya, kami ucapkan jazakumullah khairan katsiran.</p>
 
             <p><strong><em>Wassalamu'alaikum Warahmatullahi Wabarakatuh.</em></strong></p>
 
@@ -133,13 +114,19 @@
         <!-- TANDA TANGAN -->
         <div class="area-tanda-tangan">
             <div class="tanda-tangan">
-                <p>Hormat kami,<br>Admin/Panitia PPDB Center</p>
+                <p>Hormat kami,</p>
+                <p><strong>Panitia PPDB Darel Azhar</strong></p>
                 <div class="space-ttd">
                     <!-- Space for digital signature -->
                 </div>
-                <p class="nama-terang">Panitia Pendaftaran Web</p>
+                <p class="nama-terang">Mudirul Ma'had</p>
             </div>
             <div class="clear"></div>
+        </div>
+
+        <div style="border-top: 1px dashed #cbd5e1; margin-top: 40px; padding-top: 15px; font-size: 11px; color: #94a3b8; text-align: center; font-family: 'Arial', sans-serif;">
+            Jika tombol di atas tidak berfungsi, salin dan tempel tautan berikut ke browser Anda:<br>
+            <span style="color:#3b82f6;">{{ $url }}</span>
         </div>
 
     </div>

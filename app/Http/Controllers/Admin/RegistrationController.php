@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Registration;
+use App\Mail\AcceptedMail;
+use Illuminate\Support\Facades\Mail;
 
 class RegistrationController extends Controller
 {
@@ -26,7 +28,12 @@ class RegistrationController extends Controller
             'notes' => 'nullable|string'
         ]);
 
+        $oldStatus = $registration->status;
         $registration->update($validated);
+
+        if ($oldStatus !== 'accepted' && $validated['status'] === 'accepted') {
+            Mail::to($registration->user->email)->send(new AcceptedMail($registration));
+        }
 
         return back()->with('success', 'Status pendaftaran berhasil diperbarui!');
     }

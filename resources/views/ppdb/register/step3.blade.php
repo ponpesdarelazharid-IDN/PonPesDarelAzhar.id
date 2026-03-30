@@ -8,17 +8,25 @@
     <div class="mb-12">
         <div class="flex items-center justify-between relative">
             <div class="absolute top-1/2 left-0 w-full h-0.5 bg-slate-200 dark:bg-gray-800 -translate-y-1/2"></div>
+            <!-- Step 1 -->
             <div class="relative z-10 flex flex-col items-center">
-                <div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-gray-800 text-slate-500 flex items-center justify-center font-bold">1</div>
+                <div class="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold shadow-lg">✓</div>
                 <span class="mt-2 text-xs font-bold text-slate-400 uppercase tracking-wider">Biodata</span>
             </div>
+            <!-- Step 2 -->
             <div class="relative z-10 flex flex-col items-center">
-                <div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-gray-800 text-slate-500 flex items-center justify-center font-bold">2</div>
+                <div class="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold shadow-lg">✓</div>
                 <span class="mt-2 text-xs font-bold text-slate-400 uppercase tracking-wider">Orang Tua</span>
             </div>
+            <!-- Step 3 -->
             <div class="relative z-10 flex flex-col items-center">
-                <div class="w-10 h-10 rounded-full bg-[#1e293b] dark:bg-white text-white dark:text-black flex items-center justify-center font-bold shadow-lg">3</div>
+                <div class="w-12 h-12 rounded-full bg-[#1e293b] dark:bg-white text-white dark:text-black flex items-center justify-center font-bold shadow-xl border-4 border-white dark:border-[#0a0a0a]">3</div>
                 <span class="mt-2 text-xs font-bold text-slate-800 dark:text-white uppercase tracking-wider">Berkas</span>
+            </div>
+            <!-- Step 4 -->
+            <div class="relative z-10 flex flex-col items-center">
+                <div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-gray-800 text-slate-500 flex items-center justify-center font-bold">4</div>
+                <span class="mt-2 text-xs font-bold text-slate-400 uppercase tracking-wider">Review</span>
             </div>
         </div>
     </div>

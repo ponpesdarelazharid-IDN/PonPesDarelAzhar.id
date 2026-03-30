@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\RegistrationRequest;
 use App\Models\Registration;
 use App\Models\PpdbSetting;
+use App\Models\SchoolProfile;
 use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
@@ -81,6 +82,21 @@ class RegistrationController extends Controller
             }
         }
 
+        $registration->save();
+
+        return redirect()->route('ppdb.register.step4');
+    }
+
+    public function step4()
+    {
+        $registration = Registration::where('user_id', auth()->id())->with('ppdbSetting')->firstOrFail();
+        return view('ppdb.register.step4', compact('registration'));
+    }
+
+    public function storeFinal(RegistrationRequest $request)
+    {
+        $registration = Registration::where('user_id', auth()->id())->firstOrFail();
+        
         $registration->status = 'pending';
         $registration->save();
 
@@ -93,5 +109,16 @@ class RegistrationController extends Controller
         }
 
         return redirect()->route('ppdb.status')->with('success', 'Pendaftaran berhasil dikirim! Silakan cek email Anda.');
+    }
+
+    public function printCard()
+    {
+        $registration = Registration::where('user_id', auth()->id())
+            ->where('status', 'accepted')
+            ->firstOrFail();
+
+        $school = SchoolProfile::whereIn('key', ['nama_sekolah', 'alamat', 'email', 'tlp'])->get()->pluck('value', 'key');
+        
+        return view('ppdb.card', compact('registration', 'school'));
     }
 }

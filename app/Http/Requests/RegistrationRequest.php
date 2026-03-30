@@ -46,8 +46,28 @@ class RegistrationRequest extends FormRequest
                 'ijazah' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
                 'skhu' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
             ]);
+        } elseif ($this->step == 4) {
+            $rules = array_merge($rules, [
+                'confirmation' => 'required|accepted',
+            ]);
         }
 
         return $rules;
+    }
+
+    public function messages(): array
+    {
+        return [
+            'full_name.required' => 'Mohon masukkan Nama Lengkap sesuai Akta Kelahiran.',
+            'birth_date.required' => 'Tanggal Lahir wajib diisi.',
+            'gender.required' => 'Silakan pilih Jenis Kelamin.',
+            'father_name.required' => 'Nama Ayah wajib diisi.',
+            'mother_name.required' => 'Nama Ibu wajib diisi.',
+            'parent_phone.required' => 'Nomor WhatsApp aktif wajib diisi untuk koordinasi.',
+            'origin_school.required' => 'Asal Sekolah wajib diisi.',
+            'confirmation.accepted' => 'Anda harus menyetujui pernyataan kebenaran data.',
+            'photo.image' => 'File harus berupa gambar (JPG/PNG).',
+            'photo.max' => 'Ukuran file foto maksimal 2MB.',
+        ];
     }
 }

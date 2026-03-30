@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tanda Terima Registrasi PPDB - Darel Azhar</title>
+    <title>Pemberitahuan Kelulusan Santri Baru - Darel Azhar</title>
     <style>
         body { font-family: 'Times New Roman', Times, serif; background-color: #f0f4f8; margin: 0; padding: 30px; color: #1e242a; }
         .surat-container { background-color: #ffffff; max-width: 650px; margin: 0 auto; padding: 40px; border: 1px solid #cbd5e1; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
@@ -30,13 +30,15 @@
         .isi-surat p { margin-bottom: 15px; }
         .salam-pembuka { font-weight: bold; margin-bottom: 15px; }
         
-        /* Box Data Singkat */
-        .lampiran-info { background-color: transparent; border: 1px dashed #cbd5e1; padding: 15px 20px; text-align: left; margin: 20px 0; font-family: 'Times New Roman', Times, serif; }
-        .lampiran-info h3 { margin: 0 0 10px 0; font-size: 15px; text-transform: uppercase; color: #1e242a; text-decoration: underline; }
-        .data-list { width: 100%; text-align: left; border-collapse: collapse; }
-        .data-list td { padding: 4px 0; vertical-align: top; font-size: 15px; }
-        .data-list td:first-child { width: 140px; font-weight: bold; }
-        
+        /* Box / Kartu Preview */
+        .lampiran-info { background-color: #f8fafc; border: 1px dashed #94a3b8; padding: 20px; text-align: center; margin: 25px 0; font-family: 'Arial', sans-serif; }
+        .lampiran-info h3 { margin: 0 0 10px 0; font-size: 14px; text-transform: uppercase; color: #64748b; }
+        .lampiran-info .nis-box { font-size: 28px; font-weight: 900; color: #1e242a; letter-spacing: 2px; border-bottom: 2px solid #d1a34b; display: inline-block; padding-bottom: 5px; margin-bottom: 20px; }
+
+        /* Tombol / Call to Action */
+        .area-tombol { text-align: center; margin: 30px 0 20px 0; }
+        .btn-action { display: inline-block; background-color: #1e242a; color: #ffffff !important; text-decoration: none; padding: 14px 28px; font-weight: bold; font-family: 'Arial', sans-serif; font-size: 16px; border-radius: 4px; border-left: 6px solid #d1a34b; }
+
         /* Tanda Tangan */
         .area-tanda-tangan { margin-top: 50px; display: table; width: 100%; }
         .tanda-tangan { display: table-cell; width: 300px; text-align: center; font-size: 15px; vertical-align: top; float: right; }
@@ -76,9 +78,9 @@
         <!-- ATRIBUT SURAT -->
         <div class="atribut-surat">
             <div class="atribut-kiri">
-                <div class="baris-atribut"><span class="label-atribut">Nomor</span>: {{ date('Y') }}/PPDB/DA/BKT-{{ str_pad($registration->id, 4, '0', STR_PAD_LEFT) }}</div>
-                <div class="baris-atribut"><span class="label-atribut">Lampiran</span>: -</div>
-                <div class="baris-atribut"><span class="label-atribut">Perihal</span>: <strong>Tanda Terima Berkas PPDB</strong></div>
+                <div class="baris-atribut"><span class="label-atribut">Nomor</span>: {{ date('Y') }}/PPDB/DA/LULUS-{{ str_pad($registration->id, 4, '0', STR_PAD_LEFT) }}</div>
+                <div class="baris-atribut"><span class="label-atribut">Lampiran</span>: Bukti Penerimaan & Kartu Digital</div>
+                <div class="baris-atribut"><span class="label-atribut">Perihal</span>: <strong>Keputusan Kelulusan Calon Santri</strong></div>
             </div>
             <div class="atribut-kanan">
                 Banten, {{ date('d F Y') }}
@@ -90,41 +92,35 @@
         <div class="isi-surat">
             <div class="salam-pembuka">
                 Kepada Yth,<br>
-                <strong>Sdr/i. {{ strtoupper($registration->full_name) }}</strong><br>
+                <strong>Bapak/Ibu Orang Tua/Wali dari Ananda {{ strtoupper($registration->full_name) }}</strong><br>
                 Di Tempat.
             </div>
 
             <p><strong><em>Assalamu'alaikum Warahmatullahi Wabarakatuh,</em></strong></p>
 
             <p>Dengan hormat,<br>
-            Puji syukur senantiasa kita panjatkan ke hadirat Allah SWT. Melalui surat (tanda terima) ini, Panitia Penerimaan Peserta Didik Baru (PPDB) Pondok Pesantren Modern Darel Azhar menyatakan bahwa kami telah menerima sepenuhnya pendaftaran formulir dan berkas elektronik atas nama Saudara/i:</p>
+            Berdasarkan hasil Rapat Panitia Penerimaan Peserta Didik Baru (PPDB) Pondok Pesantren Modern Darel Azhar dan evaluasi berkas pendaftaran calon santri:</p>
             
+            <ul style="list-style-type: none; padding-left: 0; margin-left: 20px;">
+                <li><strong>Nama Lengkap:</strong> {{ $registration->full_name }}</li>
+                <li><strong>Asal Sekolah:</strong> {{ $registration->previous_school ?? '-' }}</li>
+            </ul>
+
+            <p>Maka dengan penuh rasa syukur, kami memutuskan bahwa santri yang tercantum namanya di atas secara resmi dinyatakan <strong>LULUS SELEKSI</strong> dan <strong>DITERIMA</strong> sebagai santri/wati baru di Pondok Pesantren Modern Darel Azhar Tahun Ajaran {{ date('Y') }}/{{ date('Y') + 1 }}.</p>
+
             <div class="lampiran-info">
-                <table class="data-list">
-                    <tr>
-                        <td>Nomor Registrasi</td>
-                        <td>: <strong>{{ $registration->registration_number }}</strong></td>
-                    </tr>
-                    <tr>
-                        <td>Nama Lengkap</td>
-                        <td>: {{ $registration->full_name }}</td>
-                    </tr>
-                    <tr>
-                        <td>Asal Sekolah</td>
-                        <td>: {{ $registration->origin_school ?? '-' }}</td>
-                    </tr>
-                    <tr>
-                        <td>Status Berkas</td>
-                        <td>: <strong>MENUNGGU PROSES VERIFIKASI</strong></td>
-                    </tr>
-                </table>
+                <h3>Nomor Induk Santri (NIS) Telah Diterbitkan:</h3>
+                <div class="nis-box">{{ $registration->registration_number }}</div>
+                <p style="margin:0; font-size:13px;">Gunakan nomor induk ini untuk keperluan administrasi pendidikan dan keuangan pondok.</p>
+                
+                <div class="area-tombol">
+                    <a href="{{ route('ppdb.register.card') }}" class="btn-action">Tampilkan & Cetak Kartu Pelajar Digital Resmi</a>
+                </div>
             </div>
-
-            <p>Selanjutnya, panitia akan melakukan validasi dan peninjauan secara menyeluruh terhadap kelengkapan dan keabsahan dokumen persyaratan (Pas Foto, Ijazah, dll) Anda yang telah dikirimkan ke dalam sistem kami.</p>
-
-            <p>Mohon untuk senantiasa memantau menu Status Pendaftaran ('Dashboard') milik Anda di portal resmi secara berkala untuk mengetahui keputusan kelulusan. Segala bentuk pengumuman lanjutan akan kami terbitkan melalui akun tersebut.</p>
             
-            <p>Demikian surat tanda terima penyetahan berkas elektronik ini diterbitkan untuk dipergunakan dengan penuh rasa tanggung jawab. Kami haturkan *jazakumullah khairan katsiran* atas kepercayaan Anda mendaftar di pondok pesantren ini.</p>
+            <p>Berkenaan dengan keputusan tersebut, kami mohon Bapak/Ibu segera menyelesaikan prosedur pendaftaran ulang serta mencetak <strong>Kartu Pelajar Digital</strong> (kartu tanda pengenal santri sah) melalui portal elektronik sekolah, dengan menekan tombol (tautan) yang terlampir di dalam dokumen ini.</p>
+            
+            <p>Demikian surat keputusan dan pemberitahuan kelulusan ini diterbitkan untuk dipergunakan sebagaimana mestinya. Kami sampaikan tahniah dan *Mabruk* atas bergabungnya Ananda; semoga kelak menjadi santri yang berakhlak mulia dan senantiasa dirahmati Allah SWT.</p>
 
             <p><strong><em>Wassalamu'alaikum Warahmatullahi Wabarakatuh.</em></strong></p>
 
@@ -133,11 +129,12 @@
         <!-- TANDA TANGAN -->
         <div class="area-tanda-tangan">
             <div class="tanda-tangan">
-                <p>Hormat kami,<br>Admin/Panitia PPDB Center</p>
+                <p>Hormat kami,</p>
+                <p><strong>Ketua Panitia PMB PPDB</strong></p>
                 <div class="space-ttd">
                     <!-- Space for digital signature -->
                 </div>
-                <p class="nama-terang">Panitia Pendaftaran Web</p>
+                <p class="nama-terang">Mudirul Ma'had</p>
             </div>
             <div class="clear"></div>
         </div>

@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Auth\Notifications\VerifyEmail;
+use Illuminate\Notifications\Messages\MailMessage;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,6 +28,13 @@ class AppServiceProvider extends ServiceProvider
         // Global share school profiles to all views
         \Illuminate\Support\Facades\View::composer('*', function ($view) {
             $view->with('profiles', \App\Models\SchoolProfile::pluck('value', 'key')->toArray());
+        });
+
+        // Kustomisasi Email Verifikasi menjadi format Surat Resmi Kop Sekolah
+        VerifyEmail::toMailUsing(function (object $notifiable, string $url) {
+            return (new MailMessage)
+                ->subject('Pemberitahuan: Verifikasi Alamat Surat Elektronik (Email) PPDB Darel Azhar')
+                ->view('emails.verify', ['url' => $url, 'user' => $notifiable]);
         });
     }
 }
