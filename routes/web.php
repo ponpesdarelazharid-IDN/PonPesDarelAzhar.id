@@ -64,28 +64,36 @@ require __DIR__.'/auth.php';
 
 // ==== PREVIEW ROUTE FOR CARD ====
 Route::get('/preview-card', function () {
-    $registration = new \App\Models\Registration([
+    $profiles = \App\Models\SchoolProfile::pluck('value', 'key')->toArray();
+    $registration = \App\Models\Registration::first() ?? new \App\Models\Registration([
         'full_name' => 'Aisyah Az Zahra',
         'birth_place' => 'Bandung',
         'birth_date' => now()->subYears(15),
         'address' => 'Jl. Anggrek No. 12, Cipete, Jakarta Selatan',
-        'registration_number' => '2122.10.045',
+        'registration_number' => 'PPDB-2024-0045',
+        'created_at' => now(),
     ]);
-    $registration->created_at = now();
-    $registration->photo_path = 'https://i.pravatar.cc/300?img=5';
+    
     $school = [
-        'nama_sekolah' => 'Pondok Pesantren Modern Darel Azhar',
-        'alamat' => 'Jl. Pesantren No. 1, Desa Mulia, Kec. Sejahtera, Indonesia',
-        'telepon' => '08123456789'
+        'nama_sekolah' => $profiles['nama_sekolah'] ?? 'Pondok Pesantren Modern Darel Azhar',
+        'alamat' => $profiles['alamat'] ?? 'Jl. Pesantren No. 1, Desa Mulia, Kec. Sejahtera, Indonesia',
+        'telepon' => $profiles['tlp'] ?? '08123456789'
     ];
-    return view('ppdb.card', compact('registration', 'school'));
+    return view('ppdb.card', compact('registration', 'school', 'profiles'));
 });
 
 Route::get("/preview-email-accepted", function () {
-    $registration = \App\Models\Registration::first() ?? new \App\Models\Registration(["full_name" => "Aisyah Az Zahra", "registration_number" => "2122.10.045"]);
-    return view("emails.accepted", compact("registration"));
+    $profiles = \App\Models\SchoolProfile::pluck('value', 'key')->toArray();
+    $registration = \App\Models\Registration::first() ?? new \App\Models\Registration([
+        "full_name" => "Aisyah Az Zahra", 
+        "registration_number" => "PPDB-2024-0045",
+        "previous_school" => "SMP Negeri 1 Jakarta"
+    ]);
+    return view("emails.accepted", compact("registration", "profiles"));
 });
 
 Route::get("/preview-email-verify", function () {
-    return view("emails.verify", ["url" => "https://darelazhar.sch.id/verify-email/123", "user" => \App\Models\User::first()]);
+    $profiles = \App\Models\SchoolProfile::pluck('value', 'key')->toArray();
+    $user = \App\Models\User::first() ?? new \App\Models\User(["name" => "Aisyah Az Zahra", "email" => "aisyah@example.com"]);
+    return view("emails.verify", ["url" => "https://darelazhar.sch.id/verify-email/123", "user" => $user, "profiles" => $profiles]);
 });
