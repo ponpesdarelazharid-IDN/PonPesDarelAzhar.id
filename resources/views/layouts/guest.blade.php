@@ -16,7 +16,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         
         <!-- Favicon -->
-        <link rel="icon" type="image/jpeg" href="{{ asset('LOGO_DA_new.png') }}">
+        <link rel="icon" type="image/jpeg" href="{{ asset('images/logo-da.png') }}">
 
         <script>
             // On page load or when changing themes, best to add inline in `head` to avoid FOUC
@@ -73,7 +73,7 @@
     <body class="h-full antialiased bg-slate-50 dark:bg-black transition-colors duration-500">
         <!-- Loading Screen -->
         <div id="loading-screen">
-          <img src="{{ asset('LOGO_DA_new.png') }}" alt="Logo Darel Azhar" class="loading-logo">
+          <img src="{{ asset('images/logo-da.png') }}" alt="Logo Darel Azhar" class="loading-logo">
           <div class="loading-text">MEMUAT...</div>
         </div>
 
@@ -81,7 +81,7 @@
             <div class="sm:mx-auto sm:w-full sm:max-w-md text-center">
                 <a href="/" class="inline-block transform hover:scale-110 transition duration-500">
                     <div class="flex items-center justify-center p-4">
-                        <img src="{{ asset('LOGO_DA_new.png') }}" alt="Logo Darel Azhar" class="w-20 h-auto">
+                        <img src="{{ asset('images/logo-da.png') }}" alt="Logo Darel Azhar" class="w-20 h-auto">
                     </div>
                 </a>
                 <h2 class="mt-6 text-2xl font-black tracking-tight text-[#1e293b] dark:text-white uppercase">

@@ -120,7 +120,7 @@
 
     <div class="kartu-pelajar">
         <div class="kartu-header">
-            <img src="{{ asset('LOGO_DA_new.png') }}" alt="Logo Darel Azhar" class="kartu-logo">
+            <img src="{{ asset('images/logo-da.png') }}" alt="Logo Darel Azhar" class="kartu-logo">
             <h2>PONPES MODERN DAREL-AZHAR</h2>
             <h3>KARTU PELAJAR</h3>
         </div>

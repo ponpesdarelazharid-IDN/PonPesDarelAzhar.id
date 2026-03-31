@@ -56,7 +56,7 @@
         
         <!-- KOP SURAT -->
         <div class="kop-surat">
-            <img src="{{ $message->embed(public_path('LOGO_DA_new.png')) }}" alt="Logo Darel Azhar" class="kartu-logo">
+            <img src="{{ $message->embed(public_path('images/logo-da.png')) }}" alt="Logo Darel Azhar" class="kartu-logo">
             
             <div class="kop-teks">
                 <h1 class="kop-title">Yayasan Pendidikan Islam</h1>

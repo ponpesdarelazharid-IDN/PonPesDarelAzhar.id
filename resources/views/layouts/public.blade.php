@@ -9,7 +9,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     
     <!-- Favicon -->
-    <link rel="icon" type="image/jpeg" href="{{ asset('LOGO_DA_new.png') }}">
+    <link rel="icon" type="image/jpeg" href="{{ asset('images/logo-da.png') }}">
 
     <style>
       /* Styling untuk Loading Screen */
@@ -63,7 +63,7 @@
 <body class="font-sans antialiased bg-white text-slate-900 dark:bg-[#000000] dark:text-gray-100 transition-colors duration-500">
     <!-- Loading Screen -->
     <div id="loading-screen">
-      <img src="{{ asset('LOGO_DA_new.png') }}" alt="Logo Darel Azhar" class="loading-logo">
+      <img src="{{ asset('images/logo-da.png') }}" alt="Logo Darel Azhar" class="loading-logo">
       <div class="loading-text">MEMUAT...</div>
     </div>
 
