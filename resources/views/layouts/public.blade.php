@@ -69,8 +69,9 @@
 
     <nav class="navbar">
         <div class="container">
-            <a href="/" class="nav-brand">
-                <span class="text-gradient">{{ $profiles['nama_sekolah'] ?? 'Sekolah Kita' }}</span>
+            <a href="/" class="nav-brand flex items-center gap-3">
+                <img src="{{ asset('images/logo-da.png') }}" alt="Logo Darel Azhar" class="h-10 w-auto">
+                <span class="text-gradient uppercase">{{ $profiles['nama_sekolah'] ?? 'Darel Azhar' }}</span>
             </a>
             <div class="nav-links">
                 <a href="/">Beranda</a>

@@ -82,10 +82,10 @@
                 <div class="flex justify-between h-20">
                     <!-- Logo & Brand -->
                     <div class="flex items-center flex-shrink-0">
-                        <a href="/" class="flex items-center gap-2 group whitespace-nowrap">
-                            <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#1e293b] dark:bg-white flex items-center justify-center text-white dark:text-black font-black text-lg shadow-lg group-hover:scale-105 transition-transform duration-300">S</div>
-                            <span class="font-bold text-lg sm:text-xl tracking-tighter text-[#1e293b] dark:text-white truncate max-w-[150px] sm:max-w-none">
-                                {{ $profiles['nama_sekolah'] ?? 'Sekolah Kita' }}
+                        <a href="/" class="flex items-center gap-3 group whitespace-nowrap">
+                            <img src="{{ asset('images/logo-da.png') }}" alt="Logo Darel Azhar" class="w-10 h-auto sm:w-12 group-hover:scale-105 transition-transform duration-300">
+                            <span class="font-bold text-lg sm:text-xl tracking-tighter text-[#1e293b] dark:text-white truncate max-w-[150px] sm:max-w-none uppercase">
+                                {{ $profiles['nama_sekolah'] ?? 'Darel Azhar' }}
                             </span>
                         </a>
                     </div>
