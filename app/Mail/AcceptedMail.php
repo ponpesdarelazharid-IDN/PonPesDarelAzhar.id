@@ -29,7 +29,7 @@ class AcceptedMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Selamat! Anda Diterima di Darel Azhar - ' . $this->registration->registration_number,
+            subject: 'Mabruk! Hasil Seleksi PPDB Darel Azhar - ' . $this->registration->registration_number,
         );
     }
 
@@ -40,9 +40,6 @@ class AcceptedMail extends Mailable
     {
         return new Content(
             view: 'emails.accepted',
-            with: [
-                'profiles' => \App\Models\SchoolProfile::pluck('value', 'key')->toArray(),
-            ],
         );
     }
 

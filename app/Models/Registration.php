@@ -37,16 +37,16 @@ class Registration extends Model
         return $this->belongsTo(PpdbSetting::class);
     }
 
-    public function getPhotoUrlAttribute()
+    public function getPhotoUrlAttribute($value)
     {
-        if (!$this->photo_path) {
-            return null;
+        if (!$value) {
+            return asset('images/default-avatar.png');
         }
 
-        if (filter_var($this->photo_path, FILTER_VALIDATE_URL)) {
-            return $this->photo_path;
+        if (filter_var($value, FILTER_VALIDATE_URL)) {
+            return $value;
         }
 
-        return \Illuminate\Support\Facades\Storage::disk(config('filesystems.default', 'cloudinary'))->url($this->photo_path);
+        return \Illuminate\Support\Facades\Storage::disk('cloudinary')->url($value);
     }
 }
