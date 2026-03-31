@@ -69,11 +69,22 @@
             z-index: 10;
         }
 
-        .mosque-icon {
-            font-size: 24px;
-            color: var(--gold-primary);
+        .header-logo {
+            width: 45px;
+            height: 45px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             margin-right: 15px;
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+            padding: 4px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .header-logo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
         }
 
         .header-text h2 {
@@ -275,8 +286,8 @@
         <div class="top-divider"></div>
 
         <div class="header">
-            <div class="mosque-icon">
-                <i class="fa-solid fa-mosque"></i>
+            <div class="header-logo">
+                <img src="{{ asset('images/logo-da.png') }}" alt="Logo Darel Azhar">
             </div>
             <div class="header-text">
                 <h2>DAREL AZHAR</h2>
@@ -303,7 +314,7 @@
                     <p class="label">TEMPAT TGL LAHIR</p>
                     <p class="value">
                         @if(isset($registration) && $registration->birth_date)
-                            {{ strtoupper($registration->birth_place) }}, {{ $registration->birth_date->format('d OKTOBER Y') }}
+                            {{ strtoupper($registration->birth_place) }}, {{ strtoupper($registration->birth_date->isoFormat('DD MMMM YYYY')) }}
                         @else
                             BANDUNG, 12 OKTOBER 2007
                         @endif
