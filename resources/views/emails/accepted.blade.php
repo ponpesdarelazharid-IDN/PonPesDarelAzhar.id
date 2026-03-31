@@ -9,12 +9,11 @@
         .surat-container { background-color: #ffffff; max-width: 650px; margin: 0 auto; padding: 40px; border: 1px solid #cbd5e1; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
         
         /* Kop Surat Resmi */
-        .kop-surat { text-align: center; border-bottom: 3px double #1e242a; padding-bottom: 15px; margin-bottom: 25px; position: relative; }
-        .kop-surat img { position: absolute; left: 0; top: 0; width: 75px; height: 75px; }
-        .kop-teks { margin-left: 0; }
-        .kop-title { margin: 0; font-size: 16px; font-weight: bold; letter-spacing: 1px; color: #1e242a; text-transform: uppercase; }
-        .kop-nama { margin: 5px 0; font-size: 24px; font-weight: 800; color: #d1a34b; font-family: 'Arial', sans-serif; text-transform: uppercase; }
-        .kop-alamat { margin: 0; font-size: 13px; color: #475569; }
+        .kop-surat { text-align: center; border-bottom: 3px solid #1a5e20; padding-bottom: 25px; margin-bottom: 30px; position: relative; }
+        .kartu-logo { width: 100px; height: auto; margin-bottom: 15px; }
+        .kop-title { margin: 0; font-size: 14px; font-weight: bold; letter-spacing: 1px; color: #1e242a; text-transform: uppercase; }
+        .kop-nama { margin: 5px 0; font-size: 22px; font-weight: 800; color: #1a5e20; font-family: 'Arial', sans-serif; text-transform: uppercase; }
+        .kop-alamat { margin: 0; font-size: 12px; color: #64748b; line-height: 1.5; }
         
         .clear { clear: both; }
 
@@ -61,8 +60,7 @@
         
         <!-- KOP SURAT -->
         <div class="kop-surat">
-            <!-- Pura-pura ada stempel/logo -->
-            <div style="position: absolute; left: 10px; top: 10px; width: 60px; height: 60px; border-radius: 50%; background-color: #1e242a; border: 3px solid #d1a34b; color: #d1a34b; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; line-height: 1;">LOGO</div>
+            <img src="{{ $message->embed(public_path('LOGO_DA_new.png')) }}" alt="Logo Darel Azhar" class="kartu-logo">
             
             <div class="kop-teks">
                 <h1 class="kop-title">Yayasan Pendidikan Islam</h1>

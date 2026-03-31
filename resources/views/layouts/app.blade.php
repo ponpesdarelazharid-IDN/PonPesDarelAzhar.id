@@ -22,8 +22,58 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="{{ asset('LOGO_DA_new.png') }}">
+
+    <style>
+      /* Styling untuk Loading Screen */
+      #loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #ffffff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        font-family: Arial, sans-serif;
+        transition: opacity 0.5s ease;
+      }
+
+      /* Ukuran logo diatur proporsional */
+      .loading-logo {
+        width: 150px; /* Atur lebar sesuai kebutuhan */
+        height: auto; /* Memastikan logo tidak peyang/distorsi */
+        animation: pulse 2s infinite ease-in-out;
+      }
+
+      .loading-text {
+        margin-top: 20px;
+        color: #333333;
+        font-size: 16px;
+        font-weight: bold;
+        letter-spacing: 2px;
+      }
+
+      /* Animasi halus membesar-mengecil sedikit */
+      @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+      }
+    </style>
 </head>
 <body class="font-sans antialiased bg-white text-slate-900 dark:bg-[#000000] dark:text-gray-100 transition-colors duration-500">
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+      <img src="{{ asset('LOGO_DA_new.png') }}" alt="Logo Darel Azhar" class="loading-logo">
+      <div class="loading-text">MEMUAT...</div>
+    </div>
+
     <div x-data="{ mobileMenuOpen: false }" class="min-h-screen flex flex-col">
         
         <!-- Navbar (Navy/Black Accents) -->
@@ -296,6 +346,17 @@
         if(themeToggleBtnMobile) themeToggleBtnMobile.addEventListener('click', toggleTheme);
         
         initTheme();
+    </script>
+    
+    <!-- Script to hide loading screen -->
+    <script>
+        window.addEventListener('load', function() {
+            const loader = document.getElementById('loading-screen');
+            loader.style.opacity = '0';
+            setTimeout(function() {
+                loader.style.display = 'none';
+            }, 500);
+        });
     </script>
 </body>
 </html>

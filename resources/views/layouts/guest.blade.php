@@ -15,6 +15,9 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         
+        <!-- Favicon -->
+        <link rel="icon" type="image/jpeg" href="{{ asset('LOGO_DA_new.png') }}">
+
         <script>
             // On page load or when changing themes, best to add inline in `head` to avoid FOUC
             if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -26,14 +29,59 @@
 
         <style>
             body { font-family: 'Outfit', sans-serif; }
+
+            /* Styling untuk Loading Screen */
+            #loading-screen {
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              background-color: #ffffff;
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+              z-index: 9999;
+              font-family: Arial, sans-serif;
+              transition: opacity 0.5s ease;
+            }
+
+            /* Ukuran logo diatur proporsional */
+            .loading-logo {
+              width: 150px; /* Atur lebar sesuai kebutuhan */
+              height: auto; /* Memastikan logo tidak peyang/distorsi */
+              animation: pulse 2s infinite ease-in-out;
+            }
+
+            .loading-text {
+              margin-top: 20px;
+              color: #333333;
+              font-size: 16px;
+              font-weight: bold;
+              letter-spacing: 2px;
+            }
+
+            /* Animasi halus membesar-mengecil sedikit */
+            @keyframes pulse {
+              0% { transform: scale(1); }
+              50% { transform: scale(1.05); }
+              100% { transform: scale(1); }
+            }
         </style>
     </head>
     <body class="h-full antialiased bg-slate-50 dark:bg-black transition-colors duration-500">
+        <!-- Loading Screen -->
+        <div id="loading-screen">
+          <img src="{{ asset('LOGO_DA_new.png') }}" alt="Logo Darel Azhar" class="loading-logo">
+          <div class="loading-text">MEMUAT...</div>
+        </div>
+
         <div class="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
             <div class="sm:mx-auto sm:w-full sm:max-w-md text-center">
                 <a href="/" class="inline-block transform hover:scale-110 transition duration-500">
-                    <div class="w-16 h-16 bg-[#1e293b] dark:bg-white rounded-2xl flex items-center justify-center shadow-2xl mx-auto">
-                        <span class="text-white dark:text-black text-2xl font-black">DA</span>
+                    <div class="flex items-center justify-center p-4">
+                        <img src="{{ asset('LOGO_DA_new.png') }}" alt="Logo Darel Azhar" class="w-20 h-auto">
                     </div>
                 </a>
                 <h2 class="mt-6 text-2xl font-black tracking-tight text-[#1e293b] dark:text-white uppercase">
@@ -51,5 +99,18 @@
                 </p>
             </div>
         </div>
+
+        <!-- Script to hide loading screen -->
+        <script>
+            window.addEventListener('load', function() {
+                const loader = document.getElementById('loading-screen');
+                if (loader) {
+                    loader.style.opacity = '0';
+                    setTimeout(function() {
+                        loader.style.display = 'none';
+                    }, 500);
+                }
+            });
+        </script>
     </body>
 </html>
