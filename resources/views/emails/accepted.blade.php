@@ -3,140 +3,66 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pemberitahuan Kelulusan Santri Baru - Darel Azhar</title>
+    <title>Selamat Bergabung - PPDB Darel Azhar</title>
     <style>
-        body { font-family: 'Times New Roman', Times, serif; background-color: #f0f4f8; margin: 0; padding: 30px; color: #1e242a; }
-        .surat-container { background-color: #ffffff; max-width: 650px; margin: 0 auto; padding: 40px; border: 1px solid #cbd5e1; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
+        body { margin: 0; padding: 20px; font-family: 'Inter', 'Arial', sans-serif; background-color: #020617; color: #f8fafc; }
+        .wrapper { max-width: 600px; margin: 0 auto; background-color: #0f172a; border-radius: 24px; overflow: hidden; border: 1px solid #1e293b; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+        .hero { padding: 40px 20px; text-align: center; background: radial-gradient(circle at top, #1e293b 0%, #0f172a 100%); border-bottom: 1px solid #1e293b; }
+        .mabruk { font-size: 14px; font-weight: 800; color: #fbbf24; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 10px; display: block; }
+        .title { font-size: 32px; font-weight: 900; color: #ffffff; margin: 0; letter-spacing: -0.5px; }
         
-        /* Kop Surat Resmi */
-        .kop-surat { text-align: center; border-bottom: 3px solid #1a5e20; padding-bottom: 25px; margin-bottom: 30px; position: relative; }
-        .kartu-logo { width: 100px; height: auto; margin-bottom: 15px; }
-        .kop-title { margin: 0; font-size: 14px; font-weight: bold; letter-spacing: 1px; color: #1e242a; text-transform: uppercase; }
-        .kop-nama { margin: 5px 0; font-size: 22px; font-weight: 800; color: #1a5e20; font-family: 'Arial', sans-serif; text-transform: uppercase; }
-        .kop-alamat { margin: 0; font-size: 12px; color: #64748b; line-height: 1.5; }
+        .content { padding: 40px; line-height: 1.7; font-size: 16px; color: #cbd5e1; }
+        .greeting { color: #f8fafc; font-weight: 600; margin-bottom: 20px; }
+        .highlight { color: #fbbf24; font-weight: 700; }
+        .link-text { color: #22d3ee; text-decoration: none; font-weight: 600; border-bottom: 1px solid rgba(34, 211, 238, 0.3); }
         
-        .clear { clear: both; }
-
-        /* Atribut Surat */
-        .atribut-surat { margin-bottom: 30px; font-size: 14px; display: table; width: 100%; border-collapse: collapse; }
-        .atribut-kiri { display: table-cell; width: 60%; vertical-align: top; }
-        .atribut-kanan { display: table-cell; width: 40%; vertical-align: top; text-align: right; }
-        .baris-atribut { margin-bottom: 4px; }
-        .label-atribut { display: inline-block; width: 70px; }
-
-        /* Isi Surat */
-        .isi-surat { font-size: 15px; line-height: 1.6; text-align: justify; }
-        .isi-surat p { margin-bottom: 15px; }
-        .salam-pembuka { font-weight: bold; margin-bottom: 15px; }
+        .nis-container { margin: 40px 0; padding: 30px; background-color: #020617; border-radius: 16px; border: 1px dashed #1e293b; text-align: center; }
+        .nis-label { font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; display: block; }
+        .nis-code { font-size: 24px; font-weight: 900; color: #ffffff; letter-spacing: 4px; text-shadow: 0 0 15px rgba(251, 191, 36, 0.2); }
         
-        /* Box / Kartu Preview */
-        .lampiran-info { background-color: #f8fafc; border: 1px dashed #94a3b8; padding: 20px; text-align: center; margin: 25px 0; font-family: 'Arial', sans-serif; }
-        .lampiran-info h3 { margin: 0 0 10px 0; font-size: 14px; text-transform: uppercase; color: #64748b; }
-        .lampiran-info .nis-box { font-size: 28px; font-weight: 900; color: #1e242a; letter-spacing: 2px; border-bottom: 2px solid #d1a34b; display: inline-block; padding-bottom: 5px; margin-bottom: 20px; }
-
-        /* Tombol / Call to Action */
-        .area-tombol { text-align: center; margin: 30px 0 20px 0; }
-        .btn-action { display: inline-block; background-color: #1e242a; color: #ffffff !important; text-decoration: none; padding: 14px 28px; font-weight: bold; font-family: 'Arial', sans-serif; font-size: 16px; border-radius: 4px; border-left: 6px solid #d1a34b; }
-
-        /* Tanda Tangan */
-        .area-tanda-tangan { margin-top: 50px; display: table; width: 100%; }
-        .tanda-tangan { display: table-cell; width: 300px; text-align: center; font-size: 15px; vertical-align: top; float: right; }
-        .tanda-tangan p { margin: 0 0 5px 0; }
-        .space-ttd { height: 75px; }
-        .nama-terang { font-weight: bold; text-decoration: underline; }
+        .cta-area { text-align: center; margin-top: 30px; }
+        .btn { display: inline-block; background-color: #ffffff; color: #020617 !important; text-decoration: none; padding: 16px 32px; font-weight: 800; border-radius: 12px; font-size: 16px; transition: all 0.2s; }
+        
+        .footer { padding: 30px; text-align: center; font-size: 13px; color: #64748b; border-top: 1px solid #1e293b; }
+        .footer p { margin: 5px 0; }
         
         @media only screen and (max-width: 600px) {
-            body { padding: 10px; }
-            .surat-container { padding: 20px; }
-            .kop-surat img { position: static; display: block; margin: 0 auto 10px auto; }
-            .kop-teks { margin-left: 0; }
-            .atribut-kiri, .atribut-kanan { display: block; width: 100%; text-align: left; margin-bottom: 10px; }
-            .tanda-tangan { float: none; width: 100%; margin-top: 30px; text-align: right; }
+            .content { padding: 25px; }
+            .title { font-size: 26px; }
         }
     </style>
 </head>
 <body>
-    <div class="surat-container">
-        
-        <!-- KOP SURAT -->
-        <div class="kop-surat">
-            <img src="{{ $message->embed(public_path('images/logo-da.png')) }}" alt="Logo Darel Azhar" class="kartu-logo">
-            
-            <div class="kop-teks">
-                <h1 class="kop-title">Yayasan Pendidikan Islam</h1>
-                <h2 class="kop-nama">Pondok Pesantren Modern Darel Azhar</h2>
-                <p class="kop-alamat">
-                    {{ $profiles['alamat'] ?? 'Jl. Pesantren No. 1, Desa Mulia, Kec. Sejahtera, Indonesia' }}<br>
-                    Telp: {{ $profiles['tlp'] ?? '08123456789' }} | Email: {{ $profiles['email'] ?? 'info@darelazharsystem.id' }}
-                </p>
-            </div>
-            <div class="clear"></div>
+    <div class="wrapper">
+        <div class="hero">
+            <span class="mabruk">MABRUK! 🎉</span>
+            <h1 class="title">Selamat Bergabung!</h1>
         </div>
 
-        <!-- ATRIBUT SURAT -->
-        <div class="atribut-surat">
-            <div class="atribut-kiri">
-                <div class="baris-atribut"><span class="label-atribut">Nomor</span>: {{ date('Y') }}/PPDB/DA/LULUS-{{ str_pad($registration->id, 4, '0', STR_PAD_LEFT) }}</div>
-                <div class="baris-atribut"><span class="label-atribut">Lampiran</span>: Bukti Penerimaan & Kartu Digital</div>
-                <div class="baris-atribut"><span class="label-atribut">Perihal</span>: <strong>Keputusan Kelulusan Calon Santri</strong></div>
-            </div>
-            <div class="atribut-kanan">
-                Banten, {{ date('d F Y') }}
-            </div>
-            <div class="clear"></div>
-        </div>
-
-        <!-- ISI SURAT -->
-        <div class="isi-surat">
-            <div class="salam-pembuka">
-                Kepada Yth,<br>
-                <strong>Bapak/Ibu Orang Tua/Wali dari Ananda {{ strtoupper($registration->full_name) }}</strong><br>
-                Di Tempat.
-            </div>
-
-            <p><strong><em>Assalamu'alaikum Warahmatullahi Wabarakatuh,</em></strong></p>
-
-            <p>Dengan hormat,<br>
-            Berdasarkan hasil Rapat Panitia Penerimaan Peserta Didik Baru (PPDB) Pondok Pesantren Modern Darel Azhar dan evaluasi berkas pendaftaran calon santri:</p>
+        <div class="content">
+            <p class="greeting">Assalamu'alaikum {{ $registration->full_name }},</p>
             
-            <ul style="list-style-type: none; padding-left: 0; margin-left: 20px;">
-                <li><strong>Nama Lengkap:</strong> {{ $registration->full_name }}</li>
-                <li><strong>Asal Sekolah:</strong> {{ $registration->previous_school ?? '-' }}</li>
-            </ul>
+            <p>Dengan penuh rasa syukur, kami menginformasikan bahwa Anda telah dinyatakan <span class="highlight">LULUS</span> seleksi dan resmi menjadi bagian dari keluarga besar Pondok Pesantren Modern Darel Azhar.</p>
+            
+            <p>Sebagai identitas resmi, kami telah menerbitkan <a href="{{ route('ppdb.register.card') }}" class="link-text">Kartu Pelajar Digital</a> Anda. Silakan klik tombol di bawah ini untuk melihat dan mencetak kartu Anda (Ukuran KTP).</p>
 
-            <p>Maka dengan penuh rasa syukur, kami memutuskan bahwa santri yang tercantum namanya di atas secara resmi dinyatakan <strong>LULUS SELEKSI</strong> dan <strong>DITERIMA</strong> sebagai santri/wati baru di Pondok Pesantren Modern Darel Azhar Tahun Ajaran {{ date('Y') }}/{{ date('Y') + 1 }}.</p>
+            <div class="nis-container">
+                <span class="nis-label">NOMOR REGISTRASI / NIS</span>
+                <div class="nis-code">{{ $registration->registration_number }}</div>
+            </div>
 
-            <div class="lampiran-info">
-                <h3>Nomor Induk Santri (NIS) Telah Diterbitkan:</h3>
-                <div class="nis-box">{{ $registration->registration_number }}</div>
-                <p style="margin:0; font-size:13px;">Gunakan nomor induk ini untuk keperluan administrasi pendidikan dan keuangan pondok.</p>
-                
-                <div class="area-tombol">
-                    <a href="{{ route('ppdb.register.card') }}" class="btn-action">Tampilkan & Cetak Kartu Pelajar Digital Resmi</a>
-                </div>
+            <div class="cta-area">
+                <a href="{{ route('ppdb.register.card') }}" class="btn">LIHAT KARTU PELAJAR</a>
             </div>
             
-            <p>Berkenaan dengan keputusan tersebut, kami mohon Bapak/Ibu segera menyelesaikan prosedur pendaftaran ulang serta mencetak <strong>Kartu Pelajar Digital</strong> (kartu tanda pengenal santri sah) melalui portal elektronik sekolah, dengan menekan tombol (tautan) yang terlampir di dalam dokumen ini.</p>
-            
-            <p>Demikian surat keputusan dan pemberitahuan kelulusan ini diterbitkan untuk dipergunakan sebagaimana mestinya. Kami sampaikan tahniah dan *Mabruk* atas bergabungnya Ananda; semoga kelak menjadi santri yang berakhlak mulia dan senantiasa dirahmati Allah SWT.</p>
-
-            <p><strong><em>Wassalamu'alaikum Warahmatullahi Wabarakatuh.</em></strong></p>
-
+            <p style="margin-top: 40px; font-style: italic; font-size: 14px;">"Selamat berjuang menuntut ilmu, semoga menjadi santri yang berakhlak mulia dan bermanfaat bagi umat."</p>
         </div>
 
-        <!-- TANDA TANGAN -->
-        <div class="area-tanda-tangan">
-            <div class="tanda-tangan">
-                <p>Hormat kami,</p>
-                <p><strong>Ketua Panitia PMB PPDB</strong></p>
-                <div class="space-ttd">
-                    <!-- Space for digital signature -->
-                </div>
-                <p class="nama-terang">Mudirul Ma'had</p>
-            </div>
-            <div class="clear"></div>
+        <div class="footer">
+            <p><strong>Pondok Pesantren Modern Darel Azhar</strong></p>
+            <p>{{ $profiles['alamat'] ?? 'Indonesia' }}</p>
+            <p>Email ini dikirim secara otomatis oleh sistem PPDB.</p>
         </div>
-
     </div>
 </body>
 </html>

@@ -3,143 +3,48 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tanda Terima Registrasi PPDB - Darel Azhar</title>
+    <title>Tanda Terima Registrasi - PPDB Darel Azhar</title>
     <style>
-        body { font-family: 'Times New Roman', Times, serif; background-color: #f0f4f8; margin: 0; padding: 30px; color: #1e242a; }
-        .surat-container { background-color: #ffffff; max-width: 650px; margin: 0 auto; padding: 40px; border: 1px solid #cbd5e1; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
+        body { margin: 0; padding: 20px; font-family: 'Inter', 'Arial', sans-serif; background-color: #020617; color: #f8fafc; }
+        .wrapper { max-width: 600px; margin: 0 auto; background-color: #0f172a; border-radius: 24px; overflow: hidden; border: 1px solid #1e293b; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+        .hero { padding: 40px 20px; text-align: center; background: radial-gradient(circle at top, #1e293b 0%, #0f172a 100%); border-bottom: 1px solid #1e293b; }
+        .label { font-size: 14px; font-weight: 800; color: #fbbf24; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 10px; display: block; }
+        .title { font-size: 28px; font-weight: 900; color: #ffffff; margin: 0; letter-spacing: -0.5px; }
         
-        /* Kop Surat Resmi */
-        .kop-surat { text-align: center; border-bottom: 3px solid #1a5e20; padding-bottom: 25px; margin-bottom: 30px; position: relative; }
-        .kartu-logo { width: 100px; height: auto; margin-bottom: 15px; }
-        .kop-title { margin: 0; font-size: 14px; font-weight: bold; letter-spacing: 1px; color: #1e242a; text-transform: uppercase; }
-        .kop-nama { margin: 5px 0; font-size: 22px; font-weight: 800; color: #1a5e20; font-family: 'Arial', sans-serif; text-transform: uppercase; }
-        .kop-alamat { margin: 0; font-size: 12px; color: #64748b; line-height: 1.5; }
+        .content { padding: 40px; line-height: 1.7; font-size: 16px; color: #cbd5e1; }
+        .greeting { color: #f8fafc; font-weight: 600; margin-bottom: 20px; }
         
-        .clear { clear: both; }
-
-        /* Atribut Surat */
-        .atribut-surat { margin-bottom: 30px; font-size: 14px; display: table; width: 100%; border-collapse: collapse; }
-        .atribut-kiri { display: table-cell; width: 60%; vertical-align: top; }
-        .atribut-kanan { display: table-cell; width: 40%; vertical-align: top; text-align: right; }
-        .baris-atribut { margin-bottom: 4px; }
-        .label-atribut { display: inline-block; width: 70px; }
-
-        /* Isi Surat */
-        .isi-surat { font-size: 15px; line-height: 1.6; text-align: justify; }
-        .isi-surat p { margin-bottom: 15px; }
-        .salam-pembuka { font-weight: bold; margin-bottom: 15px; }
+        .nis-container { margin: 30px 0; padding: 25px; background-color: #020617; border-radius: 16px; border: 1px dashed #1e293b; text-align: center; }
+        .nis-label { font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; display: block; }
+        .nis-code { font-size: 24px; font-weight: 900; color: #ffffff; letter-spacing: 4px; }
         
-        /* Box Data Singkat */
-        .lampiran-info { background-color: transparent; border: 1px dashed #cbd5e1; padding: 15px 20px; text-align: left; margin: 20px 0; font-family: 'Times New Roman', Times, serif; }
-        .lampiran-info h3 { margin: 0 0 10px 0; font-size: 15px; text-transform: uppercase; color: #1e242a; text-decoration: underline; }
-        .data-list { width: 100%; text-align: left; border-collapse: collapse; }
-        .data-list td { padding: 4px 0; vertical-align: top; font-size: 15px; }
-        .data-list td:first-child { width: 140px; font-weight: bold; }
-        
-        /* Tanda Tangan */
-        .area-tanda-tangan { margin-top: 50px; display: table; width: 100%; }
-        .tanda-tangan { display: table-cell; width: 300px; text-align: center; font-size: 15px; vertical-align: top; float: right; }
-        .tanda-tangan p { margin: 0 0 5px 0; }
-        .space-ttd { height: 75px; }
-        .nama-terang { font-weight: bold; text-decoration: underline; }
-        
-        @media only screen and (max-width: 600px) {
-            body { padding: 10px; }
-            .surat-container { padding: 20px; }
-            .kop-surat img { position: static; display: block; margin: 0 auto 10px auto; }
-            .kop-teks { margin-left: 0; }
-            .atribut-kiri, .atribut-kanan { display: block; width: 100%; text-align: left; margin-bottom: 10px; }
-            .tanda-tangan { float: none; width: 100%; margin-top: 30px; text-align: right; }
-        }
+        .footer { padding: 30px; text-align: center; font-size: 13px; color: #64748b; border-top: 1px solid #1e293b; }
     </style>
 </head>
 <body>
-    <div class="surat-container">
-        
-        <!-- KOP SURAT -->
-        <div class="kop-surat">
-            <img src="{{ $message->embed(public_path('images/logo-da.png')) }}" alt="Logo Darel Azhar" class="kartu-logo">
+    <div class="wrapper">
+        <div class="hero">
+            <span class="label">REGISTRATION RECEIVED</span>
+            <h1 class="title">Tanda Terima PPDB</h1>
+        </div>
+
+        <div class="content">
+            <p class="greeting">Assalamu'alaikum {{ $registration->full_name }},</p>
             
-            <div class="kop-teks">
-                <h1 class="kop-title">Yayasan Pendidikan Islam</h1>
-                <h2 class="kop-nama">Pondok Pesantren Modern Darel Azhar</h2>
-                <p class="kop-alamat">
-                    {{ $profiles['alamat'] ?? 'Jl. Pesantren No. 1, Desa Mulia, Kec. Sejahtera, Indonesia' }}<br>
-                    Telp: {{ $profiles['tlp'] ?? '08123456789' }} | Email: {{ $profiles['email'] ?? 'info@darelazharsystem.id' }}
-                </p>
+            <p>Terima kasih telah melakukan pendaftaran di Pondok Pesantren Modern Darel Azhar. Kami menginformasikan bahwa berkas pendaftaran Anda telah kami terima sepenuhnya di sistem kami.</p>
+
+            <div class="nis-container">
+                <span class="nis-label">NOMOR REGISTRASI ANDA</span>
+                <div class="nis-code">{{ $registration->registration_number }}</div>
             </div>
-            <div class="clear"></div>
+
+            <p>Mohon menunggu proses verifikasi berkas oleh Panitia PPDB. Status pendaftaran Anda akan kami informasikan lebih lanjut melalui dashboard sytem atau email resmi sekolah.</p>
         </div>
 
-        <!-- ATRIBUT SURAT -->
-        <div class="atribut-surat">
-            <div class="atribut-kiri">
-                <div class="baris-atribut"><span class="label-atribut">Nomor</span>: {{ date('Y') }}/PPDB/DA/BKT-{{ str_pad($registration->id, 4, '0', STR_PAD_LEFT) }}</div>
-                <div class="baris-atribut"><span class="label-atribut">Lampiran</span>: -</div>
-                <div class="baris-atribut"><span class="label-atribut">Perihal</span>: <strong>Tanda Terima Berkas PPDB</strong></div>
-            </div>
-            <div class="atribut-kanan">
-                Banten, {{ date('d F Y') }}
-            </div>
-            <div class="clear"></div>
+        <div class="footer">
+            <p><strong>Pondok Pesantren Modern Darel Azhar</strong></p>
+            <p>Email ini dikirim secara otomatis oleh sistem.</p>
         </div>
-
-        <!-- ISI SURAT -->
-        <div class="isi-surat">
-            <div class="salam-pembuka">
-                Kepada Yth,<br>
-                <strong>Sdr/i. {{ strtoupper($registration->full_name) }}</strong><br>
-                Di Tempat.
-            </div>
-
-            <p><strong><em>Assalamu'alaikum Warahmatullahi Wabarakatuh,</em></strong></p>
-
-            <p>Dengan hormat,<br>
-            Puji syukur senantiasa kita panjatkan ke hadirat Allah SWT. Melalui surat (tanda terima) ini, Panitia Penerimaan Peserta Didik Baru (PPDB) Pondok Pesantren Modern Darel Azhar menyatakan bahwa kami telah menerima sepenuhnya pendaftaran formulir dan berkas elektronik atas nama Saudara/i:</p>
-            
-            <div class="lampiran-info">
-                <table class="data-list">
-                    <tr>
-                        <td>Nomor Registrasi</td>
-                        <td>: <strong>{{ $registration->registration_number }}</strong></td>
-                    </tr>
-                    <tr>
-                        <td>Nama Lengkap</td>
-                        <td>: {{ $registration->full_name }}</td>
-                    </tr>
-                    <tr>
-                        <td>Asal Sekolah</td>
-                        <td>: {{ $registration->origin_school ?? '-' }}</td>
-                    </tr>
-                    <tr>
-                        <td>Status Berkas</td>
-                        <td>: <strong>MENUNGGU PROSES VERIFIKASI</strong></td>
-                    </tr>
-                </table>
-            </div>
-
-            <p>Selanjutnya, panitia akan melakukan validasi dan peninjauan secara menyeluruh terhadap kelengkapan dan keabsahan dokumen persyaratan (Pas Foto, Ijazah, dll) Anda yang telah dikirimkan ke dalam sistem kami.</p>
-
-            <p>Mohon untuk senantiasa memantau menu Status Pendaftaran ('Dashboard') milik Anda di portal resmi secara berkala untuk mengetahui keputusan kelulusan. Segala bentuk pengumuman lanjutan akan kami terbitkan melalui akun tersebut.</p>
-            
-            <p>Demikian surat tanda terima penyetahan berkas elektronik ini diterbitkan untuk dipergunakan dengan penuh rasa tanggung jawab. Kami haturkan *jazakumullah khairan katsiran* atas kepercayaan Anda mendaftar di pondok pesantren ini.</p>
-
-            <p><strong><em>Wassalamu'alaikum Warahmatullahi Wabarakatuh.</em></strong></p>
-
-        </div>
-
-        <!-- TANDA TANGAN -->
-        <div class="area-tanda-tangan">
-            <div class="tanda-tangan">
-                <p>Hormat kami,<br>Admin/Panitia PPDB Center</p>
-                <div class="space-ttd">
-                    <!-- Space for digital signature -->
-                </div>
-                <p class="nama-terang">Panitia Pendaftaran Web</p>
-            </div>
-            <div class="clear"></div>
-        </div>
-
     </div>
 </body>
 </html>
