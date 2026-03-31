@@ -40,6 +40,9 @@ class AcceptedMail extends Mailable
     {
         return new Content(
             view: 'emails.accepted',
+            with: [
+                'profiles' => \App\Models\SchoolProfile::pluck('value', 'key')->toArray(),
+            ],
         );
     }
 

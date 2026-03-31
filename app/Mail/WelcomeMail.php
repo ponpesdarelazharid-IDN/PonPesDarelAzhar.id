@@ -40,6 +40,9 @@ class WelcomeMail extends Mailable
     {
         return new Content(
             view: 'emails.welcome',
+            with: [
+                'profiles' => \App\Models\SchoolProfile::pluck('value', 'key')->toArray(),
+            ],
         );
     }
 

@@ -70,7 +70,7 @@ Route::get('/preview-card', function () {
         'birth_place' => 'Bandung',
         'birth_date' => now()->subYears(15),
         'address' => 'Jl. Anggrek No. 12, Cipete, Jakarta Selatan',
-        'registration_number' => 'PPDB-2024-0045',
+        'registration_number' => '2122.10.045',
         'created_at' => now(),
     ]);
     
@@ -85,8 +85,9 @@ Route::get('/preview-card', function () {
 Route::get("/preview-email-accepted", function () {
     $profiles = \App\Models\SchoolProfile::pluck('value', 'key')->toArray();
     $registration = \App\Models\Registration::first() ?? new \App\Models\Registration([
+        'id' => 1,
         "full_name" => "Aisyah Az Zahra", 
-        "registration_number" => "PPDB-2024-0045",
+        "registration_number" => "2122.10.045",
         "previous_school" => "SMP Negeri 1 Jakarta"
     ]);
     return view("emails.accepted", compact("registration", "profiles"));
