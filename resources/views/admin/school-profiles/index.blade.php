@@ -18,6 +18,17 @@
         </div>
     @endif
 
+    @if($errors->any())
+        <div class="mb-8 p-5 rounded-2xl bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/20 flex items-center gap-4 animate-in fade-in slide-in-from-top-4 duration-500">
+            <div class="w-10 h-10 rounded-xl bg-red-500 text-white flex items-center justify-center shadow-lg">✕</div>
+            <div class="text-red-800 dark:text-red-400 font-bold tracking-tight">
+                @foreach ($errors->all() as $error)
+                    <p>{{ $error }}</p>
+                @endforeach
+            </div>
+        </div>
+    @endif
+
     <form action="{{ route('admin.school-profiles.store') }}" method="POST" enctype="multipart/form-data" class="space-y-10">
         @csrf
         
@@ -193,4 +204,122 @@
         </div>
     </form>
 </div>
+
+<!-- Image Compression Script -->
+<script>
+document.querySelectorAll('input[type="file"]').forEach(input => {
+    input.addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (!file || !file.type.startsWith('image/')) return;
+        
+        // Only compress if file is larger than 2MB or has huge dimensions
+        if (file.size < 2 * 1024 * 1024) return;
+
+        // Create overlay
+        const container = e.target.closest('.group');
+        const overlay = document.createElement('div');
+        overlay.className = "absolute inset-0 bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center z-50 text-white transition-opacity duration-300";
+        overlay.innerHTML = `
+            <div class="w-12 h-12 border-4 border-white/20 border-t-white rounded-full animate-spin mb-4"></div>
+            <p class="text-[10px] font-black uppercase tracking-widest animate-pulse text-center px-4">Optimizing Image Quality...</p>
+        `;
+        container.appendChild(overlay);
+
+        try {
+            // Resize to max 2200px (Very high res for Hero) with 0.92 quality
+            const compressedFile = await compressImage(file, 2200, 0.92);
+            
+            // Replace the file in the input using DataTransfer
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(compressedFile);
+            e.target.files = dataTransfer.files;
+            
+            // Update preview
+            const reader = new FileReader();
+            reader.onload = (re) => {
+                const img = container.querySelector('img');
+                if (img) {
+                    img.src = re.target.result;
+                } else {
+                    // If no img tag (placeholder state), create one
+                    const placeholder = container.querySelector('.text-center');
+                    if (placeholder) {
+                        const newImg = document.createElement('img');
+                        newImg.src = re.target.result;
+                        newImg.className = "w-full h-full object-cover group-hover:scale-105 transition-transform duration-500";
+                        container.innerHTML = '';
+                        container.appendChild(newImg);
+                        // Re-add hidden input since we wiped innerHTML
+                        const newInput = document.createElement('input');
+                        newInput.type = 'file';
+                        newInput.name = e.target.name;
+                        newInput.className = "absolute inset-0 opacity-0 cursor-pointer";
+                        container.appendChild(newInput);
+                    }
+                }
+            };
+            reader.readAsDataURL(compressedFile);
+            
+            console.log(`Original: ${(file.size / 1024 / 1024).toFixed(2)}MB, Compressed: ${(compressedFile.size / 1024 / 1024).toFixed(2)}MB`);
+        } catch (err) {
+            console.error('Compression failed:', err);
+        } finally {
+            overlay.remove();
+        }
+    });
+});
+
+async function compressImage(file, maxDimension, quality) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (event) => {
+            const img = new Image();
+            img.src = event.target.result;
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                let width = img.width;
+                let height = img.height;
+
+                // Only resize if bigger than maxDimension
+                if (width > maxDimension || height > maxDimension) {
+                    if (width > height) {
+                        height = Math.round((height * maxDimension) / width);
+                        width = maxDimension;
+                    } else {
+                        width = Math.round((width * maxDimension) / height);
+                        height = maxDimension;
+                    }
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                
+                // Use high quality interpolation
+                ctx.imageSmoothingEnabled = true;
+                ctx.imageSmoothingQuality = 'high';
+                
+                ctx.drawImage(img, 0, 0, width, height);
+
+                canvas.toBlob((blob) => {
+                    if (!blob) return reject(new Error('Canvas to Blob failed'));
+                    const compressedFile = new File([blob], file.name, {
+                        type: 'image/jpeg',
+                        lastModified: Date.now(),
+                    });
+                    
+                    // If compressed file is somehow still bigger than original (rare), use original
+                    if (compressedFile.size > file.size) {
+                        resolve(file);
+                    } else {
+                        resolve(compressedFile);
+                    }
+                }, 'image/jpeg', quality);
+            };
+        };
+        reader.onerror = (error) => reject(error);
+    });
+}
+</script>
 @endsection
