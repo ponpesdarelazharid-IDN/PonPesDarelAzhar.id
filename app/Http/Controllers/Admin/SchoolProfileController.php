@@ -24,15 +24,25 @@ class SchoolProfileController extends Controller
         ]);
 
         $data = $request->except('_token');
+        $files = $request->allFiles();
         
         try {
-            foreach ($data as $key => $value) {
-                // Handle file upload if the key is a file
-                if ($request->hasFile($key)) {
-                    $value = $request->file($key)->storeOnCloudinary('school_profiles')->getSecurePath();
+            // Proses upload file terlebih dahulu
+            foreach ($files as $key => $file) {
+                if (in_array($key, ['logo', 'hero_image', 'secondary_image']) && $file) {
+                    $path = $file->storeOnCloudinary('school_profiles')->getSecurePath();
+                    if ($path) {
+                        SchoolProfile::updateOrCreate(
+                            ['key' => $key],
+                            ['value' => $path]
+                        );
+                    }
                 }
+            }
 
-                if ($value !== null) {
+            // Proses data teks yang lain
+            foreach ($data as $key => $value) {
+                 if (!array_key_exists($key, $files) && $value !== null) {
                     SchoolProfile::updateOrCreate(
                         ['key' => $key],
                         ['value' => $value]
