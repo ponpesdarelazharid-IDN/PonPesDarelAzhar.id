@@ -55,8 +55,17 @@ class SchoolProfileController extends Controller
                         $tmpFilePath = sys_get_temp_dir() . '/' . uniqid() . '.jpg';
                         file_put_contents($tmpFilePath, $image_base64);
 
-                        // Upload physical file ke Cloudinary
-                        $path = cloudinary()->upload($tmpFilePath, ['folder' => 'school_profiles'])->getSecurePath();
+                        // Gunakan UploadedFile Laravel agar kompatibel dengan macro storeOnCloudinary
+                        $uploadedFile = new \Illuminate\Http\UploadedFile(
+                            $tmpFilePath,
+                            $key . '.jpg',
+                            'image/jpeg',
+                            null,
+                            true
+                        );
+
+                        // Upload menggunakan metode yang sama dengan form normal (ini terbukti berhasil di Vercel)
+                        $path = $uploadedFile->storeOnCloudinary('school_profiles')->getSecurePath();
                         
                         // Hapus file temporary
                         @unlink($tmpFilePath);
