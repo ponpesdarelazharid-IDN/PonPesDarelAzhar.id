@@ -31,7 +31,8 @@ class SchoolProfileController extends Controller
             foreach ($files as $key => $file) {
                 if (in_array($key, ['logo', 'hero_image', 'secondary_image']) && $file && $file->isValid()) {
                     try {
-                        $path = cloudinary()->upload($file->getRealPath(), ['folder' => 'school_profiles'])->getSecurePath();
+                        $response = cloudinary()->uploadApi()->upload($file->getRealPath(), ['folder' => 'school_profiles']);
+                        $path = $response['secure_url'] ?? $response->offsetGet('secure_url');
                         if ($path) {
                             SchoolProfile::updateOrCreate(
                                 ['key' => $key],
@@ -39,7 +40,7 @@ class SchoolProfileController extends Controller
                             );
                         }
                     } catch (\Exception $e) {
-                         // Fallback alert for this specific file upload failure
+                         // Fail silently for individual files or log it
                     }
                 }
             }
@@ -68,8 +69,9 @@ class SchoolProfileController extends Controller
                         $tmpFilePath = sys_get_temp_dir() . '/' . uniqid() . '.jpg';
                         file_put_contents($tmpFilePath, $image_base64);
 
-                        // Upload menggunakan helper cloudinary() yang lebih stabil daripada macro pada Vercel
-                        $path = cloudinary()->upload($tmpFilePath, ['folder' => 'school_profiles'])->getSecurePath();
+                        // Upload menggunakan SDK Cloudinary v2 yang benar (uploadApi()->upload)
+                        $response = cloudinary()->uploadApi()->upload($tmpFilePath, ['folder' => 'school_profiles']);
+                        $path = $response['secure_url'] ?? $response->offsetGet('secure_url');
                         
                         // Hapus file temporary
                         @unlink($tmpFilePath);
