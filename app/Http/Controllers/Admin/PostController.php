@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use Illuminate\Support\Str;
 
-use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -39,8 +39,11 @@ class PostController extends Controller
         $post->slug = Str::slug($request->title) . '-' . uniqid();
         $post->user_id = auth()->id();
         
-        if ($request->hasFile('image')) {
-            $post->image_url = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $path = Storage::disk('cloudinary')->putFile('sekolah/posts', $request->file('image'));
+            if ($path) {
+                $post->image_url = Storage::disk('cloudinary')->url($path);
+            }
         }
 
         if ($request->status == 'published') {
@@ -74,8 +77,11 @@ class PostController extends Controller
             $post->slug = Str::slug($request->title) . '-' . uniqid();
         }
 
-        if ($request->hasFile('image')) {
-            $post->image_url = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $path = Storage::disk('cloudinary')->putFile('sekolah/posts', $request->file('image'));
+            if ($path) {
+                $post->image_url = Storage::disk('cloudinary')->url($path);
+            }
         }
 
         if ($request->status == 'published' && !$post->published_at) {

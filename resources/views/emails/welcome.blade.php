@@ -38,11 +38,16 @@
                 <div class="nis-code">{{ $registration->registration_number }}</div>
             </div>
 
-            <p>Mohon menunggu proses verifikasi berkas oleh Panitia PPDB. Status pendaftaran Anda akan kami informasikan lebih lanjut melalui dashboard sytem atau email resmi sekolah.</p>
+            <p>Mohon menunggu proses verifikasi berkas oleh Panitia PPDB. Status pendaftaran Anda akan kami informasikan lebih lanjut melalui dashboard sistem atau email resmi sekolah.</p>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="{{ route('ppdb.status') }}" style="display: inline-block; background-color: #ffffff; color: #020617 !important; text-decoration: none; padding: 16px 32px; font-weight: 800; border-radius: 12px; font-size: 16px;">CEK STATUS PENDAFTARAN</a>
+            </div>
         </div>
 
         <div class="footer">
-            <p><strong>Pondok Pesantren Modern Darel Azhar</strong></p>
+            <p><strong>{{ $profiles['nama_sekolah'] ?? 'Pondok Pesantren Modern Darel Azhar' }}</strong></p>
+            <p>{{ $profiles['alamat'] ?? '' }}</p>
             <p>Email ini dikirim secara otomatis oleh sistem.</p>
         </div>
     </div>

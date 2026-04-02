@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Ekstrakurikuler;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Illuminate\Support\Facades\Storage;
 
 class EkstrakurikulerController extends Controller
 {
@@ -33,11 +33,11 @@ class EkstrakurikulerController extends Controller
         $data['slug'] = Str::slug($request->name) . '-' . rand(100, 999);
         $data['is_active'] = $request->has('is_active');
 
-        if ($request->hasFile('image_file')) {
-            $uploadedFileUrl = Cloudinary::upload($request->file('image_file')->getRealPath(), [
-                'folder' => 'sekolah/ekskul',
-            ])->getSecurePath();
-            $data['image'] = $uploadedFileUrl;
+        if ($request->hasFile('image_file') && $request->file('image_file')->isValid()) {
+            $path = Storage::disk('cloudinary')->putFile('sekolah/ekskul', $request->file('image_file'));
+            if ($path) {
+                $data['image'] = Storage::disk('cloudinary')->url($path);
+            }
         }
 
         Ekstrakurikuler::create($data);
@@ -61,11 +61,11 @@ class EkstrakurikulerController extends Controller
         $data = $request->only(['name', 'description']);
         $data['is_active'] = $request->has('is_active');
 
-        if ($request->hasFile('image_file')) {
-            $uploadedFileUrl = Cloudinary::upload($request->file('image_file')->getRealPath(), [
-                'folder' => 'sekolah/ekskul',
-            ])->getSecurePath();
-            $data['image'] = $uploadedFileUrl;
+        if ($request->hasFile('image_file') && $request->file('image_file')->isValid()) {
+            $path = Storage::disk('cloudinary')->putFile('sekolah/ekskul', $request->file('image_file'));
+            if ($path) {
+                $data['image'] = Storage::disk('cloudinary')->url($path);
+            }
         }
 
         $ekstrakurikuler->update($data);

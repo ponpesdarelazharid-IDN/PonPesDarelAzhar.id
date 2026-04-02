@@ -11,7 +11,7 @@ use App\Models\SchoolProfile;
 use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
-use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Illuminate\Support\Facades\Storage;
 
 class RegistrationController extends Controller
 {
@@ -72,13 +72,32 @@ class RegistrationController extends Controller
     public function storeStep3(RegistrationRequest $request)
     {
         $registration = Registration::where('user_id', auth()->id())->firstOrFail();
+        $storage = Storage::disk('cloudinary');
         
-        $files = ['photo', 'birth_cert', 'ijazah', 'skhu'];
-        foreach ($files as $fileKey) {
-            if ($request->hasFile($fileKey)) {
-                $uploadedFileUrl = Cloudinary::upload($request->file($fileKey)->getRealPath())->getSecurePath();
-                $dbKey = ($fileKey == 'photo') ? 'photo_url' : ($fileKey == 'birth_cert' ? 'birth_cert_url' : $fileKey . '_url');
-                $registration->$dbKey = $uploadedFileUrl;
+        $fields = ['photo', 'birth_cert', 'ijazah', 'skhu'];
+        foreach ($fields as $field) {
+            $compressedKey = $field . '_compressed';
+            $dbKey = ($field == 'photo') ? 'photo_url' : ($field == 'birth_cert' ? 'birth_cert_url' : $field . '_url');
+
+            // 1. Check for Compressed Base64 Data First (Preferred for Vercel)
+            if ($request->filled($compressedKey)) {
+                $base64Data = $request->input($compressedKey);
+                if (preg_match('/^data:image\/(\w+);base64,/', $base64Data, $type)) {
+                    $imageBinary = base64_decode(substr($base64Data, strpos($base64Data, ',') + 1));
+                    $filename = 'ppdb/' . ($field == 'photo' ? 'photos' : 'documents') . '/' . uniqid() . '.jpg';
+                    
+                    if ($storage->put($filename, $imageBinary)) {
+                        $registration->$dbKey = $storage->url($filename);
+                    }
+                }
+            } 
+            // 2. Fallback to Standard File Upload (e.g. for PDFs or if compression failed)
+            elseif ($request->hasFile($field) && $request->file($field)->isValid()) {
+                $folder = ($field == 'photo' ? 'ppdb/photos' : 'ppdb/documents');
+                $path = $storage->putFile($folder, $request->file($field));
+                if ($path) {
+                    $registration->$dbKey = $storage->url($path);
+                }
             }
         }
 

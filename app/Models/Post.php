@@ -17,4 +17,12 @@ class Post extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function getImageUrlAttribute($value)
+    {
+        if (!$value) return null;
+        if (filter_var($value, FILTER_VALIDATE_URL)) return $value;
+
+        return \Illuminate\Support\Facades\Storage::disk('cloudinary')->url($value);
+    }
 }

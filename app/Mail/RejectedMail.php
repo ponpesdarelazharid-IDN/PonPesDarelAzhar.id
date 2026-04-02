@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class AcceptedMail extends Mailable
+class RejectedMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -31,7 +31,7 @@ class AcceptedMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Mabruk! Hasil Seleksi PPDB Darel Azhar - ' . $this->registration->registration_number,
+            subject: 'Informasi Status Pendaftaran PPDB Darel Azhar - ' . $this->registration->registration_number,
         );
     }
 
@@ -41,7 +41,7 @@ class AcceptedMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.accepted',
+            view: 'emails.rejected',
         );
     }
 

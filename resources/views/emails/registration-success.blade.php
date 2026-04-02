@@ -1,112 +1,77 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrasi Berhasil</title>
+    <title>Akun Berhasil Dibuat - PPDB {{ $profiles['nama_sekolah'] ?? config('app.name') }}</title>
     <style>
-        body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background-color: #f8fafc;
-            color: #1e293b;
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 600px;
-            margin: 40px auto;
-            background: #ffffff;
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-        .header {
-            background-color: #1e293b;
-            padding: 40px 20px;
-            text-align: center;
-            color: #ffffff;
-        }
-        .content {
-            padding: 40px;
-        }
-        .footer {
-            padding: 20px;
-            text-align: center;
-            font-size: 12px;
-            color: #64748b;
-            background-color: #f1f5f9;
-        }
-        h1 { margin: 0; font-size: 24px; font-weight: 800; letter-spacing: -0.025em; }
-        p { margin-bottom: 24px; }
-        .stats {
-            background-color: #f8fafc;
-            border-radius: 16px;
-            padding: 24px;
-            margin-bottom: 32px;
-        }
-        .stat-item {
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-        }
-        .stat-label { font-weight: 700; color: #64748b; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
-        .stat-value { font-weight: 800; color: #1e293b; }
-        .btn {
-            display: inline-block;
-            background-color: #1e293b;
-            color: #ffffff !important;
-            padding: 16px 32px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 800;
-            text-align: center;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        /* Dark Mode Support */
-        @media (prefers-color-scheme: dark) {
-            body { background-color: #000000; }
-            .container { background-color: #0a0a0a; color: #f8fafc; border: 1px solid #1e293b; }
-            .header { background-color: #ffffff; color: #000000; }
-            .content { color: #cbd5e1; }
-            .stats { background-color: #111111; }
-            .stat-value { color: #ffffff; }
-            .btn { background-color: #ffffff; color: #000000 !important; }
-            .footer { background-color: #000000; color: #475569; }
+        body { margin: 0; padding: 20px; font-family: 'Inter', 'Arial', sans-serif; background-color: #020617; color: #f8fafc; }
+        .wrapper { max-width: 600px; margin: 0 auto; background-color: #0f172a; border-radius: 24px; overflow: hidden; border: 1px solid #1e293b; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+        .header { padding: 40px 20px; text-align: center; background: radial-gradient(circle at top, #1e293b 0%, #0f172a 100%); border-bottom: 1px solid #1e293b; }
+        .label { font-size: 12px; font-weight: 800; color: #22d3ee; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 10px; display: block; }
+        .title { font-size: 28px; font-weight: 900; color: #ffffff; margin: 0; letter-spacing: -0.5px; }
+        
+        .content { padding: 40px; line-height: 1.7; font-size: 16px; color: #cbd5e1; }
+        .greeting { color: #f8fafc; font-weight: 600; margin-bottom: 20px; font-size: 18px; }
+        .highlight { color: #22d3ee; font-weight: 700; }
+        
+        .info-container { margin: 30px 0; padding: 25px; background-color: #020617; border-radius: 16px; border: 1px solid #1e293b; }
+        .info-row { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #1e293b; padding-bottom: 10px; }
+        .info-label { font-size: 13px; color: #64748b; font-weight: 600; text-transform: uppercase; }
+        .info-value { font-size: 15px; color: #ffffff; font-weight: 700; }
+        
+        .cta-area { text-align: center; margin-top: 30px; }
+        .btn { display: inline-block; background-color: #ffffff; color: #020617 !important; text-decoration: none; padding: 18px 36px; font-weight: 800; border-radius: 12px; font-size: 16px; transition: all 0.2s; }
+        
+        .footer { padding: 30px; text-align: center; font-size: 13px; color: #64748b; border-top: 1px solid #1e293b; }
+        .footer p { margin: 5px 0; }
+        
+        @media only screen and (max-width: 600px) {
+            .content { padding: 25px; }
+            .title { font-size: 24px; }
+            .info-row { flex-direction: column; text-align: center; }
+            .info-value { margin-top: 4px; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="wrapper">
         <div class="header">
-            <h1>PPDB ONLINE</h1>
-            <div style="font-size: 14px; font-weight: 600; margin-top: 8px; opacity: 0.8;">{{ config('app.name') }}</div>
+            <span class="label">Pendaftaran Berhasil</span>
+            <h1 class="title">Selamat Bergabung!</h1>
         </div>
+
         <div class="content">
-            <p style="font-size: 18px; font-weight: 700; color: #1e293b;" class="stat-value">Halo, {{ $user->name }}!</p>
-            <p>Selamat! Akun Anda telah berhasil dibuat. Silakan gunakan akun ini sebagai profil utama Anda untuk melakukan pendaftaran online PPDB dan memantau seluruh proses seleksi.</p>
+            <p class="greeting">Halo {{ $user->name }},</p>
             
-            <div class="stats">
-                <div class="stat-item">
-                    <span class="stat-label">Email</span>
-                    <span class="stat-value">{{ $user->email }}</span>
+            <p>Akun pendaftaran Anda telah berhasil dibuat. Anda sekarang dapat mengakses dashboard sistem PPDB {{ $profiles['nama_sekolah'] ?? config('app.name') }} untuk melengkapi berkas pendaftaran.</p>
+            
+            <div class="info-container">
+                <div class="info-row">
+                    <span class="info-label">Email Log In</span>
+                    <span class="info-value">{{ $user->email }}</span>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-label">Tanggal Daftar</span>
-                    <span class="stat-value">{{ $registrationDate }}</span>
+                <div class="info-row" style="border: none; padding: 0;">
+                    <span class="info-label">Waktu Pendaftaran</span>
+                    <span class="info-value">{{ $registrationDate }}</span>
                 </div>
             </div>
 
-            <p>Jangan lupa untuk segera melengkapi berkas pendaftaran Anda melalui link di bawah ini:</p>
-            
-            <a href="{{ route('dashboard') }}" class="btn">Lengkapi Berkas Sekarang</a>
+            <p>Segera lengkapi data diri dan dokumen pendukung (Foto, Akta Kelahiran, Ijazah, dll) untuk mempermudah proses verifikasi oleh panitia.</p>
 
-            <p style="margin-top: 32px; font-size: 14px;">Email ini juga akan menjadi media informasi utama terkait seluruh pengumuman dan jadwal tes PPDB Anda.</p>
+            <div class="cta-area">
+                <a href="{{ route('dashboard') }}" class="btn">LENGKAPI BERKAS SEKARANG</a>
+            </div>
+            
+            <p style="margin-top: 40px; font-style: italic; font-size: 14px; text-align: center; color: #64748b;">
+                "Langkah awal menuju masa depan yang gemilang dimulai dari sini."
+            </p>
         </div>
+
         <div class="footer">
-            &copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.<br>
-            Jl. Komp. Pendidikan No.RT 08/09, Muara Ciujung Tim., Lebak, Banten.
+            <p><strong>{{ $profiles['nama_sekolah'] ?? 'Pondok Pesantren Modern Darel Azhar' }}</strong></p>
+            <p>{{ $profiles['alamat'] ?? '' }}</p>
+            <p>Email ini dikirim secara otomatis oleh sistem pendaftaran.</p>
         </div>
     </div>
 </body>

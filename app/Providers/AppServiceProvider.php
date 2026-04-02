@@ -27,7 +27,14 @@ class AppServiceProvider extends ServiceProvider
 
         // Global share school profiles to all views
         \Illuminate\Support\Facades\View::composer('*', function ($view) {
-            $view->with('profiles', \App\Models\SchoolProfile::pluck('value', 'key')->toArray());
+            $pluck = \App\Models\SchoolProfile::pluck('value', 'key')->toArray();
+            
+            // Override image keys with full URLs via the helper
+            $pluck['logo'] = \App\Models\SchoolProfile::getValue('logo');
+            $pluck['hero_image'] = \App\Models\SchoolProfile::getValue('hero_image');
+            $pluck['secondary_image'] = \App\Models\SchoolProfile::getValue('secondary_image');
+
+            $view->with('profiles', $pluck);
         });
 
         // Kustomisasi Email Verifikasi menjadi format Surat Resmi Kop Sekolah

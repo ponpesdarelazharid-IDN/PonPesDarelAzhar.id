@@ -38,6 +38,12 @@ class RegistrationController extends Controller
             } catch (\Exception $e) {
                 Log::error('Gagal mengirim email kelulusan PPDB: ' . $e->getMessage());
             }
+        } elseif ($oldStatus !== 'rejected' && $validated['status'] === 'rejected') {
+            try {
+                Mail::to($registration->user->email)->send(new \App\Mail\RejectedMail($registration));
+            } catch (\Exception $e) {
+                Log::error('Gagal mengirim email penolakan PPDB: ' . $e->getMessage());
+            }
         }
 
         return back()->with('success', 'Status pendaftaran berhasil diperbarui!');

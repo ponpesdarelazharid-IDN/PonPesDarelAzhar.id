@@ -41,10 +41,14 @@ class RegistrationRequest extends FormRequest
             ]);
         } elseif ($this->step == 3) {
             $rules = array_merge($rules, [
-                'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-                'birth_cert' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
-                'ijazah' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
-                'skhu' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+                'photo' => 'nullable|max:5120',
+                'birth_cert' => 'nullable|max:5120',
+                'ijazah' => 'nullable|max:5120',
+                'skhu' => 'nullable|max:5120',
+                'photo_compressed' => 'nullable|string',
+                'birth_cert_compressed' => 'nullable|string',
+                'ijazah_compressed' => 'nullable|string',
+                'skhu_compressed' => 'nullable|string',
             ]);
         } elseif ($this->step == 4) {
             $rules = array_merge($rules, [
@@ -66,8 +70,7 @@ class RegistrationRequest extends FormRequest
             'parent_phone.required' => 'Nomor WhatsApp aktif wajib diisi untuk koordinasi.',
             'origin_school.required' => 'Asal Sekolah wajib diisi.',
             'confirmation.accepted' => 'Anda harus menyetujui pernyataan kebenaran data.',
-            'photo.image' => 'File harus berupa gambar (JPG/PNG).',
-            'photo.max' => 'Ukuran file foto maksimal 2MB.',
+            'photo.max' => 'Ukuran file foto maksimal 5MB.',
         ];
     }
 }

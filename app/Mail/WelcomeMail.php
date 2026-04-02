@@ -14,6 +14,7 @@ class WelcomeMail extends Mailable
     use Queueable, SerializesModels;
 
     public $registration;
+    public $profiles;
 
     /**
      * Create a new message instance.
@@ -21,6 +22,7 @@ class WelcomeMail extends Mailable
     public function __construct($registration)
     {
         $this->registration = $registration;
+        $this->profiles = \App\Models\SchoolProfile::pluck('value', 'key')->toArray();
     }
 
     /**

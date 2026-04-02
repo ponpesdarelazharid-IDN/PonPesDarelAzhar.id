@@ -72,18 +72,21 @@ class PpdbController extends Controller
         $registration->ppdb_setting_id = $ppdb->id;
         $registration->status = 'pending';
 
-        // Upload to Cloudinary
+        // Upload to Cloudinary using Storage Facade for robustness
+        $storage = \Illuminate\Support\Facades\Storage::disk('cloudinary');
+
         if ($request->hasFile('photo')) {
-            $registration->photo_url = $request->file('photo')->storeOnCloudinary('ppdb/photos')->getSecurePath();
+            $path = $storage->putFile('ppdb/photos', $request->file('photo'));
+            $registration->photo_url = $storage->url($path);
         }
-        if ($request->hasFile('birth_cert')) {
-            $registration->birth_cert_url = $request->file('birth_cert')->storeOnCloudinary('ppdb/documents')->getSecurePath();
-        }
-        if ($request->hasFile('ijazah')) {
-            $registration->ijazah_url = $request->file('ijazah')->storeOnCloudinary('ppdb/documents')->getSecurePath();
-        }
-        if ($request->hasFile('skhu')) {
-            $registration->skhu_url = $request->file('skhu')->storeOnCloudinary('ppdb/documents')->getSecurePath();
+        
+        $documentFiles = ['birth_cert', 'ijazah', 'skhu'];
+        foreach ($documentFiles as $doc) {
+            if ($request->hasFile($doc)) {
+                $path = $storage->putFile('ppdb/documents', $request->file($doc));
+                $urlField = $doc . '_url';
+                $registration->$urlField = $storage->url($path);
+            }
         }
 
         $registration->save();

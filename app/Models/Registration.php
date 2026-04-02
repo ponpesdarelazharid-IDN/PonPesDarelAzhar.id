@@ -39,14 +39,32 @@ class Registration extends Model
 
     public function getPhotoUrlAttribute($value)
     {
-        if (!$value) {
-            return asset('images/default-avatar.png');
-        }
+        if (!$value) return asset('images/default-avatar.png');
+        if (filter_var($value, FILTER_VALIDATE_URL)) return $value;
+        return \Illuminate\Support\Facades\Storage::disk('cloudinary')->url($value);
+    }
 
-        if (filter_var($value, FILTER_VALIDATE_URL)) {
-            return $value;
-        }
+    public function getBirthCertUrlAttribute()
+    {
+        $value = $this->birth_cert;
+        if (!$value) return null;
+        if (filter_var($value, FILTER_VALIDATE_URL)) return $value;
+        return \Illuminate\Support\Facades\Storage::disk('cloudinary')->url($value);
+    }
 
+    public function getIjazahUrlAttribute()
+    {
+        $value = $this->ijazah;
+        if (!$value) return null;
+        if (filter_var($value, FILTER_VALIDATE_URL)) return $value;
+        return \Illuminate\Support\Facades\Storage::disk('cloudinary')->url($value);
+    }
+
+    public function getSkhuUrlAttribute()
+    {
+        $value = $this->skhu;
+        if (!$value) return null;
+        if (filter_var($value, FILTER_VALIDATE_URL)) return $value;
         return \Illuminate\Support\Facades\Storage::disk('cloudinary')->url($value);
     }
 }

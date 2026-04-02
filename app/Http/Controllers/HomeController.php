@@ -11,7 +11,14 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $profiles = SchoolProfile::pluck('value', 'key')->toArray();
+        $profiles = [
+            'nama_sekolah' => SchoolProfile::getValue('nama_sekolah'),
+            'alamat' => SchoolProfile::getValue('alamat'),
+            'tlp' => SchoolProfile::getValue('tlp'),
+            'email' => SchoolProfile::getValue('email'),
+            'logo' => SchoolProfile::getValue('logo'),
+            'hero_image' => SchoolProfile::getValue('hero_image'),
+        ];
         $berita = Post::where('type', 'berita')->whereNotNull('published_at')->latest()->take(3)->get();
         $acara = Post::where('type', 'acara')->whereNotNull('published_at')->latest()->take(3)->get();
         $prestasi = Post::where('type', 'prestasi')->whereNotNull('published_at')->latest()->take(3)->get();

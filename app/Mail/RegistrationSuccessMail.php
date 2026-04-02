@@ -16,6 +16,7 @@ class RegistrationSuccessMail extends Mailable
 
     public $user;
     public $registrationDate;
+    public $profiles;
 
     /**
      * Create a new message instance.
@@ -24,6 +25,7 @@ class RegistrationSuccessMail extends Mailable
     {
         $this->user = $user;
         $this->registrationDate = now()->format('d M Y H:i');
+        $this->profiles = \App\Models\SchoolProfile::pluck('value', 'key')->toArray();
     }
 
     /**
