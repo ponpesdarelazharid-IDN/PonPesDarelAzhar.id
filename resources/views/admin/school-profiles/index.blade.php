@@ -212,8 +212,8 @@ document.querySelectorAll('input[type="file"]').forEach(input => {
         const file = e.target.files[0];
         if (!file || !file.type.startsWith('image/')) return;
         
-        // Only compress if file is larger than 2MB or has huge dimensions
-        if (file.size < 2 * 1024 * 1024) return;
+        // Compress if file is larger than 500KB
+        if (file.size < 500 * 1024) return;
 
         // Create overlay
         const container = e.target.closest('.group');
@@ -226,8 +226,12 @@ document.querySelectorAll('input[type="file"]').forEach(input => {
         container.appendChild(overlay);
 
         try {
-            // Resize to max 2200px (Very high res for Hero) with 0.92 quality
-            const compressedFile = await compressImage(file, 2200, 0.92);
+            // Determine max dimensions based on the field name
+            let maxDim = 1200;
+            if (e.target.name === 'hero_image') maxDim = 1920;
+            if (e.target.name === 'logo') maxDim = 800;
+
+            const compressedFile = await compressImage(file, maxDim, 0.85);
             
             // Replace the file in the input using DataTransfer
             const dataTransfer = new DataTransfer();
@@ -241,21 +245,15 @@ document.querySelectorAll('input[type="file"]').forEach(input => {
                 if (img) {
                     img.src = re.target.result;
                 } else {
-                    // If no img tag (placeholder state), create one
+                    // Remove the placeholder cleanly without wiping the input
                     const placeholder = container.querySelector('.text-center');
-                    if (placeholder) {
-                        const newImg = document.createElement('img');
-                        newImg.src = re.target.result;
-                        newImg.className = "w-full h-full object-cover group-hover:scale-105 transition-transform duration-500";
-                        container.innerHTML = '';
-                        container.appendChild(newImg);
-                        // Re-add hidden input since we wiped innerHTML
-                        const newInput = document.createElement('input');
-                        newInput.type = 'file';
-                        newInput.name = e.target.name;
-                        newInput.className = "absolute inset-0 opacity-0 cursor-pointer";
-                        container.appendChild(newInput);
-                    }
+                    if (placeholder) placeholder.remove();
+
+                    const newImg = document.createElement('img');
+                    newImg.src = re.target.result;
+                    newImg.className = "w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 absolute inset-0 z-0";
+                    e.target.classList.add('z-10'); // ensures input stays above image
+                    container.insertBefore(newImg, e.target);
                 }
             };
             reader.readAsDataURL(compressedFile);
