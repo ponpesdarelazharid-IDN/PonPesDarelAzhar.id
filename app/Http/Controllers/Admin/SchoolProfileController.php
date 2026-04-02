@@ -45,8 +45,22 @@ class SchoolProfileController extends Controller
             foreach ($fileKeys as $key) {
                 if ($request->filled($key . '_base64')) {
                     $base64Data = $request->input($key . '_base64');
+                    
                     try {
-                        $path = cloudinary()->upload($base64Data, ['folder' => 'school_profiles'])->getSecurePath();
+                        // Hilangkan header data URI ("data:image/jpeg;base64,")
+                        $image_parts = explode(";base64,", $base64Data);
+                        $image_base64 = base64_decode($image_parts[1]);
+                        
+                        // Simpan ke temporary file
+                        $tmpFilePath = sys_get_temp_dir() . '/' . uniqid() . '.jpg';
+                        file_put_contents($tmpFilePath, $image_base64);
+
+                        // Upload physical file ke Cloudinary
+                        $path = cloudinary()->upload($tmpFilePath, ['folder' => 'school_profiles'])->getSecurePath();
+                        
+                        // Hapus file temporary
+                        @unlink($tmpFilePath);
+
                         if ($path) {
                             SchoolProfile::updateOrCreate(
                                 ['key' => $key],
@@ -54,14 +68,16 @@ class SchoolProfileController extends Controller
                             );
                         }
                     } catch (\Exception $e) {
-                         return back()->withInput()->withErrors(['error' => 'Gagal compress/upload image.']);
+                         // PREVENT Header Overflow by removing base64 strings from input flash
+                         $safeInput = $request->except(['logo_base64', 'hero_image_base64', 'secondary_image_base64']);
+                         return back()->withInput($safeInput)->withErrors(['error' => 'Gagal mengupload gambar (' . $key . '). Detail: ' . $e->getMessage()]);
                     }
                 }
             }
 
             // Proses data teks yang lain
             foreach ($data as $key => $value) {
-                 if (!array_key_exists($key, $files) && $value !== null) {
+                 if (!array_key_exists($key, $files) && $value !== null && !str_ends_with($key, '_base64')) {
                     SchoolProfile::updateOrCreate(
                         ['key' => $key],
                         ['value' => $value]
@@ -70,7 +86,8 @@ class SchoolProfileController extends Controller
             }
             return back()->with('success', 'Profil sekolah berhasil diperbarui!');
         } catch (\Exception $e) {
-            return back()->withInput()->withErrors(['error' => 'Gagal memperbarui profil. Silakan coba lagi. ' . $e->getMessage()]);
+            $safeInput = $request->except(['logo_base64', 'hero_image_base64', 'secondary_image_base64']);
+            return back()->withInput($safeInput)->withErrors(['error' => 'Terjadi kesalahan sistem. Silakan coba lagi.']);
         }
     }
 }
