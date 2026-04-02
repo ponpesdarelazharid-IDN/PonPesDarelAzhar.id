@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SchoolProfile;
+use Cloudinary\Cloudinary;
 
 class SchoolProfileController extends Controller
 {
@@ -23,16 +24,32 @@ class SchoolProfileController extends Controller
             'secondary_image' => 'nullable|image|max:10240',
         ]);
 
+        // Manually instantiate Cloudinary to bypass Laravel service provider issues on Vercel
+        $cloudinary = new Cloudinary([
+            'cloud' => [
+                'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+                'api_key'    => env('CLOUDINARY_API_KEY', env('CLOUDINARY_KEY')),
+                'api_secret' => env('CLOUDINARY_API_SECRET', env('CLOUDINARY_SECRET')),
+            ],
+            'url' => [
+                'secure' => true
+            ]
+        ]);
+
         $data = $request->except('_token');
         $files = $request->allFiles();
         
         try {
-            // Proses upload file terlebih dahulu
+            // Proses upload file dari form (jika ada)
             foreach ($files as $key => $file) {
                 if (in_array($key, ['logo', 'hero_image', 'secondary_image']) && $file && $file->isValid()) {
                     try {
-                        $response = cloudinary()->uploadApi()->upload($file->getRealPath(), ['folder' => 'school_profiles']);
-                        $path = $response['secure_url'] ?? $response->offsetGet('secure_url');
+                        $response = $cloudinary->uploadApi()->upload($file->getRealPath(), [
+                            'folder' => 'school_profiles',
+                            'public_id' => $key . '_' . time()
+                        ]);
+                        
+                        $path = $response['secure_url'];
                         if ($path) {
                             SchoolProfile::updateOrCreate(
                                 ['key' => $key],
@@ -40,19 +57,19 @@ class SchoolProfileController extends Controller
                             );
                         }
                     } catch (\Exception $e) {
-                         // Fail silently for individual files or log it
+                         // Fail silently for individual file attempts
                     }
                 }
             }
 
-            // Proses upload file dari base64
+            // Proses upload file dari base64 (Utama untuk Vercel)
             $fileKeys = ['logo', 'hero_image', 'secondary_image'];
             foreach ($fileKeys as $key) {
                 if ($request->filled($key . '_base64')) {
                     $base64Data = $request->input($key . '_base64');
                     
                     try {
-                        // Hilangkan header data URI ("data:image/jpeg;base64,") jika ada
+                        // Decode base64 safely
                         $image_base64 = $base64Data;
                         if (str_contains($base64Data, ';base64,')) {
                             $image_parts = explode(";base64,", $base64Data);
@@ -61,19 +78,19 @@ class SchoolProfileController extends Controller
                             $image_base64 = base64_decode($base64Data);
                         }
 
-                        if (!$image_base64) {
-                             continue;
-                        }
+                        if (!$image_base64) continue;
 
-                        // Simpan ke temporary file
+                        // Save to temp file
                         $tmpFilePath = sys_get_temp_dir() . '/' . uniqid() . '.jpg';
                         file_put_contents($tmpFilePath, $image_base64);
 
-                        // Upload menggunakan SDK Cloudinary v2 yang benar (uploadApi()->upload)
-                        $response = cloudinary()->uploadApi()->upload($tmpFilePath, ['folder' => 'school_profiles']);
-                        $path = $response['secure_url'] ?? $response->offsetGet('secure_url');
+                        // Upload using direct SDK call
+                        $response = $cloudinary->uploadApi()->upload($tmpFilePath, [
+                            'folder' => 'school_profiles',
+                            'public_id' => $key . '_' . time()
+                        ]);
                         
-                        // Hapus file temporary
+                        $path = $response['secure_url'];
                         @unlink($tmpFilePath);
 
                         if ($path) {
@@ -83,14 +100,13 @@ class SchoolProfileController extends Controller
                             );
                         }
                     } catch (\Exception $e) {
-                         // PREVENT Header Overflow by removing base64 strings from input flash
                          $safeInput = $request->except(['logo_base64', 'hero_image_base64', 'secondary_image_base64']);
-                         return back()->withInput($safeInput)->withErrors(['error' => 'Gagal mengupload gambar (' . $key . '). Detail: ' . $e->getMessage()]);
+                         return back()->withInput($safeInput)->withErrors(['error' => 'Gagal mengupload (' . $key . '). Detail: ' . $e->getMessage()]);
                     }
                 }
             }
 
-            // Proses data teks yang lain
+            // Proses data teks lainnya
             foreach ($data as $key => $value) {
                  if (!array_key_exists($key, $files) && $value !== null && !str_ends_with($key, '_base64')) {
                     SchoolProfile::updateOrCreate(
@@ -99,10 +115,12 @@ class SchoolProfileController extends Controller
                     );
                 }
             }
+            
             return back()->with('success', 'Profil sekolah berhasil diperbarui!');
         } catch (\Exception $e) {
             $safeInput = $request->except(['logo_base64', 'hero_image_base64', 'secondary_image_base64']);
-            return back()->withInput($safeInput)->withErrors(['error' => 'Terjadi kesalahan sistem. Silakan coba lagi.']);
+            return back()->withInput($safeInput)->withErrors(['error' => 'Terjadi kesalahan sistem: ' . $e->getMessage()]);
         }
     }
 }
+
