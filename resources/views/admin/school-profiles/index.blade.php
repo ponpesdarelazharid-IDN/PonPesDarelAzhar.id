@@ -249,9 +249,14 @@ document.querySelectorAll('input[type="file"]').forEach(input => {
                     const placeholder = container.querySelector('.text-center');
                     if (placeholder) placeholder.remove();
 
+                    let objectFit = "object-cover";
+                    if (e.target.name === 'logo') {
+                        objectFit = "object-contain p-4 bg-white dark:bg-black";
+                    }
+
                     const newImg = document.createElement('img');
                     newImg.src = re.target.result;
-                    newImg.className = "w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 absolute inset-0 z-0";
+                    newImg.className = `w-full h-full ${objectFit} group-hover:scale-105 transition-transform duration-500 absolute inset-0 z-0`;
                     e.target.classList.add('z-10'); // ensures input stays above image
                     container.insertBefore(newImg, e.target);
                 }

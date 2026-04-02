@@ -70,7 +70,7 @@
 <body class="font-sans antialiased bg-white text-slate-900 dark:bg-[#000000] dark:text-gray-100 transition-colors duration-500">
     <!-- Loading Screen -->
     <div id="loading-screen">
-      <img src="{{ asset('images/logo-da.png') }}" alt="Logo Darel Azhar" class="loading-logo">
+      <img src="{{ $profiles['logo'] ?? asset('images/logo-da.png') }}" alt="Logo Darel Azhar" class="loading-logo object-contain">
       <div class="loading-text">MEMUAT...</div>
     </div>
 
@@ -83,7 +83,7 @@
                     <!-- Logo & Brand -->
                     <div class="flex items-center flex-shrink-0">
                         <a href="/" class="flex items-center gap-3 group whitespace-nowrap">
-                            <img src="{{ asset('images/logo-da.png') }}" alt="Logo Darel Azhar" class="w-10 h-auto sm:w-12 group-hover:scale-105 transition-transform duration-300">
+                            <img src="{{ $profiles['logo'] ?? asset('images/logo-da.png') }}" alt="Logo Darel Azhar" class="w-10 h-auto sm:w-12 group-hover:scale-105 transition-transform duration-300 object-contain">
                             <span class="font-bold text-lg sm:text-xl tracking-tighter text-[#1e293b] dark:text-white truncate max-w-[150px] sm:max-w-none uppercase">
                                 {{ $profiles['nama_sekolah'] ?? 'Darel Azhar' }}
                             </span>
