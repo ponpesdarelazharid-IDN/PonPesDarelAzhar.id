@@ -208,71 +208,75 @@
 <!-- Image Compression Script -->
 <script>
 document.querySelectorAll('input[type="file"]').forEach(input => {
+    // Simpan nama asli input ke data-name agar tidak hilang saat dihapus
+    input.dataset.name = input.name;
+
     input.addEventListener('change', async (e) => {
         const file = e.target.files[0];
         if (!file || !file.type.startsWith('image/')) return;
         
-        // Compress if file is larger than 500KB
-        if (file.size < 500 * 1024) return;
-
         // Create overlay
         const container = e.target.closest('.group');
         const overlay = document.createElement('div');
         overlay.className = "absolute inset-0 bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center z-50 text-white transition-opacity duration-300";
         overlay.innerHTML = `
             <div class="w-12 h-12 border-4 border-white/20 border-t-white rounded-full animate-spin mb-4"></div>
-            <p class="text-[10px] font-black uppercase tracking-widest animate-pulse text-center px-4">Optimizing Image Quality...</p>
+            <p class="text-[10px] font-black uppercase tracking-widest animate-pulse text-center px-4">Processing Image...</p>
         `;
         container.appendChild(overlay);
 
         try {
             // Determine max dimensions based on the field name
+            const fieldName = e.target.dataset.name;
             let maxDim = 1200;
-            if (e.target.name === 'hero_image') maxDim = 1920;
-            if (e.target.name === 'logo') maxDim = 800;
+            if (fieldName === 'hero_image') maxDim = 1920;
+            if (fieldName === 'logo') maxDim = 800;
 
-            const compressedFile = await compressImage(file, maxDim, 0.85);
+            const base64Data = await compressToBase64(file, maxDim, 0.85);
             
-            // Replace the file in the input using DataTransfer
-            const dataTransfer = new DataTransfer();
-            dataTransfer.items.add(compressedFile);
-            e.target.files = dataTransfer.files;
+            // Create hidden input for base64
+            let hiddenInput = container.querySelector(`input[name="${fieldName}_base64"]`);
+            if (!hiddenInput) {
+                hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = `${fieldName}_base64`;
+                container.appendChild(hiddenInput);
+            }
+            hiddenInput.value = base64Data;
+            
+            // Remove name from the actual file input so the raw large file isn't uploaded
+            e.target.removeAttribute('name');
             
             // Update preview
-            const reader = new FileReader();
-            reader.onload = (re) => {
-                const img = container.querySelector('img');
-                if (img) {
-                    img.src = re.target.result;
-                } else {
-                    // Remove the placeholder cleanly without wiping the input
-                    const placeholder = container.querySelector('.text-center');
-                    if (placeholder) placeholder.remove();
+            const img = container.querySelector('img');
+            if (img) {
+                img.src = base64Data;
+            } else {
+                const placeholder = container.querySelector('.text-center');
+                if (placeholder) placeholder.remove();
 
-                    let objectFit = "object-cover";
-                    if (e.target.name === 'logo') {
-                        objectFit = "object-contain p-4 bg-white dark:bg-black";
-                    }
-
-                    const newImg = document.createElement('img');
-                    newImg.src = re.target.result;
-                    newImg.className = `w-full h-full ${objectFit} group-hover:scale-105 transition-transform duration-500 absolute inset-0 z-0`;
-                    e.target.classList.add('z-10'); // ensures input stays above image
-                    container.insertBefore(newImg, e.target);
+                let objectFit = "object-cover";
+                if (fieldName === 'logo') {
+                    objectFit = "object-contain p-4 bg-white dark:bg-black";
                 }
-            };
-            reader.readAsDataURL(compressedFile);
+
+                const newImg = document.createElement('img');
+                newImg.src = base64Data;
+                newImg.className = `w-full h-full ${objectFit} group-hover:scale-105 transition-transform duration-500 absolute inset-0 z-0`;
+                e.target.classList.add('z-10'); // ensures input stays above image
+                container.insertBefore(newImg, e.target);
+            }
             
-            console.log(`Original: ${(file.size / 1024 / 1024).toFixed(2)}MB, Compressed: ${(compressedFile.size / 1024 / 1024).toFixed(2)}MB`);
         } catch (err) {
-            console.error('Compression failed:', err);
+            console.error('Processing failed:', err);
+            alert('Gagal mendeteksi gambar. Silakan coba file gambar yang berbeda.');
         } finally {
             overlay.remove();
         }
     });
 });
 
-async function compressImage(file, maxDimension, quality) {
+async function compressToBase64(file, maxDimension, quality) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -284,7 +288,7 @@ async function compressImage(file, maxDimension, quality) {
                 let width = img.width;
                 let height = img.height;
 
-                // Only resize if bigger than maxDimension
+                // Resize logic
                 if (width > maxDimension || height > maxDimension) {
                     if (width > height) {
                         height = Math.round((height * maxDimension) / width);
@@ -299,26 +303,13 @@ async function compressImage(file, maxDimension, quality) {
                 canvas.height = height;
                 const ctx = canvas.getContext('2d');
                 
-                // Use high quality interpolation
                 ctx.imageSmoothingEnabled = true;
                 ctx.imageSmoothingQuality = 'high';
-                
                 ctx.drawImage(img, 0, 0, width, height);
 
-                canvas.toBlob((blob) => {
-                    if (!blob) return reject(new Error('Canvas to Blob failed'));
-                    const compressedFile = new File([blob], file.name, {
-                        type: 'image/jpeg',
-                        lastModified: Date.now(),
-                    });
-                    
-                    // If compressed file is somehow still bigger than original (rare), use original
-                    if (compressedFile.size > file.size) {
-                        resolve(file);
-                    } else {
-                        resolve(compressedFile);
-                    }
-                }, 'image/jpeg', quality);
+                // Export to base64 completely
+                const base64Data = canvas.toDataURL('image/jpeg', quality);
+                resolve(base64Data);
             };
         };
         reader.onerror = (error) => reject(error);

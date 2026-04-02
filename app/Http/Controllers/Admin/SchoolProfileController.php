@@ -40,6 +40,25 @@ class SchoolProfileController extends Controller
                 }
             }
 
+            // Proses upload file dari base64
+            $fileKeys = ['logo', 'hero_image', 'secondary_image'];
+            foreach ($fileKeys as $key) {
+                if ($request->filled($key . '_base64')) {
+                    $base64Data = $request->input($key . '_base64');
+                    try {
+                        $path = cloudinary()->upload($base64Data, ['folder' => 'school_profiles'])->getSecurePath();
+                        if ($path) {
+                            SchoolProfile::updateOrCreate(
+                                ['key' => $key],
+                                ['value' => $path]
+                            );
+                        }
+                    } catch (\Exception $e) {
+                         return back()->withInput()->withErrors(['error' => 'Gagal compress/upload image.']);
+                    }
+                }
+            }
+
             // Proses data teks yang lain
             foreach ($data as $key => $value) {
                  if (!array_key_exists($key, $files) && $value !== null) {
