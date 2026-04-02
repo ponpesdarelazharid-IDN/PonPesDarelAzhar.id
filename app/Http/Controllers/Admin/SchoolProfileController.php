@@ -47,10 +47,19 @@ class SchoolProfileController extends Controller
                     $base64Data = $request->input($key . '_base64');
                     
                     try {
-                        // Hilangkan header data URI ("data:image/jpeg;base64,")
-                        $image_parts = explode(";base64,", $base64Data);
-                        $image_base64 = base64_decode($image_parts[1]);
-                        
+                        // Hilangkan header data URI ("data:image/jpeg;base64,") jika ada
+                        $image_base64 = $base64Data;
+                        if (str_contains($base64Data, ';base64,')) {
+                            $image_parts = explode(";base64,", $base64Data);
+                            $image_base64 = base64_decode($image_parts[1]);
+                        } else {
+                            $image_base64 = base64_decode($base64Data);
+                        }
+
+                        if (!$image_base64) {
+                             continue;
+                        }
+
                         // Simpan ke temporary file
                         $tmpFilePath = sys_get_temp_dir() . '/' . uniqid() . '.jpg';
                         file_put_contents($tmpFilePath, $image_base64);
