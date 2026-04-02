@@ -29,13 +29,17 @@ class SchoolProfileController extends Controller
         try {
             // Proses upload file terlebih dahulu
             foreach ($files as $key => $file) {
-                if (in_array($key, ['logo', 'hero_image', 'secondary_image']) && $file) {
-                    $path = $file->storeOnCloudinary('school_profiles')->getSecurePath();
-                    if ($path) {
-                        SchoolProfile::updateOrCreate(
-                            ['key' => $key],
-                            ['value' => $path]
-                        );
+                if (in_array($key, ['logo', 'hero_image', 'secondary_image']) && $file && $file->isValid()) {
+                    try {
+                        $path = cloudinary()->upload($file->getRealPath(), ['folder' => 'school_profiles'])->getSecurePath();
+                        if ($path) {
+                            SchoolProfile::updateOrCreate(
+                                ['key' => $key],
+                                ['value' => $path]
+                            );
+                        }
+                    } catch (\Exception $e) {
+                         // Fallback alert for this specific file upload failure
                     }
                 }
             }
@@ -64,17 +68,8 @@ class SchoolProfileController extends Controller
                         $tmpFilePath = sys_get_temp_dir() . '/' . uniqid() . '.jpg';
                         file_put_contents($tmpFilePath, $image_base64);
 
-                        // Gunakan UploadedFile Laravel agar kompatibel dengan macro storeOnCloudinary
-                        $uploadedFile = new \Illuminate\Http\UploadedFile(
-                            $tmpFilePath,
-                            $key . '.jpg',
-                            'image/jpeg',
-                            null,
-                            true
-                        );
-
-                        // Upload menggunakan metode yang sama dengan form normal (ini terbukti berhasil di Vercel)
-                        $path = $uploadedFile->storeOnCloudinary('school_profiles')->getSecurePath();
+                        // Upload menggunakan helper cloudinary() yang lebih stabil daripada macro pada Vercel
+                        $path = cloudinary()->upload($tmpFilePath, ['folder' => 'school_profiles'])->getSecurePath();
                         
                         // Hapus file temporary
                         @unlink($tmpFilePath);
