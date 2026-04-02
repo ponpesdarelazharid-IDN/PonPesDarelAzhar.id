@@ -34,7 +34,7 @@
         </div>
     </div>
     <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-        <img class="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full opacity-90 dark:opacity-70" src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Siswa Sekolah">
+        <img class="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full opacity-90 dark:opacity-70" src="{{ $profiles['hero_image'] ?? 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80' }}" alt="Siswa Sekolah">
     </div>
 </section>
 
@@ -56,7 +56,7 @@
             </div>
             <div class="lg:w-1/2">
                 <div class="relative rounded-2xl overflow-hidden shadow-2xl transition transform hover:scale-[1.02]">
-                    <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Gedung Sekolah" class="w-full h-80 object-cover">
+                    <img src="{{ $profiles['secondary_image'] ?? 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' }}" alt="Gedung Sekolah" class="w-full h-80 object-cover">
                     <div class="absolute inset-0 bg-blue-600/10 dark:bg-black/20"></div>
                 </div>
             </div>

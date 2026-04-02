@@ -287,7 +287,7 @@
 
         <div class="header">
             <div class="header-logo">
-                <img src="{{ asset('images/logo-da.png') }}" alt="Logo Darel Azhar">
+                                <img src="{{ $profiles['logo'] ?? asset('images/logo-da.png') }}" alt="Logo Darel Azhar">
             </div>
             <div class="header-text">
                 <h2>DAREL AZHAR</h2>
@@ -353,7 +353,7 @@
         
         <div class="content" style="position:relative; z-index:10; width: 100%;">
             <div class="logo-container-back" style="margin: 0 auto 15px auto;">
-                <img src="{{ asset('images/logo-da.png') }}" alt="Logo Darel Azhar">
+                                <img src="{{ $profiles['logo'] ?? asset('images/logo-da.png') }}" alt="Logo Darel Azhar">
             </div>
             
             <h1>PONDOK PESANTREN<br>MODERN DAREL AZHAR</h1>

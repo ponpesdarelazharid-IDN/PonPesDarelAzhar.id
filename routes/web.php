@@ -60,6 +60,36 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
     Route::resource('ekstrakurikuler', AdminEkstrakurikulerController::class);
 });
 
+// ==== SALARY MANAGER MODULE ====
+use App\Http\Controllers\Salary\SalaryDashboardController;
+use App\Http\Controllers\Salary\SalaryController;
+use App\Http\Controllers\Salary\SalaryCategoryController;
+use App\Http\Controllers\Salary\SalaryAllocationController;
+
+Route::prefix('salary')->name('salary.')->group(function () {
+    // Dashboard
+    Route::get('/', [SalaryDashboardController::class, 'index'])->name('dashboard');
+
+    // Input & History Gaji
+    Route::get('/input', [SalaryController::class, 'index'])->name('index');
+    Route::post('/input', [SalaryController::class, 'store'])->name('store');
+    Route::post('/preview', [SalaryController::class, 'preview'])->name('preview');
+    Route::delete('/input/{id}', [SalaryController::class, 'destroy'])->name('destroy');
+
+    // Detail Alokasi
+    Route::get('/{id}/detail', [SalaryController::class, 'show'])->name('detail');
+
+    // Manajemen Pos Pengeluaran
+    Route::get('/categories', [SalaryCategoryController::class, 'index'])->name('categories.index');
+    Route::post('/categories', [SalaryCategoryController::class, 'store'])->name('categories.store');
+    Route::put('/categories/{salaryCategory}', [SalaryCategoryController::class, 'update'])->name('categories.update');
+    Route::delete('/categories/{salaryCategory}', [SalaryCategoryController::class, 'destroy'])->name('categories.destroy');
+
+    // Alokasi Actions (AJAX)
+    Route::post('/allocations/{id}/toggle-paid', [SalaryAllocationController::class, 'togglePaid'])->name('allocations.toggle');
+    Route::put('/allocations/{id}/notes', [SalaryAllocationController::class, 'updateNotes'])->name('allocations.notes');
+});
+
 require __DIR__.'/auth.php';
 
 // ==== PREVIEW ROUTE FOR CARD ====

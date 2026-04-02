@@ -18,7 +18,7 @@
         </div>
     @endif
 
-    <form action="{{ route('admin.school-profiles.store') }}" method="POST" class="space-y-10">
+    <form action="{{ route('admin.school-profiles.store') }}" method="POST" enctype="multipart/form-data" class="space-y-10">
         @csrf
         
         <!-- Identitas Sekolah -->
@@ -103,12 +103,71 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Media & Galeri Utama -->
+        <div class="bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-100 dark:border-gray-900 overflow-hidden">
+            <div class="p-8 border-b border-slate-50 dark:border-gray-900 bg-slate-50/50 dark:bg-white/5">
+                <h3 class="text-xl font-black text-[#1e293b] dark:text-white flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-[#1e293b] dark:bg-white text-white dark:text-black flex items-center justify-center text-sm">03</span>
+                    Media & Galeri Utama
+                </h3>
+            </div>
+            <div class="p-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Logo Sekolah -->
+                <div class="space-y-4">
+                    <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest">Logo Sekolah</label>
+                    <div class="relative group aspect-square rounded-3xl bg-slate-50 dark:bg-gray-900 border-2 border-dashed border-slate-200 dark:border-gray-800 flex items-center justify-center overflow-hidden">
+                        @if(isset($profiles['logo']))
+                            <img src="{{ $profiles['logo'] }}" class="w-full h-full object-contain p-4 group-hover:scale-110 transition-transform duration-500">
+                        @else
+                            <div class="text-center p-4">
+                                <span class="text-4xl block mb-2">📸</span>
+                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Pilih Logo</span>
+                            </div>
+                        @endif
+                        <input type="file" name="logo" class="absolute inset-0 opacity-0 cursor-pointer">
+                    </div>
+                </div>
+
+                <!-- Hero Image -->
+                <div class="space-y-4 md:col-span-2">
+                    <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest">Hero Image (Halaman Depan)</label>
+                    <div class="relative group aspect-video rounded-3xl bg-slate-50 dark:bg-gray-900 border-2 border-dashed border-slate-200 dark:border-gray-800 flex items-center justify-center overflow-hidden">
+                        @if(isset($profiles['hero_image']))
+                            <img src="{{ $profiles['hero_image'] }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        @else
+                            <div class="text-center p-4">
+                                <span class="text-4xl block mb-2">🌅</span>
+                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Pilih Foto Hero</span>
+                            </div>
+                        @endif
+                        <input type="file" name="hero_image" class="absolute inset-0 opacity-0 cursor-pointer">
+                    </div>
+                </div>
+
+                <!-- Secondary Image -->
+                <div class="space-y-4 md:col-span-3">
+                    <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest">Foto Gedung/Fasilitas (Sekunder)</label>
+                    <div class="relative group h-48 rounded-3xl bg-slate-50 dark:bg-gray-900 border-2 border-dashed border-slate-200 dark:border-gray-800 flex items-center justify-center overflow-hidden">
+                        @if(isset($profiles['secondary_image']))
+                            <img src="{{ $profiles['secondary_image'] }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        @else
+                            <div class="text-center p-4">
+                                <span class="text-4xl block mb-2">🏫</span>
+                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Pilih Foto Gedung</span>
+                            </div>
+                        @endif
+                        <input type="file" name="secondary_image" class="absolute inset-0 opacity-0 cursor-pointer">
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Lokasi & Peta -->
         <div class="bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-100 dark:border-gray-900 overflow-hidden">
             <div class="p-8 border-b border-slate-50 dark:border-gray-900 bg-slate-50/50 dark:bg-white/5">
                 <h3 class="text-xl font-black text-[#1e293b] dark:text-white flex items-center gap-3">
-                    <span class="w-8 h-8 rounded-lg bg-[#1e293b] dark:bg-white text-white dark:text-black flex items-center justify-center text-sm">03</span>
+                    <span class="w-8 h-8 rounded-lg bg-[#1e293b] dark:bg-white text-white dark:text-black flex items-center justify-center text-sm">04</span>
                     Lokasi & Google Maps
                 </h3>
             </div>

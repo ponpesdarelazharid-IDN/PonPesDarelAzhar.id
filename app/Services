@@ -1,0 +1,138 @@
+<?php
+
+namespace App\Services;
+
+use App\Models\SalaryCategory;
+use App\Models\Salary;
+use App\Models\SalaryAllocation;
+use Illuminate\Support\Facades\DB;
+
+class SalaryCalculationService
+{
+    /**
+     * Hitung pembagian gaji berdasarkan kategori yang aktif.
+     *
+     * Logika:
+     * 1. Ambil semua kategori `fixed` (urut by priority) → potong dari gaji
+     * 2. Hitung sisa gaji setelah semua fixed terpotong
+     * 3. Bagi sisa ke kategori `percentage`
+     * 4. Hitung sisa akhir (uang yg bebas digunakan)
+     *
+     * @param float $salaryAmount Total gaji yang diterima
+     * @return array Hasil kalkulasi lengkap
+     */
+    public function calculate(float $salaryAmount): array
+    {
+        $categories = SalaryCategory::active()
+            ->orderBy('type')  // fixed dulu, baru percentage
+            ->orderBy('priority')
+            ->get();
+
+        $fixedCategories      = $categories->where('type', 'fixed');
+        $percentageCategories = $categories->where('type', 'percentage');
+
+        // Step 1: Hitung total potongan fixed
+        $totalFixed = 0;
+        $fixedBreakdown = [];
+
+        foreach ($fixedCategories as $cat) {
+            $amount = (float) $cat->value;
+            $totalFixed += $amount;
+            $fixedBreakdown[] = [
+                'category_id'        => $cat->id,
+                'category_name'      => $cat->name,
+                'category_icon'      => $cat->icon,
+                'category_color'     => $cat->color,
+                'type'               => 'fixed',
+                'value'              => $cat->value,
+                'amount_allocated'   => $amount,
+                'formatted_amount'   => 'Rp ' . number_format($amount, 0, ',', '.'),
+            ];
+        }
+
+        // Step 2: Hitung sisa setelah fixed
+        $remainingAfterFixed = $salaryAmount - $totalFixed;
+        if ($remainingAfterFixed < 0) {
+            $remainingAfterFixed = 0;
+        }
+
+        // Step 3: Bagi sisa ke percentage categories
+        $totalPercentage = 0;
+        $percentageBreakdown = [];
+
+        foreach ($percentageCategories as $cat) {
+            $amount = $remainingAfterFixed * ((float) $cat->value / 100);
+            $totalPercentage += $amount;
+            $percentageBreakdown[] = [
+                'category_id'        => $cat->id,
+                'category_name'      => $cat->name,
+                'category_icon'      => $cat->icon,
+                'category_color'     => $cat->color,
+                'type'               => 'percentage',
+                'value'              => $cat->value,
+                'amount_allocated'   => $amount,
+                'formatted_amount'   => 'Rp ' . number_format($amount, 0, ',', '.'),
+            ];
+        }
+
+        // Step 4: Sisa akhir
+        $finalRemaining = $remainingAfterFixed - $totalPercentage;
+
+        return [
+            'salary_amount'       => $salaryAmount,
+            'formatted_salary'    => 'Rp ' . number_format($salaryAmount, 0, ',', '.'),
+            'total_fixed'         => $totalFixed,
+            'remaining_after_fixed' => $remainingAfterFixed,
+            'total_percentage'    => $totalPercentage,
+            'total_allocated'     => $totalFixed + $totalPercentage,
+            'final_remaining'     => $finalRemaining,
+            'breakdown'           => array_merge($fixedBreakdown, $percentageBreakdown),
+            'fixed_breakdown'     => $fixedBreakdown,
+            'percentage_breakdown' => $percentageBreakdown,
+        ];
+    }
+
+    /**
+     * Simpan hasil kalkulasi ke database.
+     *
+     * @param float  $salaryAmount
+     * @param string $month        Format: YYYY-MM
+     * @param string $notes        Catatan opsional
+     * @return Salary
+     */
+    public function save(float $salaryAmount, string $month, string $notes = ''): Salary
+    {
+        $calculation = $this->calculate($salaryAmount);
+
+        return DB::transaction(function () use ($salaryAmount, $month, $notes, $calculation) {
+            // Hapus data lama jika ada (re-calculate untuk bulan yg sama)
+            $existingSalary = Salary::where('month', $month)->first();
+            if ($existingSalary) {
+                $existingSalary->allocations()->delete();
+                $existingSalary->delete();
+            }
+
+            // Simpan record gaji
+            $salary = Salary::create([
+                'amount'           => $salaryAmount,
+                'month'            => $month,
+                'notes'            => $notes,
+                'total_fixed'      => $calculation['total_fixed'],
+                'total_percentage' => $calculation['total_percentage'],
+                'remaining'        => $calculation['final_remaining'],
+            ]);
+
+            // Simpan setiap alokasi
+            foreach ($calculation['breakdown'] as $item) {
+                SalaryAllocation::create([
+                    'salary_id'        => $salary->id,
+                    'category_id'      => $item['category_id'],
+                    'amount_allocated' => $item['amount_allocated'],
+                    'is_paid'          => false,
+                ]);
+            }
+
+            return $salary->load('allocations.category');
+        });
+    }
+}

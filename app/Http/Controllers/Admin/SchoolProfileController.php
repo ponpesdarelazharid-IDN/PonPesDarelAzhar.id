@@ -19,6 +19,11 @@ class SchoolProfileController extends Controller
         $data = $request->except('_token');
         
         foreach ($data as $key => $value) {
+            // Handle file upload if the key is a file
+            if ($request->hasFile($key)) {
+                $value = $request->file($key)->storeOnCloudinary('school_profiles')->getSecurePath();
+            }
+
             SchoolProfile::updateOrCreate(
                 ['key' => $key],
                 ['value' => $value]
