@@ -35,6 +35,9 @@ class HomeController extends Controller
             })
             ->first();
 
-        return view('home', compact('profiles', 'berita', 'acara', 'prestasi', 'ekskul', 'programs', 'ppdb'));
+        $title = 'Selamat Datang di Pondok Pesantren Darel Azhar';
+        $meta_description = 'Mencetak Generasi Qurani yang Berwawasan Global. Pendaftaran Santri Baru (PPDB) Tahun Pelajaran 2026/2027 telah dibuka. Bergabunglah bersama kami!';
+
+        return view('home', compact('profiles', 'berita', 'acara', 'prestasi', 'ekskul', 'programs', 'ppdb', 'title', 'meta_description'));
     }
 }

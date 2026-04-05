@@ -5,7 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', $profiles['nama_sekolah'] ?? 'PonPes Darel Azhar')</title>
+    <!-- SEO Meta Tags -->
+    <title>@yield('title', 'Beranda') | {{ config('app.name', 'PONPES DAREL AZHAR') }}</title>
+    <meta name="description" content="@yield('meta_description', 'Pondok Pesantren Darel Azhar - Mencetak Generasi Qurani, Berwawasan Global, dan Berakhlakul Karimah.')">
+    <meta name="keywords" content="pondok pesantren, darel azhar, ppdb, sekolah islam, tahfidz, boarding school">
+    
+    <!-- OpenGraph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="@yield('title', 'Beranda') | {{ config('app.name', 'PONPES DAREL AZHAR') }}">
+    <meta property="og:description" content="@yield('meta_description', 'Pondok Pesantren Darel Azhar - Mencetak Generasi Qurani, Berwawasan Global, dan Berakhlakul Karimah.')">
+    <meta property="og:image" content="@yield('meta_image', asset('images/logo-da.png'))">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ url()->current() }}">
+    <meta property="twitter:title" content="@yield('title', 'Beranda') | {{ config('app.name', 'PONPES DAREL AZHAR') }}">
+    <meta property="twitter:description" content="@yield('meta_description', 'Pondok Pesantren Darel Azhar - Mencetak Generasi Qurani, Berwawasan Global, dan Berakhlakul Karimah.')">
+    <meta property="twitter:image" content="@yield('meta_image', asset('images/logo-da.png'))">
+
+    @yield('meta')
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script>

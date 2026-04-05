@@ -49,8 +49,10 @@
                 <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ $program->description }}</p>
             </div>
             @empty
-            <div class="col-span-3 text-center py-8">
-                <p class="text-slate-500 dark:text-slate-400">Belum ada program unggulan.</p>
+            <div class="col-span-3 py-16 px-8 rounded-[40px] bg-slate-50 dark:bg-dark-main border border-dashed border-slate-200 dark:border-slate-800 text-center uppercase tracking-widest">
+                <div class="text-4xl mb-4 opacity-50">✨</div>
+                <p class="text-[10px] font-black text-slate-400 dark:text-slate-500">Program Unggulan Belum Tersedia</p>
+                <p class="text-[8px] text-slate-400 mt-2 lowercase font-medium">Informasi program sekolah akan segera diperbarui oleh admin.</p>
             </div>
             @endforelse
         </div>
@@ -162,8 +164,10 @@
                 </div>
             </a>
             @empty
-            <div class="col-span-1 md:col-span-3 text-center py-12">
-                <p class="text-gray-500 dark:text-gray-400 transition-colors">Belum ada berita terbaru.</p>
+            <div class="col-span-3 py-16 px-8 rounded-[40px] bg-slate-50 dark:bg-dark-main border border-dashed border-slate-200 dark:border-slate-800 text-center uppercase tracking-widest">
+                <div class="text-4xl mb-4 opacity-50">📰</div>
+                <p class="text-[10px] font-black text-slate-400 dark:text-slate-500">Belum Ada Berita Terbaru</p>
+                <p class="text-[8px] text-slate-400 mt-2 lowercase font-medium">Nantikan informasi terbaru dari kami segera.</p>
             </div>
             @endforelse
         </div>
@@ -206,9 +210,10 @@
                 </a>
             </div>
             @empty
- Broadway
-            <div class="col-span-1 md:col-span-3 text-center py-12">
-                <p class="text-gray-500 dark:text-gray-400">Belum ada agenda acara terbaru.</p>
+            <div class="col-span-3 py-16 px-8 rounded-[40px] bg-slate-50 dark:bg-dark-main border border-dashed border-slate-200 dark:border-slate-800 text-center uppercase tracking-widest">
+                <div class="text-4xl mb-4 opacity-50">🗓️</div>
+                <p class="text-[10px] font-black text-slate-400 dark:text-slate-500">Tidak Ada Agenda Mendatang</p>
+                <p class="text-[8px] text-slate-400 mt-2 lowercase font-medium">Semua agenda acara sudah terlaksana. Pantau terus halaman ini.</p>
             </div>
             @endforelse
         </div>
@@ -250,8 +255,10 @@
                 </div>
             </div>
             @empty
-            <div class="col-span-1 md:col-span-3 text-center py-12">
-                <p class="text-gray-500 dark:text-gray-400">Belum ada data prestasi yang ditampilkan.</p>
+            <div class="col-span-3 py-16 px-8 rounded-[40px] bg-slate-50 dark:bg-dark-main border border-dashed border-slate-200 dark:border-slate-800 text-center uppercase tracking-widest">
+                <div class="text-4xl mb-4 opacity-50">🏆</div>
+                <p class="text-[10px] font-black text-slate-400 dark:text-slate-500">Belum Ada Riwayat Prestasi</p>
+                <p class="text-[8px] text-slate-400 mt-2 lowercase font-medium">Data prestasi sedang dalam proses pendataan.</p>
             </div>
             @endforelse
         </div>
@@ -275,7 +282,7 @@
         </div>
         
         <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
-            @foreach($ekskul as $post)
+            @forelse($ekskul as $post)
             <a href="{{ route('posts.show', $post) }}" class="group block bg-gray-50 dark:bg-[#0a0a0a] rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-800 hover:shadow-lg dark:hover:shadow-white/10 transition duration-300">
                 @if($post->image_url)
                     <div class="aspect-w-16 aspect-h-9 w-full bg-gray-200 dark:bg-gray-800">
@@ -292,7 +299,13 @@
                     <p class="text-gray-500 dark:text-gray-400 text-sm transition-colors">{{ Str::limit($post->excerpt ?? strip_tags($post->content), 80) }}</p>
                 </div>
             </a>
-            @endforeach
+            @empty
+            <div class="col-span-3 py-16 px-8 rounded-[40px] bg-slate-50 dark:bg-dark-main border border-dashed border-slate-200 dark:border-slate-800 text-center uppercase tracking-widest">
+                <div class="text-4xl mb-4 opacity-50">🪁</div>
+                <p class="text-[10px] font-black text-slate-400 dark:text-slate-500">Ekstrakurikuler Belum Diupdate</p>
+                <p class="text-[8px] text-slate-400 mt-2 lowercase font-medium">Kegiatan ekskul akan segera kami tampilkan.</p>
+            </div>
+            @endforelse
         </div>
         
         <div class="mt-12 text-center">

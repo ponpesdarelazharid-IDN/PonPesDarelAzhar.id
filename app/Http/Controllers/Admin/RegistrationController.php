@@ -11,9 +11,27 @@ use Illuminate\Support\Facades\Log;
 
 class RegistrationController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $registrations = Registration::latest()->paginate(20);
+        $query = Registration::query();
+
+        // Search Filter
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('full_name', 'like', "%{$search}%")
+                  ->orWhere('registration_number', 'like', "%{$search}%")
+                  ->orWhere('origin_school', 'like', "%{$search}%");
+            });
+        }
+
+        // Status Filter
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $registrations = $query->latest()->paginate(20)->withQueryString();
+        
         return view('admin.registrations.index', compact('registrations'));
     }
 

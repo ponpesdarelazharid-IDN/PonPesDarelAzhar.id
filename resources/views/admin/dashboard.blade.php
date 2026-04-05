@@ -4,10 +4,31 @@
 
 @section('content')
 <div class="relative">
-    <div class="mb-10">
-        <h1 class="text-4xl font-extrabold text-[#111c3a] dark:text-white tracking-tight">Ringkasan Statistik</h1>
-        <p class="text-slate-500 dark:text-slate-400 mt-2 font-medium">Pantau perkembangan pendaftaran santri baru dan aktivitas konten.</p>
+    <div class="mb-10 flex justify-between items-start">
+        <div>
+            <h1 class="text-4xl font-extrabold text-[#111c3a] dark:text-white tracking-tight">Ringkasan Statistik</h1>
+            <p class="text-slate-500 dark:text-slate-400 mt-2 font-medium">Pantau perkembangan pendaftaran santri baru dan aktivitas konten.</p>
+        </div>
+        <div class="flex gap-3">
+            <a href="{{ route('admin.posts.create') }}" class="px-5 py-2.5 bg-emerald-500 text-white text-xs font-black uppercase tracking-widest rounded-2xl hover:bg-emerald-600 transition shadow-lg shadow-emerald-500/20">+ Buat Berita</a>
+            <a href="{{ route('admin.registrations.index') }}" class="px-5 py-2.5 bg-[#111c3a] dark:bg-slate-800 text-white text-xs font-black uppercase tracking-widest rounded-2xl hover:bg-slate-700 transition shadow-lg">+ Kelola PPDB</a>
+        </div>
     </div>
+
+    <!-- Health Alerts -->
+    @if(!empty($health))
+        <div class="mb-8 space-y-3">
+            @foreach($health as $h)
+                <div @class([
+                    'p-4 rounded-3xl flex items-center gap-4 border',
+                    'bg-amber-50 border-amber-100 text-amber-700 dark:bg-amber-900/20 dark:border-amber-800 dark:text-amber-400' => $h['type'] == 'warning',
+                ])>
+                    <span class="text-2xl">⚠️</span>
+                    <p class="text-xs font-bold uppercase tracking-wide">{{ $h['message'] }}</p>
+                </div>
+            @endforeach
+        </div>
+    @endif
 
     <!-- Stats Grid (Modernized) -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
@@ -19,9 +40,6 @@
             </div>
             <p class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Pendaftar</p>
             <h3 class="text-3xl font-black text-[#111c3a] dark:text-white mt-1">{{ $stats['total_pendaftar'] }}</h3>
-            <div class="mt-4 w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                <div class="bg-emerald-500 h-full w-[70%]" title="Placeholder progress"></div>
-            </div>
         </div>
 
         <!-- Card 2 -->
@@ -32,9 +50,6 @@
             </div>
             <p class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Pending</p>
             <h3 class="text-3xl font-black text-[#111c3a] dark:text-white mt-1">{{ $stats['pending'] }}</h3>
-            <div class="mt-4 w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                <div class="bg-amber-500 h-full w-[{{ $stats['total_pendaftar'] > 0 ? ($stats['pending']/$stats['total_pendaftar'])*100 : 0 }}%]" title="Progress pending"></div>
-            </div>
         </div>
 
         <!-- Card 3 -->
@@ -45,9 +60,6 @@
             </div>
             <p class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Lolos Verifikasi</p>
             <h3 class="text-3xl font-black text-[#111c3a] dark:text-white mt-1">{{ $stats['accepted'] }}</h3>
-            <div class="mt-4 w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                <div class="bg-emerald-600 h-full w-[{{ $stats['total_pendaftar'] > 0 ? ($stats['accepted']/$stats['total_pendaftar'])*100 : 0 }}%]" title="Progress diterima"></div>
-            </div>
         </div>
 
         <!-- Card 4 -->
@@ -58,8 +70,27 @@
             </div>
             <p class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Total Post</p>
             <h3 class="text-3xl font-black text-[#111c3a] dark:text-white mt-1">{{ $stats['total_berita'] + $stats['total_prestasi'] }}</h3>
-            <div class="mt-4 w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                <div class="bg-indigo-500 h-full w-[60%]" title="Progress konten"></div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+        <!-- Registration Trends -->
+        <div class="lg:col-span-2 bg-white dark:bg-[#1E293B] p-8 rounded-[40px] shadow-2xl shadow-slate-900/5 border border-slate-100 dark:border-slate-800">
+            <h3 class="text-xl font-extrabold text-[#111c3a] dark:text-white mb-6 uppercase tracking-tight">Tren Pendaftaran (6 Bulan)</h3>
+            <canvas id="trendsChart" height="150"></canvas>
+        </div>
+
+        <!-- Demographics / Status -->
+        <div class="bg-white dark:bg-[#1E293B] p-8 rounded-[40px] shadow-2xl shadow-slate-900/5 border border-slate-100 dark:border-slate-800">
+            <h3 class="text-xl font-extrabold text-[#111c3a] dark:text-white mb-6 uppercase tracking-tight">Status & Gender</h3>
+            <div class="space-y-10">
+                <div>
+                    <canvas id="statusChart" height="200"></canvas>
+                </div>
+                <div>
+                    <canvas id="genderChart" height="200"></canvas>
+                </div>
             </div>
         </div>
     </div>
@@ -138,4 +169,121 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const noDataPlugin = {
+            id: 'noData',
+            afterDraw: (chart) => {
+                const { datasets } = chart.data;
+                let hasData = false;
+                for (let dataset of datasets) {
+                    if (dataset.data.length > 0 && dataset.data.some(v => v > 0)) {
+                        hasData = true;
+                        break;
+                    }
+                }
+                if (!hasData) {
+                    const { ctx, chartArea: { left, top, right, bottom } } = chart;
+                    const centerX = (left + right) / 2;
+                    const centerY = (top + bottom) / 2;
+                    ctx.save();
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.font = 'bold 12px Inter, sans-serif';
+                    ctx.fillStyle = '#94a3b8';
+                    ctx.fillText('Belum Ada Data', centerX, centerY);
+                    ctx.restore();
+                }
+            }
+        };
+
+        // Trends Chart
+        const trendsData = {!! json_encode($charts['trends']['data']) !!};
+        const trendsCtx = document.getElementById('trendsChart').getContext('2d');
+        new Chart(trendsCtx, {
+            type: 'line',
+            plugins: [noDataPlugin],
+            data: {
+                labels: {!! json_encode($charts['trends']['labels']) !!},
+                datasets: [{
+                    label: 'Pendaftaran',
+                    data: trendsData,
+                    borderColor: '#10b981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#10b981',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { 
+                        beginAtZero: true, 
+                        suggestedMax: 5,
+                        grid: { borderDash: [5, 5], color: '#e2e8f0' } 
+                    },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // Status Chart
+        const statusData = {!! json_encode(array_values($charts['status'])) !!};
+        const statusCtx = document.getElementById('statusChart').getContext('2d');
+        new Chart(statusCtx, {
+            type: 'doughnut',
+            plugins: [noDataPlugin],
+            data: {
+                labels: {!! json_encode(array_keys($charts['status'])) !!},
+                datasets: [{
+                    data: statusData,
+                    backgroundColor: ['#f59e0b', '#3b82f6', '#10b981', '#ef4444'],
+                    borderWidth: 0,
+                    cutout: '70%'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'bottom', labels: { usePointStyle: true, padding: 20, font: { weight: 'bold', size: 10 } } },
+                    title: { display: true, text: 'Distribusi Status', font: { weight: 'black', size: 12 } }
+                }
+            }
+        });
+
+        // Gender Chart
+        const genderL = {!! $charts['gender']['L'] !!};
+        const genderP = {!! $charts['gender']['P'] !!};
+        const genderCtx = document.getElementById('genderChart').getContext('2d');
+        new Chart(genderCtx, {
+            type: 'pie',
+            plugins: [noDataPlugin],
+            data: {
+                labels: ['Laki-laki', 'Perempuan'],
+                datasets: [{
+                    data: [genderL, genderP],
+                    backgroundColor: ['#111c3a', '#ec4899'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'bottom', labels: { usePointStyle: true, padding: 20, font: { weight: 'bold', size: 10 } } },
+                    title: { display: true, text: 'Sebaran Jenis Kelamin', font: { weight: 'black', size: 12 } }
+                }
+            }
+        });
+    });
+</script>
 @endsection

@@ -53,6 +53,37 @@
         </div>
     </div>
 
+    <!-- Registration Filters -->
+    <div class="bg-white dark:bg-dark-card p-6 rounded-[32px] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-900/5 mb-8">
+        <form action="{{ route('admin.registrations.index') }}" method="GET" class="flex flex-col md:flex-row gap-4 items-end">
+            <div class="flex-1 w-full">
+                <label class="block text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 ml-1">Cari Pendaftar</label>
+                <div class="relative">
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Nama, No. Registrasi, atau Sekolah..." 
+                        class="w-full pl-12 pr-6 py-4 rounded-2xl bg-slate-50 dark:bg-dark-main border-none focus:ring-2 focus:ring-emerald-500 text-sm font-bold text-slate-600 dark:text-white transition-all">
+                    <div class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">🔍</div>
+                </div>
+            </div>
+            <div class="w-full md:w-64">
+                <label class="block text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 ml-1">Filter Status</label>
+                <select name="status" onchange="this.form.submit()" 
+                    class="w-full px-6 py-4 rounded-2xl bg-slate-50 dark:bg-dark-main border-none focus:ring-2 focus:ring-emerald-500 text-sm font-bold text-slate-600 dark:text-white appearance-none transition-all cursor-pointer">
+                    <option value="">Semua Status</option>
+                    <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>⏳ Pending</option>
+                    <option value="verified" {{ request('status') == 'verified' ? 'selected' : '' }}>🛡️ Verified</option>
+                    <option value="accepted" {{ request('status') == 'accepted' ? 'selected' : '' }}>🏆 Accepted</option>
+                    <option value="rejected" {{ request('status') == 'rejected' ? 'selected' : '' }}>🚫 Rejected</option>
+                </select>
+            </div>
+            <div class="flex gap-2 w-full md:w-auto">
+                <button type="submit" class="flex-1 md:flex-none px-8 py-4 bg-emerald-500 text-white text-xs font-black uppercase tracking-widest rounded-2xl hover:bg-emerald-600 transition shadow-lg shadow-emerald-500/20">Filter</button>
+                @if(request()->anyFilled(['search', 'status']))
+                    <a href="{{ route('admin.registrations.index') }}" class="px-6 py-4 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-xs font-black uppercase tracking-widest rounded-2xl hover:bg-slate-200 transition">Reset</a>
+                @endif
+            </div>
+        </form>
+    </div>
+
     <!-- Registration Table Card -->
     <div class="bg-white dark:bg-dark-card rounded-[40px] shadow-2xl shadow-slate-900/5 border border-slate-100 dark:border-slate-800 overflow-hidden">
         <div class="overflow-x-auto text-nowrap">
@@ -85,7 +116,11 @@
                         </td>
                         <td class="px-8 py-6">
                             <p class="text-xs font-bold text-slate-500 dark:text-slate-400">{{ $reg->origin_school }}</p>
-                            <p class="text-[9px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-widest mt-0.5">Lulus {{ $reg->graduation_year }}</p>
+                            <p @class([
+                                'text-[9px] font-bold uppercase tracking-widest mt-0.5',
+                                'text-blue-500' => $reg->gender == 'L',
+                                'text-pink-500' => $reg->gender == 'P'
+                            ])>{{ $reg->gender == 'L' ? 'Laki-laki' : 'Perempuan' }} • Lulus {{ $reg->graduation_year }}</p>
                         </td>
                         <td class="px-8 py-6">
                             @if($reg->status == 'pending')
@@ -111,8 +146,8 @@
                         <td colspan="5" class="px-8 py-24 text-center">
                             <div class="flex flex-col items-center">
                                 <div class="w-24 h-24 rounded-[32px] bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-5xl mb-6 shadow-inner">📭</div>
-                                <h4 class="text-lg font-extrabold text-[#111c3a] dark:text-white uppercase tracking-widest">Belum Ada Pendaftaran</h4>
-                                <p class="text-slate-400 dark:text-slate-500 text-sm mt-2">Daftar calon santri baru akan muncul di sini setelah mereka mengisi formulir PPDB.</p>
+                                <h4 class="text-lg font-extrabold text-[#111c3a] dark:text-white uppercase tracking-widest">Data Tidak Ditemukan</h4>
+                                <p class="text-slate-400 dark:text-slate-500 text-sm mt-2">Gunakan kata kunci atau filter lain untuk menemukan data yang Anda cari.</p>
                             </div>
                         </td>
                     </tr>
