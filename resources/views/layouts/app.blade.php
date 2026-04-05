@@ -133,6 +133,7 @@
                     <div class="hidden md:flex items-center space-x-8">
                         <a href="/" class="text-sm font-semibold hover:text-emerald-500 transition">Beranda</a>
                         <a href="{{ route('berita.index') }}" class="text-sm font-semibold hover:text-emerald-500 transition">Berita</a>
+                        <a href="{{ route('ekstrakurikuler.index') }}" class="text-sm font-semibold hover:text-emerald-500 transition">Ekskul</a>
                         @if(isset($ppdb) && $ppdb->is_open)
                             <a href="{{ route('ppdb.landing') }}" class="px-6 py-2 bg-emerald-500 text-white rounded-full font-bold hover:bg-emerald-600 transition shadow-lg shadow-emerald-500/30">Daftar PPDB</a>
                         @else
