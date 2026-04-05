@@ -1,68 +1,110 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
-@section('title', 'Edit Ekskul - Admin')
+@section('header')
+<div class="flex items-center gap-4">
+    <a href="{{ route('admin.ekstrakurikuler.index') }}" 
+       class="p-2 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700/50 text-slate-400 hover:text-emerald-500 transition-colors shadow-sm">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+    </a>
+    <div>
+        <h2 class="text-3xl font-black text-slate-800 dark:text-white uppercase tracking-tight">
+            {{ __('Edit Ekskul') }}
+        </h2>
+        <p class="text-slate-500 dark:text-slate-400 text-sm font-medium mt-1">
+            Perbarui informasi kegiatan ekstrakurikuler.
+        </p>
+    </div>
+</div>
+@endsection
 
 @section('content')
-<div class="py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-3xl mx-auto">
-        <div class="mb-12">
-            <a href="{{ route('admin.ekstrakurikuler.index') }}" class="inline-flex items-center gap-2 group text-slate-500 dark:text-gray-400 hover:text-[#1e293b] dark:hover:text-white transition-all font-bold uppercase tracking-widest text-[10px] mb-6">
-                <svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-                Kembali ke Daftar
-            </a>
-            <h1 class="text-4xl font-black text-[#1e293b] dark:text-white uppercase tracking-tight">Edit Ekskul</h1>
-            <p class="mt-2 text-slate-500 dark:text-gray-400 font-medium">Perbarui informasi kegiatan ekstrakurikuler.</p>
-        </div>
+<div class="max-w-4xl">
+    <form action="{{ route('admin.ekstrakurikuler.update', $ekstrakurikuler) }}" method="POST" enctype="multipart/form-data" class="space-y-8">
+        @csrf
+        @method('PUT')
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Form Fields -->
+            <div class="lg:col-span-2 space-y-6">
+                <div class="bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-sm border border-slate-100 dark:border-slate-700/50 space-y-6">
+                    <div>
+                        <label class="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Nama Ekskul</label>
+                        <input type="text" name="name" value="{{ old('name', $ekstrakurikuler->name) }}" required
+                            class="w-full bg-slate-50 dark:bg-slate-900/50 border-none rounded-2xl px-5 py-4 text-sm font-bold focus:ring-2 focus:ring-emerald-500 dark:text-white transition-all">
+                        @error('name') <p class="text-red-500 text-[10px] mt-1 font-bold">{{ $message }}</p> @enderror
+                    </div>
 
-        <form action="{{ route('admin.ekstrakurikuler.update', $ekstrakurikuler) }}" method="POST" enctype="multipart/form-data" class="bg-white dark:bg-[#0a0a0a] rounded-3xl border border-slate-100 dark:border-gray-800 p-8 shadow-2xl">
-            @csrf
-            @method('PUT')
-            
-            <div class="space-y-8">
-                <div>
-                    <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-3 px-1">Nama Ekskul</label>
-                    <input type="text" name="name" value="{{ $ekstrakurikuler->name }}" required placeholder="Contoh: Pramuka, Futsal, Rohis..."
-                        class="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-gray-900 border-none focus:ring-2 focus:ring-[#1e293b] dark:focus:ring-white text-slate-900 dark:text-white transition-all shadow-sm font-bold">
-                </div>
+                    <div>
+                        <label class="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Deskripsi Kegiatan</label>
+                        <textarea name="description" rows="6"
+                            class="w-full bg-slate-50 dark:bg-slate-900/50 border-none rounded-2xl px-5 py-4 text-sm font-medium focus:ring-2 focus:ring-emerald-500 dark:text-white transition-all leading-relaxed">{{ old('description', $ekstrakurikuler->description) }}</textarea>
+                        @error('description') <p class="text-red-500 text-[10px] mt-1 font-bold">{{ $message }}</p> @enderror
+                    </div>
 
-                <div>
-                    <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-3 px-1">Deskripsi Kegiatan</label>
-                    <textarea name="description" rows="6" placeholder="Jelaskan secara singkat tentang kegiatan ini..."
-                        class="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-gray-900 border-none focus:ring-2 focus:ring-[#1e293b] dark:focus:ring-white text-slate-900 dark:text-white transition-all shadow-sm font-bold">{{ $ekstrakurikuler->description }}</textarea>
-                </div>
-
-                <div>
-                    <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-3 px-1">Foto Kegiatan (Biarkan kosong jika tidak ingin ganti)</label>
-                    @if($ekstrakurikuler->image)
-                        <div class="mb-4 aspect-video w-full rounded-2xl overflow-hidden border border-slate-100 dark:border-gray-800">
-                            <img src="{{ $ekstrakurikuler->image }}" class="w-full h-full object-cover grayscale" alt="{{ $ekstrakurikuler->name }}">
-                        </div>
-                    @endif
-                    <div class="relative group cursor-pointer">
-                        <input type="file" name="image_file" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
-                        <div class="w-full py-10 rounded-2xl border-2 border-dashed border-slate-200 dark:border-gray-800 bg-slate-50 dark:bg-gray-900 flex flex-col items-center justify-center group-hover:bg-slate-100 dark:group-hover:bg-white/5 transition-all">
-                            <svg class="w-8 h-8 text-slate-400 dark:text-gray-600 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                            <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-gray-600">Klik untuk ganti foto</p>
-                        </div>
+                    <div class="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-100 dark:border-slate-700/50">
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" name="is_active" value="1" {{ $ekstrakurikuler->is_active ? 'checked' : '' }} class="sr-only peer">
+                            <div class="w-11 h-6 bg-slate-200 dark:bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
+                            <span class="ms-3 text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Status Aktif</span>
+                        </label>
                     </div>
                 </div>
 
-                <div class="flex items-center gap-4 p-4 bg-slate-50 dark:bg-gray-900 rounded-2xl border border-slate-100 dark:border-gray-800">
-                    <div class="relative inline-block w-12 h-6 rounded-full bg-slate-200 dark:bg-gray-800 transition-colors">
-                        <input type="checkbox" name="is_active" {{ $ekstrakurikuler->is_active ? 'checked' : '' }} class="sr-only peer">
-                        <div class="absolute inset-0 rounded-full transition-colors peer-checked:bg-green-500"></div>
-                        <div class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-transform peer-checked:translate-x-6"></div>
-                    </div>
-                    <span class="text-xs font-black uppercase tracking-widest text-[#1e293b] dark:text-white">Status Aktif</span>
-                </div>
-
-                <div class="pt-6">
-                    <button type="submit" class="w-full py-5 bg-[#1e293b] dark:bg-white text-white dark:text-black rounded-2xl font-black uppercase tracking-[0.2em] text-xs hover:scale-[1.02] active:scale-95 transition-all shadow-2xl">
+                <div class="flex items-center justify-end gap-4 mt-8">
+                    <a href="{{ route('admin.ekstrakurikuler.index') }}" 
+                        class="px-8 py-4 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-black uppercase tracking-widest text-[10px] rounded-2xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-all">
+                        Batal
+                    </a>
+                    <button type="submit" 
+                        class="px-12 py-4 bg-emerald-500 hover:bg-emerald-600 text-white font-black uppercase tracking-widest text-[10px] rounded-2xl shadow-lg shadow-emerald-500/20 transition-all transform hover:scale-[1.05] active:scale-95">
                         Simpan Perubahan
                     </button>
                 </div>
             </div>
-        </form>
-    </div>
+
+            <!-- Sidebar Info/Image -->
+            <div class="lg:col-span-1 space-y-6">
+                <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-sm border border-slate-100 dark:border-slate-700/50">
+                    <label class="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4 px-1 text-center">Foto Kegiatan</label>
+                    
+                    <div class="relative group">
+                        <input type="file" name="image_file" id="image_upload" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                        <div id="image_preview_container" class="aspect-square rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 flex flex-col items-center justify-center group-hover:bg-slate-100 dark:group-hover:bg-emerald-500/5 transition-all overflow-hidden relative">
+                            @if($ekstrakurikuler->image)
+                                <img id="image_preview" src="{{ $ekstrakurikuler->image }}" class="absolute inset-0 w-full h-full object-cover">
+                                <div id="placeholder" class="hidden flex flex-col items-center justify-center p-4 text-center">
+                                    <svg class="w-10 h-10 text-slate-300 dark:text-slate-600 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                                    <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-600">Klik untuk ganti</p>
+                                </div>
+                            @else
+                                <div id="placeholder" class="flex flex-col items-center justify-center p-4 text-center">
+                                    <svg class="w-10 h-10 text-slate-300 dark:text-slate-600 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                                    <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-600">Klik untuk upload</p>
+                                </div>
+                                <img id="image_preview" class="hidden absolute inset-0 w-full h-full object-cover">
+                            @endif
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-6 bg-emerald-500/5 dark:bg-emerald-500/10 rounded-3xl border border-emerald-500/10">
+                    <h4 class="text-[10px] font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-2">Pemberitahuan</h4>
+                    <p class="text-[11px] text-emerald-800/70 dark:text-emerald-400/70 leading-relaxed font-medium text-justify">Mengubah foto akan menghapus versi lama secara permanen dari server penyimpanan Cloudinary.</p>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
+
+<script>
+    document.getElementById('image_upload').onchange = function(evt) {
+        const [file] = this.files
+        if (file) {
+            document.getElementById('image_preview').src = URL.createObjectURL(file)
+            document.getElementById('image_preview').classList.remove('hidden')
+            const placeholder = document.getElementById('placeholder');
+            if (placeholder) placeholder.classList.add('opacity-0')
+        }
+    }
+</script>
 @endsection

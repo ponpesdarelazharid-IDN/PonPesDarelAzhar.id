@@ -2,39 +2,59 @@
 
 @section('content')
 <!-- Hero Section -->
-<section class="relative bg-white dark:bg-black overflow-hidden transition-colors duration-300 border-b border-gray-100 dark:border-gray-900">
-    <div class="max-w-7xl mx-auto">
-        <div class="relative z-10 pb-8 bg-white dark:bg-black sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32 transition-colors duration-300">
-            <main class="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
-                <div class="sm:text-center lg:text-left">
-                    <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white sm:text-5xl md:text-6xl transition-colors duration-300">
-                        <span class="block">Membangun</span>
-                        <span class="block text-blue-600 dark:text-gray-300">Generasi Unggul</span>
-                        <span class="block">& Berkarakter</span>
-                    </h1>
-                    <p class="mt-3 text-base text-gray-500 dark:text-gray-400 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0 transition-colors duration-300">
-                        {{ $profiles['visi'] ?? 'Menjadi sekolah terdepan dalam inovasi teknologi dan pembentukan karakter mulia di tingkat nasional.' }}
-                    </p>
-                    <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-                        @if($ppdb)
-                        <div class="rounded-md shadow">
-                            <a href="{{ route('ppdb.landing') }}" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 dark:bg-white dark:text-black dark:hover:bg-gray-200 transition md:py-4 md:text-lg">
-                                Daftar PPDB Sekarang
-                            </a>
-                        </div>
-                        @endif
-                        <div class="mt-3 sm:mt-0 sm:ml-3">
-                            <a href="#profil" class="w-full flex items-center justify-center px-8 py-3 border border-gray-300 dark:border-gray-700 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 dark:bg-transparent dark:text-gray-300 dark:hover:bg-gray-900 dark:hover:text-white transition md:py-4 md:text-lg">
-                                Pelajari Profil Kami
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </main>
+<section class="relative py-20 md:py-32 overflow-hidden bg-light-main dark:bg-dark-main transition-colors duration-300">
+    <!-- Decorative Blurs -->
+    <div class="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl -z-10 animate-pulse"></div>
+    <div class="absolute bottom-0 left-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl -z-10"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-7xl font-extrabold tracking-tight mb-8 leading-tight text-light-text dark:text-white">
+            Membangun Generasi <br>
+            <span class="text-emerald-500 dark:text-emerald-400">Berakhlak & Berprestasi</span>
+        </h1>
+        <p class="mt-4 text-lg md:text-xl text-slate-500 dark:text-slate-400 max-w-3xl mx-auto mb-12 leading-relaxed">
+            {{ $profiles['visi'] ?? 'Pondok Pesantren modern dengan fasilitas lengkap, kurikulum terintegrasi, dan program ekstrakurikuler unggulan untuk masa depan umat.' }}
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+            @if(isset($ppdb) && $ppdb->is_open)
+                <a href="{{ route('ppdb.landing') }}" class="w-full sm:w-auto px-10 py-5 bg-emerald-500 text-white rounded-full font-bold shadow-2xl shadow-emerald-500/30 hover:bg-emerald-600 hover:-translate-y-1 transition duration-300">
+                    Mulai Pendaftaran PPDB
+                </a>
+            @endif
+            <a href="#profil" class="w-full sm:w-auto px-10 py-5 bg-white dark:bg-slate-800 text-slate-700 dark:text-white rounded-full font-bold border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition duration-300">
+                Pelajari Profil Kami
+            </a>
         </div>
     </div>
-    <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-        <img class="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full opacity-90 dark:opacity-70" src="{{ $profiles['hero_image'] ?? 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80' }}" alt="Siswa Sekolah">
+</section>
+
+<!-- Program Unggulan -->
+<section class="py-24 bg-white dark:bg-dark-card border-y border-slate-100 dark:border-slate-800 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-light-text dark:text-white">Program Unggulan</h2>
+            <div class="w-20 h-1.5 bg-emerald-500 mx-auto rounded-full"></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Program 1 -->
+            <div class="p-8 bg-light-main dark:bg-dark-main rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all group">
+                <div class="w-14 h-14 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition">📖</div>
+                <h3 class="text-xl font-bold mb-3 text-light-text dark:text-white">Tahfidz Qur'an</h3>
+                <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">Program hafalan dengan metode mutakhir dan pendampingan intensif oleh asatidz berpengalaman.</p>
+            </div>
+            <!-- Program 2 -->
+            <div class="p-8 bg-light-main dark:bg-dark-main rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all group">
+                <div class="w-14 h-14 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition">💻</div>
+                <h3 class="text-xl font-bold mb-3 text-light-text dark:text-white">IT & Multimedia</h3>
+                <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">Pengembangan skill digital, coding, dan desain grafis untuk menghadapi tantangan masa depan.</p>
+            </div>
+            <!-- Program 3 -->
+            <div class="p-8 bg-light-main dark:bg-dark-main rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all group">
+                <div class="w-14 h-14 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition">🌍</div>
+                <h3 class="text-xl font-bold mb-3 text-light-text dark:text-white">Bahasa Asing</h3>
+                <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">Penguasaan Bahasa Arab dan Inggris secara aktif sebagai bahasa pengantar dan komunikasi global.</p>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -126,20 +146,20 @@
         
         <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
             @forelse($berita as $post)
-            <a href="{{ route('posts.show', $post) }}" class="group block bg-gray-50 dark:bg-[#0a0a0a] rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-800 hover:shadow-lg dark:hover:shadow-white/10 transition duration-300">
+            <a href="{{ route('posts.show', $post) }}" class="group block bg-white dark:bg-dark-card rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-800 hover:shadow-2xl hover:shadow-emerald-500/10 transition-all duration-300">
                 @if($post->image_url)
-                    <div class="aspect-w-16 aspect-h-9 w-full bg-gray-200 dark:bg-gray-800">
+                    <div class="aspect-w-16 aspect-h-9 w-full bg-slate-100 dark:bg-slate-800">
                         <img src="{{ $post->image_url }}" alt="{{ $post->title }}" class="object-cover w-full h-48 group-hover:scale-105 transition duration-500">
                     </div>
                 @else
-                    <div class="aspect-w-16 aspect-h-9 w-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center h-48">
+                    <div class="aspect-w-16 aspect-h-9 w-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center h-48">
                         <span class="text-4xl opacity-50">📰</span>
                     </div>
                 @endif
                 <div class="p-6">
-                    <div class="text-sm text-blue-600 dark:text-gray-400 font-semibold mb-2 transition-colors">{{ $post->published_at->format('d M Y') }}</div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-gray-300 transition-colors">{{ $post->title }}</h3>
-                    <p class="text-gray-500 dark:text-gray-400 text-sm transition-colors">{{ Str::limit($post->excerpt ?? strip_tags($post->content), 80) }}</p>
+                    <div class="text-xs text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-wider mb-2">{{ $post->published_at->format('d M Y') }}</div>
+                    <h3 class="text-lg font-bold text-light-text dark:text-white mb-3 group-hover:text-emerald-500 transition-colors">{{ $post->title }}</h3>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm line-clamp-2">{{ Str::limit($post->excerpt ?? strip_tags($post->content), 80) }}</p>
                 </div>
             </a>
             @empty
@@ -169,24 +189,25 @@
         
         <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
             @forelse($acara as $post)
-            <div class="group relative bg-gray-50 dark:bg-[#0a0a0a] rounded-2xl p-8 border border-gray-100 dark:border-gray-800 hover:border-blue-500 dark:hover:border-gray-600 transition-all duration-300">
-                <div class="flex items-center gap-4 mb-4">
-                    <div class="flex-shrink-0 w-14 h-14 bg-blue-100 dark:bg-gray-800 rounded-xl flex flex-col items-center justify-center text-blue-600 dark:text-gray-300">
-                        <span class="text-lg font-bold leading-none">{{ $post->published_at->format('d') }}</span>
-                        <span class="text-xs uppercase font-semibold">{{ $post->published_at->format('M') }}</span>
+            <div class="group relative bg-white dark:bg-dark-card rounded-3xl p-8 border border-slate-100 dark:border-slate-800 hover:border-emerald-500 transition-all duration-300">
+                <div class="flex items-center gap-5 mb-6">
+                    <div class="flex-shrink-0 w-16 h-16 bg-emerald-50 dark:bg-emerald-900/30 rounded-2xl flex flex-col items-center justify-center text-emerald-600 dark:text-emerald-400">
+                        <span class="text-xl font-bold leading-none">{{ $post->published_at->format('d') }}</span>
+                        <span class="text-[10px] uppercase font-black mt-1">{{ $post->published_at->format('M') }}</span>
                     </div>
                     <div>
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-gray-300 transition-colors">{{ $post->title }}</h3>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">{{ $post->event_date ? $post->event_date->format('H:i') . ' WIB' : 'Waktu menyusul' }}</p>
+                        <h3 class="text-xl font-bold text-light-text dark:text-white group-hover:text-emerald-500 transition-colors">{{ $post->title }}</h3>
+                        <p class="text-xs text-slate-400 mt-1 uppercase tracking-widest">{{ $post->event_date ? $post->event_date->format('H:i') . ' WIB' : 'Waktu menyusul' }}</p>
                     </div>
                 </div>
-                <p class="text-gray-600 dark:text-gray-400 text-sm line-clamp-3 mb-6">{{ Str::limit(strip_tags($post->content), 120) }}</p>
-                <a href="{{ route('posts.show', $post) }}" class="inline-flex items-center text-sm font-bold text-blue-600 dark:text-gray-300 hover:gap-2 transition-all">
-                    Detail Acara 
-                    <svg class="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                <p class="text-slate-500 dark:text-slate-400 text-sm line-clamp-3 mb-6 leading-relaxed">{{ Str::limit(strip_tags($post->content), 120) }}</p>
+                <a href="{{ route('posts.show', $post) }}" class="inline-flex items-center text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:gap-3 transition-all">
+                    Lihat Detail 
+                    <svg class="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                 </a>
             </div>
             @empty
+ Broadway
             <div class="col-span-1 md:col-span-3 text-center py-12">
                 <p class="text-gray-500 dark:text-gray-400">Belum ada agenda acara terbaru.</p>
             </div>
@@ -319,19 +340,19 @@
 </section>
 
 <!-- PPDB CTA -->
-<section class="py-20 bg-blue-600 dark:bg-[#111111] transition-colors duration-300">
+<section class="py-24 bg-emerald-600 dark:bg-emerald-900 transition-colors duration-300">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-3xl font-extrabold text-white sm:text-4xl mb-6">Penerimaan Peserta Didik Baru</h2>
-        @if($ppdb && $ppdb->is_open)
-        <p class="text-xl text-blue-100 dark:text-gray-400 mb-8">Pendaftaran PPDB Tahun Ajaran {{ $ppdb->academic_year }} sedang dibuka. Jangan lewatkan kesempatan emas ini.</p>
-        <a href="{{ route('ppdb.landing') }}" class="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-bold rounded-md text-blue-600 bg-white hover:bg-gray-50 dark:bg-white dark:text-black dark:hover:bg-gray-200 shadow-xl hover:shadow-2xl transition transform hover:-translate-y-1">
-            Informasi & Pendaftaran PPDB
-        </a>
+        <h2 class="text-4xl font-extrabold text-white mb-6">Penerimaan Peserta Didik Baru</h2>
+        @if(isset($ppdb) && $ppdb->is_open)
+            <p class="text-xl text-emerald-100 mb-10 leading-relaxed font-medium">Pendaftaran PPDB Tahun Ajaran {{ $ppdb->academic_year }} telah dibuka secara online. Mari Bergabung bersama keluarga besar {{ $profiles['nama_sekolah'] ?? 'kami' }}.</p>
+            <a href="{{ route('ppdb.landing') }}" class="inline-flex items-center justify-center px-12 py-5 border border-transparent text-lg font-bold rounded-full text-emerald-600 bg-white hover:bg-emerald-50 shadow-2xl transition transform hover:-translate-y-1">
+                Informasi & Pendaftaran PPDB
+            </a>
         @else
-        <p class="text-xl text-blue-100 dark:text-gray-400 mb-8">Pendaftaran PPDB saat ini sedang ditutup. Nantikan informasi dari kami selanjutnya.</p>
-        <button disabled class="inline-flex items-center justify-center px-8 py-4 border border-white/30 dark:border-gray-700 text-lg font-medium rounded-md text-white/70 dark:text-gray-500 bg-transparent cursor-not-allowed">
-            Pendaftaran Ditutup
-        </button>
+            <p class="text-xl text-emerald-100 mb-10 leading-relaxed font-medium">Informasi pendaftaran Penerimaan Peserta Didik Baru (PPDB) akan segera kami umumkan. Nantikan kabar selanjutnya.</p>
+            <button disabled class="inline-flex items-center justify-center px-12 py-5 border border-white/30 text-lg font-bold rounded-full text-white/50 bg-white/10 cursor-not-allowed">
+                Pendaftaran Belum Dibuka
+            </button>
         @endif
     </div>
 </section>

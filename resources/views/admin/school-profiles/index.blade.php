@@ -1,240 +1,235 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
-@section('title', 'Kelola Profil Sekolah')
+@section('header')
+<div>
+    <h2 class="text-3xl font-black text-slate-800 dark:text-white uppercase tracking-tight">
+        {{ __('Profil Sekolah') }}
+    </h2>
+    <p class="text-slate-500 dark:text-slate-400 text-sm font-medium mt-1">
+        Perbarui informasi dasar, visi, misi, dan kontak sekolah Anda.
+    </p>
+</div>
+@endsection
 
 @section('content')
-<div class="px-4 py-8 max-w-5xl mx-auto">
-    <div class="mb-10 flex justify-between items-end">
-        <div>
-            <h1 class="text-4xl font-black text-[#1e293b] dark:text-white tracking-tighter uppercase">Profil Sekolah</h1>
-            <p class="text-slate-500 dark:text-gray-400 mt-2 font-medium">Perbarui informasi dasar, visi, misi, dan kontak sekolah Anda.</p>
-        </div>
-    </div>
-
+<div class="max-w-5xl">
+    <!-- Feedback -->
     @if(session('success'))
-        <div class="mb-8 p-5 rounded-2xl bg-emerald-50 dark:bg-emerald-900/10 border border-emerald-100 dark:border-emerald-900/20 flex items-center gap-4 animate-in fade-in slide-in-from-top-4 duration-500">
-            <div class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center shadow-lg">✓</div>
-            <p class="text-emerald-800 dark:text-emerald-400 font-bold tracking-tight">{{ session('success') }}</p>
+        <div class="mb-8 p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl text-emerald-600 dark:text-emerald-400 font-bold text-sm flex items-center gap-3">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            {{ session('success') }}
         </div>
     @endif
 
     @if($errors->any())
-        <div class="mb-8 p-5 rounded-2xl bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/20 flex items-center gap-4 animate-in fade-in slide-in-from-top-4 duration-500">
-            <div class="w-10 h-10 rounded-xl bg-red-500 text-white flex items-center justify-center shadow-lg">✕</div>
-            <div class="text-red-800 dark:text-red-400 font-bold tracking-tight">
-                @foreach ($errors->all() as $error)
-                    <p>{{ $error }}</p>
-                @endforeach
-            </div>
+        <div class="mb-8 p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-600 dark:text-red-400 font-bold text-sm space-y-1">
+            @foreach ($errors->all() as $error)
+                <div class="flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    {{ $error }}
+                </div>
+            @endforeach
         </div>
     @endif
 
-    <form action="{{ route('admin.school-profiles.store') }}" method="POST" enctype="multipart/form-data" class="space-y-10">
+    <form action="{{ route('admin.school-profiles.store') }}" method="POST" enctype="multipart/form-data" class="space-y-10 pb-20">
         @csrf
         
-        <!-- Identitas Sekolah -->
-        <div class="bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-100 dark:border-gray-900 overflow-hidden">
-            <div class="p-8 border-b border-slate-50 dark:border-gray-900 bg-slate-50/50 dark:bg-white/5">
-                <h3 class="text-xl font-black text-[#1e293b] dark:text-white flex items-center gap-3">
-                    <span class="w-8 h-8 rounded-lg bg-[#1e293b] dark:bg-white text-white dark:text-black flex items-center justify-center text-sm">01</span>
-                    Identitas & Kontak Dasar
-                </h3>
+        <!-- Section 1: Identitas & Kontak -->
+        <div class="bg-white dark:bg-slate-800 rounded-[2.5rem] shadow-sm border border-slate-100 dark:border-slate-700/50 overflow-hidden">
+            <div class="px-8 py-6 border-b border-slate-50 dark:border-slate-700/50 flex items-center gap-4">
+                <div class="w-10 h-10 rounded-2xl bg-emerald-500 text-white flex items-center justify-center font-black text-sm shadow-lg shadow-emerald-500/20">01</div>
+                <h3 class="text-lg font-black text-slate-800 dark:text-white uppercase tracking-tight">Identitas & Kontak</h3>
             </div>
             <div class="p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="md:col-span-2">
-                    <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-3">Nama Sekolah</label>
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 px-1">Nama Sekolah</label>
                     <input type="text" name="nama_sekolah" value="{{ $profiles['nama_sekolah'] ?? '' }}" required
-                        class="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-gray-900 border-none focus:ring-2 focus:ring-[#1e293b] dark:focus:ring-white text-slate-900 dark:text-white transition-all shadow-sm font-bold">
+                        class="w-full bg-slate-50 dark:bg-slate-900/50 border-none rounded-2xl px-5 py-4 text-sm font-bold focus:ring-2 focus:ring-emerald-500 dark:text-white transition-all">
                 </div>
                 
                 <div>
-                    <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-3">Nomor Telepon</label>
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 px-1">Nomor Telepon</label>
                     <input type="text" name="tlp" value="{{ $profiles['tlp'] ?? '' }}" required
-                        class="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-gray-900 border-none focus:ring-2 focus:ring-[#1e293b] dark:focus:ring-white text-slate-900 dark:text-white transition-all shadow-sm font-bold">
+                        class="w-full bg-slate-50 dark:bg-slate-900/50 border-none rounded-2xl px-5 py-4 text-sm font-bold focus:ring-2 focus:ring-emerald-500 dark:text-white transition-all">
                 </div>
 
                 <div>
-                    <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-3">Email Resmi</label>
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 px-1">Email Resmi</label>
                     <input type="email" name="email" value="{{ $profiles['email'] ?? '' }}" required
-                        class="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-gray-900 border-none focus:ring-2 focus:ring-[#1e293b] dark:focus:ring-white text-slate-900 dark:text-white transition-all shadow-sm font-bold">
+                        class="w-full bg-slate-50 dark:bg-slate-900/50 border-none rounded-2xl px-5 py-4 text-sm font-bold focus:ring-2 focus:ring-emerald-500 dark:text-white transition-all">
                 </div>
 
                 <div class="md:col-span-2">
-                    <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-3">Alamat Lengkap</label>
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 px-1">Alamat Lengkap</label>
                     <textarea name="alamat" rows="3" required
-                        class="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-gray-900 border-none focus:ring-2 focus:ring-[#1e293b] dark:focus:ring-white text-slate-900 dark:text-white transition-all shadow-sm font-bold">{{ $profiles['alamat'] ?? '' }}</textarea>
+                        class="w-full bg-slate-50 dark:bg-slate-900/50 border-none rounded-2xl px-5 py-4 text-sm font-bold focus:ring-2 focus:ring-emerald-500 dark:text-white transition-all leading-relaxed">{{ $profiles['alamat'] ?? '' }}</textarea>
                 </div>
             </div>
         </div>
 
-        <!-- Visi, Misi & Tentang -->
-        <div class="bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-100 dark:border-gray-900 overflow-hidden">
-            <div class="p-8 border-b border-slate-50 dark:border-gray-900 bg-slate-50/50 dark:bg-white/5">
-                <h3 class="text-xl font-black text-[#1e293b] dark:text-white flex items-center gap-3">
-                    <span class="w-8 h-8 rounded-lg bg-[#1e293b] dark:bg-white text-white dark:text-black flex items-center justify-center text-sm">02</span>
-                    Konten Profil & Filosofi
-                </h3>
+        <!-- Section 2: Visi, Misi & Konten -->
+        <div class="bg-white dark:bg-slate-800 rounded-[2.5rem] shadow-sm border border-slate-100 dark:border-slate-700/50 overflow-hidden">
+            <div class="px-8 py-6 border-b border-slate-50 dark:border-slate-700/50 flex items-center gap-4">
+                <div class="w-10 h-10 rounded-2xl bg-emerald-500 text-white flex items-center justify-center font-black text-sm shadow-lg shadow-emerald-500/20">02</div>
+                <h3 class="text-lg font-black text-slate-800 dark:text-white uppercase tracking-tight">Konten Profil & Filosofi</h3>
             </div>
             <div class="p-8 space-y-8">
                 <div>
-                    <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-3">Tentang Kami / Sambutan</label>
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 px-1">Tentang Kami / Sambutan</label>
                     <textarea name="tentang_kami" rows="4" placeholder="Jelaskan secara singkat mengenai sekolah Anda..."
-                        class="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-gray-900 border-none focus:ring-2 focus:ring-[#1e293b] dark:focus:ring-white text-slate-900 dark:text-white transition-all shadow-sm font-bold">{{ $profiles['tentang_kami'] ?? '' }}</textarea>
+                        class="w-full bg-slate-50 dark:bg-slate-900/50 border-none rounded-2xl px-5 py-4 text-sm font-bold focus:ring-2 focus:ring-emerald-500 dark:text-white transition-all leading-relaxed">{{ $profiles['tentang_kami'] ?? '' }}</textarea>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
-                        <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-3">Visi Sekolah</label>
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 px-1">Visi Sekolah</label>
                         <textarea name="visi" rows="5"
-                            class="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-gray-900 border-none focus:ring-2 focus:ring-[#1e293b] dark:focus:ring-white text-slate-900 dark:text-white transition-all shadow-sm font-bold">{{ $profiles['visi'] ?? '' }}</textarea>
+                            class="w-full bg-slate-50 dark:bg-slate-900/50 border-none rounded-2xl px-5 py-4 text-sm font-bold focus:ring-2 focus:ring-emerald-500 dark:text-white transition-all leading-relaxed">{{ $profiles['visi'] ?? '' }}</textarea>
                     </div>
                     <div>
-                        <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-3">Misi Sekolah (Poin-poin)</label>
-                        <textarea name="misi" rows="5" placeholder="Gunakan baris baru untuk setiap poin misi..."
-                            class="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-gray-900 border-none focus:ring-2 focus:ring-[#1e293b] dark:focus:ring-white text-slate-900 dark:text-white transition-all shadow-sm font-bold">{{ $profiles['misi'] ?? '' }}</textarea>
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 px-1">Misi Sekolah (Gunakan Baris Baru per Poin)</label>
+                        <textarea name="misi" rows="5" placeholder="Poin 1\nPoin 2\nPoin 3..."
+                            class="w-full bg-slate-50 dark:bg-slate-900/50 border-none rounded-2xl px-5 py-4 text-sm font-bold focus:ring-2 focus:ring-emerald-500 dark:text-white transition-all leading-relaxed">{{ $profiles['misi'] ?? '' }}</textarea>
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-3">Misi Singkat (Untuk Footer)</label>
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 px-1">Misi Singkat (Footer)</label>
                     <input type="text" name="misi_singkat" value="{{ $profiles['misi_singkat'] ?? '' }}"
-                        class="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-gray-900 border-none focus:ring-2 focus:ring-[#1e293b] dark:focus:ring-white text-slate-900 dark:text-white transition-all shadow-sm font-bold">
+                        class="w-full bg-slate-50 dark:bg-slate-900/50 border-none rounded-2xl px-5 py-4 text-sm font-bold focus:ring-2 focus:ring-emerald-500 dark:text-white transition-all">
                 </div>
 
-                <div>
-                    <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-3">Sejarah Singkat</label>
-                    <textarea name="sejarah" rows="6"
-                        class="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-gray-900 border-none focus:ring-2 focus:ring-[#1e293b] dark:focus:ring-white text-slate-900 dark:text-white transition-all shadow-sm font-bold">{{ $profiles['sejarah'] ?? '' }}</textarea>
-                </div>
-
-                <div>
-                    <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-3">Tujuan Sekolah</label>
-                    <textarea name="tujuan" rows="6" placeholder="Sebutkan tujuan strategis sekolah Anda..."
-                        class="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-gray-900 border-none focus:ring-2 focus:ring-[#1e293b] dark:focus:ring-white text-slate-900 dark:text-white transition-all shadow-sm font-bold">{{ $profiles['tujuan'] ?? '' }}</textarea>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 px-1">Sejarah Singkat</label>
+                        <textarea name="sejarah" rows="6"
+                            class="w-full bg-slate-50 dark:bg-slate-900/50 border-none rounded-2xl px-5 py-4 text-sm font-bold focus:ring-2 focus:ring-emerald-500 dark:text-white transition-all leading-relaxed">{{ $profiles['sejarah'] ?? '' }}</textarea>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 px-1">Tujuan Sekolah</label>
+                        <textarea name="tujuan" rows="6"
+                            class="w-full bg-slate-50 dark:bg-slate-900/50 border-none rounded-2xl px-5 py-4 text-sm font-bold focus:ring-2 focus:ring-emerald-500 dark:text-white transition-all leading-relaxed">{{ $profiles['tujuan'] ?? '' }}</textarea>
+                    </div>
                 </div>
             </div>
         </div>
         
-        <!-- Media & Galeri Utama -->
-        <div class="bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-100 dark:border-gray-900 overflow-hidden">
-            <div class="p-8 border-b border-slate-50 dark:border-gray-900 bg-slate-50/50 dark:bg-white/5">
-                <h3 class="text-xl font-black text-[#1e293b] dark:text-white flex items-center gap-3">
-                    <span class="w-8 h-8 rounded-lg bg-[#1e293b] dark:bg-white text-white dark:text-black flex items-center justify-center text-sm">03</span>
-                    Media & Galeri Utama
-                </h3>
+        <!-- Section 3: Media & Galeri -->
+        <div class="bg-white dark:bg-slate-800 rounded-[2.5rem] shadow-sm border border-slate-100 dark:border-slate-700/50 overflow-hidden">
+            <div class="px-8 py-6 border-b border-slate-50 dark:border-slate-700/50 flex items-center gap-4">
+                <div class="w-10 h-10 rounded-2xl bg-emerald-500 text-white flex items-center justify-center font-black text-sm shadow-lg shadow-emerald-500/20">03</div>
+                <h3 class="text-lg font-black text-slate-800 dark:text-white uppercase tracking-tight">Media & Visual Utama</h3>
             </div>
-            <div class="p-8 grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Logo Sekolah -->
+            <div class="p-8 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <!-- Logo -->
                 <div class="space-y-4">
-                    <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest">Logo Sekolah</label>
-                    <div class="relative group aspect-square rounded-3xl bg-slate-50 dark:bg-gray-900 border-2 border-dashed border-slate-200 dark:border-gray-800 flex items-center justify-center overflow-hidden">
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest">Logo Sekolah</label>
+                    <div class="relative group aspect-square rounded-3xl bg-slate-50 dark:bg-slate-900 border-2 border-dashed border-slate-200 dark:border-slate-700 flex items-center justify-center overflow-hidden">
                         @if(isset($profiles['logo']))
-                            <img src="{{ $profiles['logo'] }}" class="w-full h-full object-contain p-4 group-hover:scale-110 transition-transform duration-500">
+                            <img src="{{ $profiles['logo'] }}" class="w-full h-full object-contain p-6 group-hover:scale-110 transition-all duration-500 relative z-0">
                         @else
-                            <div class="text-center p-4">
-                                <span class="text-4xl block mb-2">📸</span>
-                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Pilih Logo</span>
+                            <div class="text-slate-300 dark:text-slate-700">
+                                <svg class="w-12 h-12 mx-auto mb-2 opacity-20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                                <span class="text-[9px] font-black uppercase tracking-widest">Upload Logo</span>
                             </div>
                         @endif
-                        <input type="file" name="logo" class="absolute inset-0 opacity-0 cursor-pointer">
+                        <input type="file" name="logo" class="absolute inset-0 opacity-0 cursor-pointer z-10">
                     </div>
                 </div>
 
                 <!-- Hero Image -->
                 <div class="space-y-4 md:col-span-2">
-                    <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest">Hero Image (Halaman Depan)</label>
-                    <div class="relative group aspect-video rounded-3xl bg-slate-50 dark:bg-gray-900 border-2 border-dashed border-slate-200 dark:border-gray-800 flex items-center justify-center overflow-hidden">
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest">Hero Image (Landing Page)</label>
+                    <div class="relative group aspect-video rounded-3xl bg-slate-50 dark:bg-slate-900 border-2 border-dashed border-slate-200 dark:border-slate-700 flex items-center justify-center overflow-hidden text-center">
                         @if(isset($profiles['hero_image']))
-                            <img src="{{ $profiles['hero_image'] }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <img src="{{ $profiles['hero_image'] }}" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500 relative z-0">
                         @else
-                            <div class="text-center p-4">
-                                <span class="text-4xl block mb-2">🌅</span>
-                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Pilih Foto Hero</span>
+                            <div class="text-slate-300 dark:text-slate-700">
+                                <svg class="w-12 h-12 mx-auto mb-2 opacity-20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                                <span class="text-[9px] font-black uppercase tracking-widest">Upload Hero Image</span>
                             </div>
                         @endif
-                        <input type="file" name="hero_image" class="absolute inset-0 opacity-0 cursor-pointer">
+                        <input type="file" name="hero_image" class="absolute inset-0 opacity-0 cursor-pointer z-10">
                     </div>
                 </div>
 
-                <!-- Secondary Image -->
+                <!-- Secondary -->
                 <div class="space-y-4 md:col-span-3">
-                    <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest">Foto Gedung/Fasilitas (Sekunder)</label>
-                    <div class="relative group h-48 rounded-3xl bg-slate-50 dark:bg-gray-900 border-2 border-dashed border-slate-200 dark:border-gray-800 flex items-center justify-center overflow-hidden">
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest">Foto Fasilitas (Sekunder)</label>
+                    <div class="relative group h-48 rounded-3xl bg-slate-50 dark:bg-slate-900 border-2 border-dashed border-slate-200 dark:border-slate-700 flex items-center justify-center overflow-hidden">
                         @if(isset($profiles['secondary_image']))
-                            <img src="{{ $profiles['secondary_image'] }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <img src="{{ $profiles['secondary_image'] }}" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500 relative z-0">
                         @else
-                            <div class="text-center p-4">
-                                <span class="text-4xl block mb-2">🏫</span>
-                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Pilih Foto Gedung</span>
+                            <div class="text-slate-300 dark:text-slate-700">
+                                <svg class="w-10 h-10 mx-auto mb-2 opacity-20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                                <span class="text-[9px] font-black uppercase tracking-widest text-center">Upload Foto Gedung / Fasilitas</span>
                             </div>
                         @endif
-                        <input type="file" name="secondary_image" class="absolute inset-0 opacity-0 cursor-pointer">
+                        <input type="file" name="secondary_image" class="absolute inset-0 opacity-0 cursor-pointer z-10">
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Lokasi & Peta -->
-        <div class="bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-100 dark:border-gray-900 overflow-hidden">
-            <div class="p-8 border-b border-slate-50 dark:border-gray-900 bg-slate-50/50 dark:bg-white/5">
-                <h3 class="text-xl font-black text-[#1e293b] dark:text-white flex items-center gap-3">
-                    <span class="w-8 h-8 rounded-lg bg-[#1e293b] dark:bg-white text-white dark:text-black flex items-center justify-center text-sm">04</span>
-                    Lokasi & Google Maps
-                </h3>
+        <!-- Section 4: Lokasi -->
+        <div class="bg-white dark:bg-slate-800 rounded-[2.5rem] shadow-sm border border-slate-100 dark:border-slate-700/50 overflow-hidden">
+            <div class="px-8 py-6 border-b border-slate-50 dark:border-slate-700/50 flex items-center gap-4">
+                <div class="w-10 h-10 rounded-2xl bg-emerald-500 text-white flex items-center justify-center font-black text-sm shadow-lg shadow-emerald-500/20">04</div>
+                <h3 class="text-lg font-black text-slate-800 dark:text-white uppercase tracking-tight">Lokasi & Navigasi</h3>
             </div>
             <div class="p-8 space-y-8">
                 <div>
-                    <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-3">Link Google Maps (Share Link)</label>
-                    <input type="text" name="google_maps_url" value="{{ $profiles['google_maps_url'] ?? '' }}" placeholder="https://www.google.com/maps/place/..."
-                        class="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-gray-900 border-none focus:ring-2 focus:ring-[#1e293b] dark:focus:ring-white text-slate-900 dark:text-white transition-all shadow-sm font-bold">
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 px-1">Link Google Maps (Share URL)</label>
+                    <input type="text" name="google_maps_url" value="{{ $profiles['google_maps_url'] ?? '' }}" placeholder="https://www.google.com/maps/..."
+                        class="w-full bg-slate-50 dark:bg-slate-900/50 border-none rounded-2xl px-5 py-4 text-sm font-bold focus:ring-2 focus:ring-emerald-500 dark:text-white transition-all">
                 </div>
 
                 <div>
-                    <label class="block text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-3">Maps Embed URL (Bagian src="..." iframe)</label>
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 px-1">Maps Embed URL (src iframe)</label>
                     <textarea name="google_maps_embed" rows="3" placeholder="https://www.google.com/maps/embed?pb=..."
-                        class="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-gray-900 border-none focus:ring-2 focus:ring-[#1e293b] dark:focus:ring-white text-slate-900 dark:text-white transition-all shadow-sm font-bold">{{ $profiles['google_maps_embed'] ?? '' }}</textarea>
+                        class="w-full bg-slate-50 dark:bg-slate-900/50 border-none rounded-2xl px-5 py-4 text-sm font-bold focus:ring-2 focus:ring-emerald-500 dark:text-white transition-all">{{ $profiles['google_maps_embed'] ?? '' }}</textarea>
                 </div>
             </div>
         </div>
 
-        <div class="flex justify-end pt-6 pb-20">
-            <button type="submit" class="px-12 py-5 rounded-2xl bg-[#1e293b] dark:bg-white text-white dark:text-black font-extrabold text-sm uppercase tracking-widest shadow-2xl hover:scale-[1.02] active:scale-95 transition-all duration-300">
-                Simpan Semua Perubahan
+        <!-- Action Bar -->
+        <div class="fixed bottom-8 right-8 z-50">
+            <button type="submit" 
+                class="px-10 py-5 bg-emerald-500 hover:bg-emerald-600 text-white font-black uppercase tracking-widest text-xs rounded-2xl shadow-2xl shadow-emerald-500/40 transition-all transform hover:scale-[1.05] active:scale-95 flex items-center gap-3">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" /></svg>
+                Simpan Perubahan
             </button>
         </div>
     </form>
 </div>
 
-<!-- Image Compression Script -->
+<!-- Image Compression Logic (Critical for Vercel) -->
 <script>
 document.querySelectorAll('input[type="file"]').forEach(input => {
-    // Simpan nama asli input ke data-name agar tidak hilang saat dihapus
     input.dataset.name = input.name;
 
     input.addEventListener('change', async (e) => {
         const file = e.target.files[0];
         if (!file || !file.type.startsWith('image/')) return;
         
-        // Create overlay
         const container = e.target.closest('.group');
         const overlay = document.createElement('div');
-        overlay.className = "absolute inset-0 bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center z-50 text-white transition-opacity duration-300";
+        overlay.className = "absolute inset-0 bg-slate-950/80 backdrop-blur-sm flex flex-col items-center justify-center z-50 text-white transition-opacity duration-300 rounded-3xl";
         overlay.innerHTML = `
-            <div class="w-12 h-12 border-4 border-white/20 border-t-white rounded-full animate-spin mb-4"></div>
-            <p class="text-[10px] font-black uppercase tracking-widest animate-pulse text-center px-4">Processing Image...</p>
+            <div class="w-10 h-10 border-4 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin mb-4"></div>
+            <p class="text-[8px] font-black uppercase tracking-[0.2em] animate-pulse text-center px-4">Processing Visual...</p>
         `;
         container.appendChild(overlay);
 
         try {
-            // Determine max dimensions based on the field name
             const fieldName = e.target.dataset.name;
             let maxDim = 1200;
             if (fieldName === 'hero_image') maxDim = 1920;
             if (fieldName === 'logo') maxDim = 800;
 
-            const base64Data = await compressToBase64(file, maxDim, 0.85);
+            const base64Data = await compressToBase64(file, maxDim, 0.82);
             
-            // Create hidden input for base64
             let hiddenInput = container.querySelector(`input[name="${fieldName}_base64"]`);
             if (!hiddenInput) {
                 hiddenInput = document.createElement('input');
@@ -244,32 +239,25 @@ document.querySelectorAll('input[type="file"]').forEach(input => {
             }
             hiddenInput.value = base64Data;
             
-            // Remove name from the actual file input so the raw large file isn't uploaded
             e.target.removeAttribute('name');
             
-            // Update preview
             const img = container.querySelector('img');
             if (img) {
                 img.src = base64Data;
             } else {
-                const placeholder = container.querySelector('.text-center');
+                const placeholder = container.querySelector('.text-slate-300');
                 if (placeholder) placeholder.remove();
-
-                let objectFit = "object-cover";
-                if (fieldName === 'logo') {
-                    objectFit = "object-contain p-4 bg-white dark:bg-black";
-                }
 
                 const newImg = document.createElement('img');
                 newImg.src = base64Data;
-                newImg.className = `w-full h-full ${objectFit} group-hover:scale-105 transition-transform duration-500 absolute inset-0 z-0`;
-                e.target.classList.add('z-10'); // ensures input stays above image
+                newImg.className = "w-full h-full object-cover transition-all duration-500 absolute inset-0 z-0";
+                if (fieldName === 'logo') newImg.classList.add('object-contain', 'p-6');
                 container.insertBefore(newImg, e.target);
             }
             
         } catch (err) {
             console.error('Processing failed:', err);
-            alert('Gagal mendeteksi gambar. Silakan coba file gambar yang berbeda.');
+            alert('Proses gambar gagal. Coba file lain.');
         } finally {
             overlay.remove();
         }
@@ -288,7 +276,6 @@ async function compressToBase64(file, maxDimension, quality) {
                 let width = img.width;
                 let height = img.height;
 
-                // Resize logic
                 if (width > maxDimension || height > maxDimension) {
                     if (width > height) {
                         height = Math.round((height * maxDimension) / width);
@@ -302,17 +289,13 @@ async function compressToBase64(file, maxDimension, quality) {
                 canvas.width = width;
                 canvas.height = height;
                 const ctx = canvas.getContext('2d');
-                
                 ctx.imageSmoothingEnabled = true;
                 ctx.imageSmoothingQuality = 'high';
                 ctx.drawImage(img, 0, 0, width, height);
-
-                // Export to base64 completely
-                const base64Data = canvas.toDataURL('image/jpeg', quality);
-                resolve(base64Data);
+                resolve(canvas.toDataURL('image/jpeg', quality));
             };
         };
-        reader.onerror = (error) => reject(error);
+        reader.onerror = reject;
     });
 }
 </script>

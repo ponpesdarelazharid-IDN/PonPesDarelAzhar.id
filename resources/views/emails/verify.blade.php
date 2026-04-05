@@ -5,43 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verifikasi Akun - PPDB Darel Azhar</title>
     <style>
-        body { margin: 0; padding: 20px; font-family: 'Inter', 'Arial', sans-serif; background-color: #020617; color: #f8fafc; }
-        .wrapper { max-width: 600px; margin: 0 auto; background-color: #0f172a; border-radius: 24px; overflow: hidden; border: 1px solid #1e293b; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
-        .hero { padding: 40px 20px; text-align: center; background: radial-gradient(circle at top, #1e293b 0%, #0f172a 100%); border-bottom: 1px solid #1e293b; }
-        .label { font-size: 14px; font-weight: 800; color: #22d3ee; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 10px; display: block; }
-        .title { font-size: 28px; font-weight: 900; color: #ffffff; margin: 0; letter-spacing: -0.5px; }
-        
-        .content { padding: 40px; line-height: 1.7; font-size: 16px; color: #cbd5e1; text-align: center; }
-        .greeting { color: #f8fafc; font-weight: 600; margin-bottom: 20px; text-align: left; }
-        
-        .cta-area { text-align: center; margin: 40px 0; }
-        .btn { display: inline-block; background-color: #fbbf24; color: #020617 !important; text-decoration: none; padding: 18px 40px; font-weight: 900; border-radius: 12px; font-size: 16px; border: none; cursor: pointer; }
-        
-        .footer { padding: 30px; text-align: center; font-size: 13px; color: #64748b; border-top: 1px solid #1e293b; }
+        body { margin: 0; padding: 0; font-family: 'Inter', system-ui, -apple-system, sans-serif; background-color: #F8FAFC; color: #1E293B; }
+        .wrapper { max-width: 600px; margin: 40px auto; background-color: #FFFFFF; border-radius: 24px; overflow: hidden; border: 1px solid #E2E8F0; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); }
+        .hero { padding: 50px 40px; text-align: center; background-color: #0F172A; color: #FFFFFF; }
+        .label { font-size: 10px; font-weight: 900; color: #10B981; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 12px; display: block; }
+        .title { font-size: 28px; font-weight: 900; color: #FFFFFF; margin: 0; letter-spacing: -1px; }
+        .content { padding: 48px; line-height: 1.7; font-size: 15px; color: #475569; text-align: center; }
+        .greeting { color: #0F172A; font-weight: 700; font-size: 18px; margin-bottom: 24px; display: block; text-align: left; }
+        .cta-box { margin: 40px 0; text-align: center; }
+        .btn { display: inline-block; background-color: #10B981; color: #FFFFFF !important; text-decoration: none; padding: 18px 40px; font-weight: 900; border-radius: 14px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.2); }
+        .footer { padding: 32px; text-align: center; font-size: 12px; color: #94A3B8; background-color: #F8FAFC; border-top: 1px solid #E2E8F0; }
+        @media only screen and (max-width: 600px) { .wrapper { margin: 0; border-radius: 0; } .hero, .content { padding: 40px 24px; } .title { font-size: 24px; } }
     </style>
 </head>
 <body>
     <div class="wrapper">
         <div class="hero">
-            <span class="label">SECURITY VERIFICATION</span>
-            <h1 class="title">Verifikasi Akun PPDB</h1>
+            <span class="label">Verifikasi Keamanan</span>
+            <h1 class="title">Aktivasi Akun Portal</h1>
         </div>
-
         <div class="content">
-            <p class="greeting">Assalamu'alaikum Calon Santri,</p>
-            
-            <p>Terima kasih telah melakukan pendaftaran di portal PPDB Pondok Pesantren Modern Darel Azhar. Untuk mengaktifkan akun Anda, mohon lakukan konfirmasi alamat email dengan menekan tombol di bawah ini:</p>
-
-            <div class="cta-area">
-                <a href="{{ $url }}" class="btn">VERIFIKASI EMAIL SEKARANG</a>
+            <span class="greeting">Assalamu'alaikum Calon Santri,</span>
+            <p>Terima kasih telah mendaftar di Portal PPDB Pondok Pesantren Modern Darel Azhar. Untuk mengamankan akun dan mengaktifkan akses pendaftaran Anda, mohon lakukan verifikasi email melalui tombol di bawah ini:</p>
+            <div class="cta-box">
+                <a href="{{ $url }}" class="btn">Verifikasi Email Sekarang</a>
             </div>
-            
-            <p style="font-size: 14px; color: #64748b;">Jika tombol tidak berfungsi, salin link berikut:<br> {{ $url }}</p>
+            <p style="font-size: 12px; color: #94A3B8; margin-top: 40px;">Jika tombol tidak berfungsi, silakan salin dan tempel link berikut di browser Anda:<br><span style="word-break: break-all; color: #10B981;">{{ $url }}</span></p>
         </div>
-
         <div class="footer">
             <p><strong>Pondok Pesantren Modern Darel Azhar</strong></p>
-            <p>PPDB System v1.0</p>
+            <p>Sistem Informasi PPDB v1.0</p>
         </div>
     </div>
 </body>

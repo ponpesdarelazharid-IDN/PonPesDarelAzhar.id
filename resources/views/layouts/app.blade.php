@@ -5,20 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', config('app.name', 'Sekolah Kita'))</title>
+    <title>@yield('title', $profiles['nama_sekolah'] ?? 'PonPes Darel Azhar')</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: { 
+                            400: '#34D399', // Mint for Dark Mode
+                            500: '#10B981', // Emerald for Light Mode
+                            600: '#059669', 
+                            700: '#047857'
+                        },
+                        slate: {
+                            900: '#1E293B', // Text Primary Light
+                        },
+                        dark: { 
+                            main: '#0F172A', // Background Dark
+                            card: '#1E293B', // surface/card Dark
+                            text: '#F1F5F9'  // Text Primary Dark
+                        },
+                        light: {
+                            main: '#F8FAFC', // Background Light
+                            text: '#1E293B'  // Text Primary Light
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Dark Mode Logic (Persistent)
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+        
+        function toggleDarkMode() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+        }
+    </script>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=inter:300,400,500,600,700,800&display=swap" rel="stylesheet" />
-
-    <!-- Theme Initialization (prevents FOUC) -->
-    <script>
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
-    </script>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ $profiles['logo'] ?? asset('images/logo-da.png') }}">
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -67,242 +109,107 @@
       }
     </style>
 </head>
-<body class="font-sans antialiased bg-white text-slate-900 dark:bg-[#000000] dark:text-gray-100 transition-colors duration-500">
-    <!-- Loading Screen -->
-    <div id="loading-screen">
-      <img src="{{ $profiles['logo'] ?? asset('images/logo-da.png') }}" alt="Logo Darel Azhar" class="loading-logo object-contain">
-      <div class="loading-text">MEMUAT...</div>
+<<body class="bg-light-main text-light-text dark:bg-dark-main dark:text-dark-text transition-colors duration-300 font-sans antialiased">
+    <!-- Loading Screen (Preserved) -->
+    <div id="loading-screen" class="fixed inset-0 z-[9999] bg-white dark:bg-dark-main flex flex-col items-center justify-center transition-opacity duration-500">
+      <img src="{{ $profiles['logo'] ?? asset('images/logo-da.png') }}" alt="Logo" class="loading-logo w-32 h-32 object-contain mb-4 animate-pulse">
+      <div class="text-emerald-500 font-bold tracking-widest uppercase animate-bounce">MEMUAT...</div>
     </div>
 
-    <div x-data="{ mobileMenuOpen: false }" class="min-h-screen flex flex-col">
-        
-        <!-- Navbar (Navy/Black Accents) -->
-        <nav class="sticky top-0 z-50 bg-white/90 dark:bg-[#000000]/90 backdrop-blur-lg border-b border-slate-200 dark:border-gray-800 transition-all duration-300">
+    <div class="min-h-screen flex flex-col">
+        <!-- Navigation -->
+        <nav class="sticky top-0 z-50 bg-white/80 dark:bg-dark-card/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-all">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between h-20">
-                    <!-- Logo & Brand -->
-                    <div class="flex items-center flex-shrink-0">
-                        <a href="/" class="flex items-center gap-3 group whitespace-nowrap">
-                            <img src="{{ $profiles['logo'] ?? asset('images/logo-da.png') }}" alt="Logo Darel Azhar" class="w-10 h-auto sm:w-12 group-hover:scale-105 transition-transform duration-300 object-contain">
-                            <span class="font-bold text-lg sm:text-xl tracking-tighter text-[#1e293b] dark:text-white truncate max-w-[150px] sm:max-w-none uppercase">
-                                {{ $profiles['nama_sekolah'] ?? 'Darel Azhar' }}
-                            </span>
-                        </a>
-                    </div>
-                    
-                    <!-- Desktop Main Links -->
-                    <div class="hidden lg:flex items-center justify-center flex-1 px-4">
-                        <div class="flex items-center space-x-6 shrink-0">
-                            <a href="/" class="text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-[#1e293b] dark:text-gray-400 dark:hover:text-white transition-colors relative group">
-                                Beranda
-                                <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#1e293b] dark:bg-white group-hover:w-full transition-all duration-300"></span>
-                            </a>
-                            <a href="/#profil" class="text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-[#1e293b] dark:text-gray-400 dark:hover:text-white transition-colors relative group">
-                                Profil
-                                <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#1e293b] dark:bg-white group-hover:w-full transition-all duration-300"></span>
-                            </a>
-                            <a href="{{ route('berita.index') }}" class="text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-[#1e293b] dark:text-gray-400 dark:hover:text-white transition-colors relative group">
-                                Berita
-                                <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#1e293b] dark:bg-white group-hover:w-full transition-all duration-300"></span>
-                            </a>
-                            <a href="{{ route('prestasi.index') }}" class="text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-[#1e293b] dark:text-gray-400 dark:hover:text-white transition-colors relative group">
-                                Prestasi
-                                <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#1e293b] dark:bg-white group-hover:w-full transition-all duration-300"></span>
-                            </a>
-                            <a href="{{ route('ekstrakurikuler.index') }}" class="text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-[#1e293b] dark:text-gray-400 dark:hover:text-white transition-colors relative group">
-                                Ekskul
-                                <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#1e293b] dark:bg-white group-hover:w-full transition-all duration-300"></span>
-                            </a>
-                            <a href="{{ route('ppdb.landing') }}" class="text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-[#1e293b] dark:text-gray-400 dark:hover:text-white transition-colors relative group">
-                                PPDB
-                                <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#1e293b] dark:bg-white group-hover:w-full transition-all duration-300"></span>
-                            </a>
+                <div class="flex justify-between items-center h-20">
+                    <!-- Brand -->
+                    <div class="flex items-center gap-3">
+                        <img src="{{ $profiles['logo'] ?? asset('images/logo-da.png') }}" alt="Logo" class="w-10 h-10 object-contain">
+                        <div class="font-bold text-xl text-emerald-600 dark:text-emerald-400 truncate">
+                            {{ $profiles['nama_sekolah'] ?? 'PonPes Darel Azhar' }}
                         </div>
                     </div>
 
-                    <!-- Right Side (Theme Toggle + Auth Link) -->
-                    <div class="hidden md:flex items-center space-x-6">
-                        <!-- Theme Toggle Button -->
-                        <button id="theme-toggle" type="button" class="w-10 h-10 flex items-center justify-center text-slate-500 dark:text-gray-400 hover:bg-slate-100 dark:hover:bg-gray-800 rounded-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#1e293b] dark:focus:ring-white">
-                            <!-- Sun Icon -->
-                            <svg id="theme-toggle-light-icon" class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"></path></svg>
-                            <!-- Moon Icon -->
-                            <svg id="theme-toggle-dark-icon" class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                    <!-- Links -->
+                    <div class="hidden md:flex items-center space-x-8">
+                        <a href="/" class="text-sm font-semibold hover:text-emerald-500 transition">Beranda</a>
+                        <a href="{{ route('berita.index') }}" class="text-sm font-semibold hover:text-emerald-500 transition">Berita</a>
+                        @if(isset($ppdb) && $ppdb->is_open)
+                            <a href="{{ route('ppdb.landing') }}" class="px-6 py-2 bg-emerald-500 text-white rounded-full font-bold hover:bg-emerald-600 transition shadow-lg shadow-emerald-500/30">Daftar PPDB</a>
+                        @else
+                            <a href="{{ route('ppdb.landing') }}" class="text-sm font-semibold hover:text-emerald-500 transition">PPDB</a>
+                        @endif
+                        
+                        <!-- Dark Mode Toggle -->
+                        <button onclick="toggleDarkMode()" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:ring-2 hover:ring-emerald-500 transition">
+                            <span class="dark:hidden">🌙</span>
+                            <span class="hidden dark:inline">☀️</span>
                         </button>
 
                         @auth
-                            <div class="flex items-center gap-3">
-                                @if(auth()->check() && strtolower(auth()->user()->role) === 'admin' && request()->is('admin*'))
-                                    <div x-data="{ adminDropdown: false }" class="relative">
-                                        <button @click="adminDropdown = !adminDropdown" @click.away="adminDropdown = false" class="flex items-center gap-2 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-[#1e293b] dark:text-white bg-slate-100 dark:bg-white/10 rounded-lg hover:bg-slate-200 dark:hover:bg-white/20 transition shadow-sm border border-slate-200 dark:border-gray-800">
-                                            Admin Menu
-                                            <svg class="w-3 h-3 transition-transform" :class="adminDropdown ? 'rotate-180' : ''" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
-                                        </button>
-                                        
-                                        <div x-show="adminDropdown" x-transition class="absolute right-0 mt-2 w-56 bg-white dark:bg-[#0a0a0a] border border-slate-100 dark:border-gray-800 rounded-2xl shadow-2xl py-2 z-50">
-                                            <a href="{{ route('admin.dashboard') }}" class="block px-6 py-3 text-xs font-bold text-slate-600 dark:text-gray-400 hover:bg-slate-50 dark:hover:bg-white/5 uppercase tracking-widest transition">Overview Panel</a>
-                                            <a href="{{ route('admin.school-profiles.index') }}" class="block px-6 py-3 text-xs font-bold text-slate-600 dark:text-gray-400 hover:bg-slate-50 dark:hover:bg-white/5 uppercase tracking-widest transition">Profil Sekolah</a>
-                                            <a href="{{ route('admin.ekstrakurikuler.index') }}" class="block px-6 py-3 text-xs font-bold text-slate-600 dark:text-gray-400 hover:bg-slate-50 dark:hover:bg-white/5 uppercase tracking-widest transition">Kelola Ekskul</a>
-                                            <a href="{{ route('admin.ppdb-settings.index') }}" class="block px-6 py-3 text-xs font-bold text-blue-600 dark:text-white hover:bg-slate-50 dark:hover:bg-white/5 uppercase tracking-widest transition">Aktifasi PPDB</a>
-                                            <a href="{{ route('admin.posts.index') }}" class="block px-6 py-3 text-xs font-bold text-slate-600 dark:text-gray-400 hover:bg-slate-50 dark:hover:bg-white/5 uppercase tracking-widest transition">Kelola Berita</a>
-                                            <div class="border-t border-slate-100 dark:border-gray-800 my-1"></div>
-                                            <form method="POST" action="{{ route('logout') }}">
-                                                @csrf
-                                                <button type="submit" class="w-full text-left px-6 py-3 text-xs font-bold text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 uppercase tracking-widest transition">Logout</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                @endif
-                                
-                                <a href="{{ (auth()->check() && strtolower(auth()->user()->role) === 'admin') ? route('admin.dashboard') : route('dashboard') }}" class="hidden sm:inline-flex px-5 py-2.5 text-xs font-black rounded-full text-white bg-[#1e293b] hover:bg-black dark:bg-white dark:text-black dark:hover:bg-gray-200 shadow-xl transition-all duration-300 uppercase tracking-widest">
-                                    Dashboard
-                                </a>
-                            </div>
+                            <a href="{{ (auth()->check() && strtolower(auth()->user()->role) === 'admin') ? route('admin.dashboard') : route('dashboard') }}" class="text-sm font-bold px-4 py-2 border-2 border-emerald-500 text-emerald-600 dark:text-emerald-400 rounded-full hover:bg-emerald-500 hover:text-white transition">Dashboard</a>
                         @else
-                            <div class="flex items-center gap-4">
-                                <a href="{{ route('login') }}" class="text-sm font-bold text-[#1e293b] dark:text-white hover:opacity-80 transition-opacity">Login</a>
-                                <a href="{{ route('register') }}" class="px-6 py-2.5 text-sm font-bold rounded-full text-white bg-[#1e293b] hover:bg-black dark:bg-white dark:text-black dark:hover:bg-gray-200 shadow-xl transition-all duration-300">
-                                    Daftar
-                                </a>
-                            </div>
+                            <a href="{{ route('login') }}" class="text-sm font-bold text-slate-600 dark:text-slate-400">Login</a>
                         @endauth
                     </div>
 
-                    <!-- Mobile menu button -->
-                    <div class="flex items-center md:hidden gap-3">
-                        <button id="theme-toggle-mobile" type="button" class="text-slate-500 dark:text-gray-400 hover:bg-slate-100 dark:hover:bg-gray-800 rounded-xl p-2.5 transition">
-                            <svg id="theme-toggle-light-icon-mobile" class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"></path></svg>
-                            <svg id="theme-toggle-dark-icon-mobile" class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                    <!-- Mobile Toggle -->
+                    <div class="md:hidden flex items-center gap-4">
+                        <button onclick="toggleDarkMode()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800">
+                             <span class="dark:hidden">🌙</span>
+                             <span class="hidden dark:inline">☀️</span>
                         </button>
-                        <button @click="mobileMenuOpen = !mobileMenuOpen" class="inline-flex items-center justify-center p-2 rounded-xl text-slate-500 hover:text-[#1e293b] hover:bg-slate-100 dark:hover:bg-gray-800 dark:hover:text-white transition-all">
-                            <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                                <path :class="{'hidden': mobileMenuOpen, 'inline-flex': !mobileMenuOpen }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                                <path :class="{'hidden': !mobileMenuOpen, 'inline-flex': mobileMenuOpen }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
+                        <button class="p-2 text-slate-600 dark:text-slate-400">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
                         </button>
                     </div>
-                </div>
-            </div>
-
-            <!-- Mobile Menu -->
-            <div x-show="mobileMenuOpen" 
-                x-transition:enter="transition ease-out duration-200"
-                x-transition:enter-start="opacity-0 -translate-y-4"
-                x-transition:enter-end="opacity-100 translate-y-0"
-                class="md:hidden border-t border-slate-100 dark:border-gray-900 bg-white dark:bg-[#000000] shadow-2xl" style="display: none;">
-                <div class="pt-4 pb-6 space-y-2">
-                    <a href="/" class="block pl-6 pr-4 py-3 text-base font-bold text-slate-600 hover:text-[#1e293b] hover:bg-slate-50 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-900 transition">Beranda</a>
-                    <a href="/#profil" class="block pl-6 pr-4 py-3 text-base font-bold text-slate-600 hover:text-[#1e293b] hover:bg-slate-50 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-900 transition">Profil</a>
-                    <a href="{{ route('berita.index') }}" class="block pl-6 pr-4 py-3 text-base font-bold text-slate-600 hover:text-[#1e293b] hover:bg-slate-50 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-900 transition">Berita</a>
-                    <a href="{{ route('prestasi.index') }}" class="block pl-6 pr-4 py-3 text-base font-bold text-slate-600 hover:text-[#1e293b] hover:bg-slate-50 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-900 transition">Prestasi</a>
-                    <a href="{{ route('ekstrakurikuler.index') }}" class="block pl-6 pr-4 py-3 text-base font-bold text-slate-600 hover:text-[#1e293b] hover:bg-slate-50 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-900 transition">Ekskul</a>
-                    <a href="{{ route('ppdb.landing') }}" class="block pl-6 pr-4 py-3 text-base font-bold text-slate-600 hover:text-[#1e293b] hover:bg-slate-50 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-900 transition">PPDB</a>
-                </div>
-                <div class="pt-6 pb-8 border-t border-slate-100 dark:border-gray-900 px-6 space-y-4">
-                    @auth
-                        @if(auth()->check() && strtolower(auth()->user()->role) === 'admin' && request()->is('admin*'))
-                            <div class="space-y-2 mb-6">
-                                <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-gray-500 mb-4 px-2">Manajemen Sekolah</p>
-                                <a href="{{ route('admin.dashboard') }}" class="block w-full py-3 px-6 rounded-2xl bg-blue-600 text-white font-bold text-center shadow-lg transition">Panel Admin</a>
-                                <a href="{{ route('admin.school-profiles.index') }}" class="block w-full py-3 px-6 rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-gray-800 text-slate-700 dark:text-white font-bold text-center transition">Profil Sekolah</a>
-                                <a href="{{ route('admin.ekstrakurikuler.index') }}" class="block w-full py-3 px-6 rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-gray-800 text-slate-700 dark:text-white font-bold text-center transition">Kelola Ekskul</a>
-                                <a href="{{ route('admin.ppdb-settings.index') }}" class="block w-full py-3 px-6 rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-gray-800 text-slate-700 dark:text-white font-bold text-center transition">Aktifasi PPDB</a>
-                            </div>
-                        @endif
-
-                        <a href="{{ (auth()->check() && strtolower(auth()->user()->role) === 'admin') ? route('admin.dashboard') : route('dashboard') }}" class="block w-full text-center py-4 px-4 rounded-2xl text-white bg-[#1e293b] hover:bg-black dark:bg-white dark:text-black font-extrabold shadow-xl transition uppercase tracking-widest text-xs">Buka Dashboard</a>
-                        
-                        <form method="POST" action="{{ route('logout') }}" class="mt-4">
-                            @csrf
-                            <button type="submit" class="w-full text-center py-3 text-xs font-bold text-red-500 uppercase tracking-widest">Logout</button>
-                        </form>
-                    @else
-                        <a href="{{ route('login') }}" class="block w-full text-center py-3.5 px-4 rounded-2xl text-[#1e293b] bg-slate-100 dark:bg-gray-900 dark:text-white font-bold transition">Login</a>
-                        <a href="{{ route('register') }}" class="block w-full text-center py-3.5 px-4 rounded-2xl text-white bg-[#1e293b] hover:bg-black dark:bg-white dark:text-black font-bold shadow-lg transition">Daftar</a>
-                    @endauth
                 </div>
             </div>
         </nav>
 
-        <!-- Page Heading (Optional) -->
-        @hasSection('header')
-            <header class="bg-slate-50 dark:bg-[#000000] border-b border-slate-100 dark:border-gray-900 transition-colors">
-                <div class="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
-                    @yield('header')
-                </div>
-            </header>
-        @endif
-
-        <!-- Main Content (with subtle entry animation) -->
+        <!-- Main Content -->
         <main class="flex-grow">
-            <div class="animate-in fade-in slide-in-from-bottom-4 duration-700">
-                @yield('content')
-                
-                @if(isset($slot))
-                    {{ $slot }}
-                @endif
-            </div>
+            @yield('content')
+            @if(isset($slot))
+                {{ $slot }}
+            @endif
         </main>
 
-        <!-- Footer (Premium & All-Black) -->
-        <footer class="bg-slate-50 dark:bg-[#000000] border-t border-slate-100 dark:border-gray-900 mt-auto transition-colors">
-            <div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
-                    <!-- Brand -->
-                    <div class="col-span-1 md:col-span-1">
-                        <span class="text-2xl font-extrabold text-[#1e293b] dark:text-white tracking-tighter">{{ $profiles['nama_sekolah'] ?? 'Sekolah Kita' }}</span>
-                        <p class="mt-6 text-sm text-slate-500 dark:text-gray-400 leading-relaxed">
-                            {{ $profiles['misi_singkat'] ?? 'Mencerdaskan kehidupan bangsa dan membangun generasi yang unggul dan berakhlak mulia melalui pendidikan berkualitas.' }}
+        <!-- Footer -->
+        <footer class="bg-white dark:bg-dark-card border-t border-slate-200 dark:border-slate-800 py-12 transition-colors">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                    <div>
+                        <div class="font-bold text-xl text-emerald-600 dark:text-emerald-400 mb-4 uppercase">
+                            {{ $profiles['nama_sekolah'] ?? 'PonPes Darel Azhar' }}
+                        </div>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                            {{ $profiles['misi_singkat'] ?? 'Membangun generasi berakhlak mulia dan berprestasi.' }}
                         </p>
                     </div>
-                    <!-- Links -->
                     <div>
-                        <h3 class="text-xs font-black text-[#1e293b] dark:text-white tracking-widest uppercase">Jelajahi</h3>
-                        <ul class="mt-6 space-y-4">
-                            <li><a href="/" class="text-sm text-slate-500 hover:text-[#1e293b] dark:text-gray-400 dark:hover:text-white transition-colors">Beranda</a></li>
-                            <li><a href="/#profil" class="text-sm text-slate-500 hover:text-[#1e293b] dark:text-gray-400 dark:hover:text-white transition-colors">Profil Sekolah</a></li>
-                            <li><a href="{{ route('ppdb.landing') }}" class="text-sm text-slate-500 hover:text-[#1e293b] dark:text-gray-400 dark:hover:text-white transition-colors">Informasi PPDB</a></li>
+                        <h4 class="font-bold mb-4 uppercase tracking-wider text-xs text-slate-400">Hubungi Kami</h4>
+                        <ul class="text-sm space-y-3 text-slate-500 dark:text-slate-400">
+                            <li>📍 {{ $profiles['alamat'] ?? 'Jl. Pesantren No. 1' }}</li>
+                            <li>📞 {{ $profiles['tlp'] ?? '08123456789' }}</li>
+                            <li>✉️ {{ $profiles['email'] ?? 'info@ponpes.id' }}</li>
                         </ul>
                     </div>
                     <div>
-                        <h3 class="text-xs font-black text-[#1e293b] dark:text-white tracking-widest uppercase">Informasi</h3>
-                        <ul class="mt-6 space-y-4">
-                            <li><a href="{{ route('berita.index') }}" class="text-sm text-slate-500 hover:text-[#1e293b] dark:text-gray-400 dark:hover:text-white transition-colors">Berita Terbaru</a></li>
-                            <li><a href="{{ route('acara.index') }}" class="text-sm text-slate-500 hover:text-[#1e293b] dark:text-gray-400 dark:hover:text-white transition-colors">Agenda Acara</a></li>
-                            <li><a href="{{ route('prestasi.index') }}" class="text-sm text-slate-500 hover:text-[#1e293b] dark:text-gray-400 dark:hover:text-white transition-colors">Galeri Prestasi</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3 class="text-xs font-black text-[#1e293b] dark:text-white tracking-widest uppercase">Hubungi Kami</h3>
-                        <ul class="mt-6 space-y-4">
-                            <li class="flex items-start text-sm text-slate-500 dark:text-gray-400">
-                                <span class="mr-3 opacity-50">📍</span>
-                                <span>{{ $profiles['alamat'] ?? 'Jl. Komp. Pendidikan No. RT 08/09, Banten' }}</span>
-                            </li>
-                            <li class="flex items-center text-sm text-slate-500 dark:text-gray-400">
-                                <span class="mr-3 opacity-50">📞</span>
-                                <span>{{ $profiles['tlp'] ?? '(021) 1234567' }}</span>
-                            </li>
-                            <li class="flex items-center text-sm text-slate-500 dark:text-gray-400">
-                                <span class="mr-3 opacity-50">✉️</span>
-                                <span>{{ $profiles['email'] ?? 'info@sekolah.com' }}</span>
-                            </li>
-                        </ul>
+                        <h4 class="font-bold mb-4 uppercase tracking-wider text-xs text-slate-400">Sosial Media</h4>
+                        <div class="flex gap-4">
+                            <div class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center hover:bg-emerald-500 hover:text-white transition cursor-pointer">FB</div>
+                            <div class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center hover:bg-emerald-500 hover:text-white transition cursor-pointer">IG</div>
+                            <div class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center hover:bg-emerald-500 hover:text-white transition cursor-pointer">YT</div>
+                        </div>
                     </div>
                 </div>
-                <div class="mt-16 border-t border-slate-100 dark:border-gray-900 pt-10 flex flex-col md:flex-row items-center justify-between gap-6">
-                    <p class="text-sm text-slate-400 dark:text-gray-600">
-                        &copy; {{ date('Y') }} {{ $profiles['nama_sekolah'] ?? 'Sekolah Kita' }}. Premium Web Experience.
-                    </p>
-                    <div class="flex gap-6">
-                        <div class="w-8 h-8 rounded-full bg-slate-100 dark:bg-gray-900 flex items-center justify-center text-[#1e293b] dark:text-white hover:scale-110 transition-transform cursor-pointer">f</div>
-                        <div class="w-8 h-8 rounded-full bg-slate-100 dark:bg-gray-900 flex items-center justify-center text-[#1e293b] dark:text-white hover:scale-110 transition-transform cursor-pointer">i</div>
-                        <div class="w-8 h-8 rounded-full bg-slate-100 dark:bg-gray-900 flex items-center justify-center text-[#1e293b] dark:text-white hover:scale-110 transition-transform cursor-pointer">y</div>
-                    </div>
+                <div class="mt-12 pt-8 border-t border-slate-100 dark:border-slate-800 text-center text-xs text-slate-400">
+                    &copy; {{ date('Y') }} {{ $profiles['nama_sekolah'] ?? 'PonPes Darel Azhar' }}. All Rights Reserved.
                 </div>
             </div>
         </footer>
     </div>
+   </div>
 
     <!-- Theme Toggle Script (Enhanced & Persistent) -->
     <script>
@@ -348,14 +255,16 @@
         initTheme();
     </script>
     
-    <!-- Script to hide loading screen -->
+    <!-- Scripts -->
     <script>
         window.addEventListener('load', function() {
             const loader = document.getElementById('loading-screen');
-            loader.style.opacity = '0';
-            setTimeout(function() {
-                loader.style.display = 'none';
-            }, 500);
+            if(loader) {
+                loader.style.opacity = '0';
+                setTimeout(function() {
+                    loader.style.display = 'none';
+                }, 500);
+            }
         });
     </script>
 </body>
