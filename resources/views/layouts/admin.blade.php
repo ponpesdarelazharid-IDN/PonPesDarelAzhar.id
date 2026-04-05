@@ -83,6 +83,12 @@
             <!-- Background Glow -->
             <div class="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl -z-10"></div>
             
+            <div class="mb-8">
+                @hasSection('header')
+                    @yield('header')
+                @endif
+            </div>
+
             @yield('content')
         </main>
     </div>
