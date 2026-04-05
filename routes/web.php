@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\PpdbSettingController as AdminPpdbSettingControll
 use App\Http\Controllers\Admin\RegistrationController as AdminRegistrationController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\EkstrakurikulerController as AdminEkstrakurikulerController;
+use App\Http\Controllers\Admin\ProgramController as AdminProgramController;
 use Illuminate\Support\Facades\Route;
 
 // ==== PUBLIC WEBSITE ====
@@ -58,6 +59,7 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
     Route::resource('registrations', AdminRegistrationController::class)->only(['index', 'show', 'update']);
     Route::resource('users', AdminUserController::class);
     Route::resource('ekstrakurikuler', AdminEkstrakurikulerController::class);
+    Route::resource('programs', AdminProgramController::class);
 
     // ==== PREVIEW ROUTES (INTERNAL ONLY) ====
     Route::get('/preview-card', function () {

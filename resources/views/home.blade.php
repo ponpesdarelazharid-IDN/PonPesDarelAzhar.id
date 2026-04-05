@@ -36,24 +36,23 @@
             <div class="w-20 h-1.5 bg-emerald-500 mx-auto rounded-full"></div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Program 1 -->
+            @forelse($programs as $program)
             <div class="p-8 bg-light-main dark:bg-dark-main rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all group">
-                <div class="w-14 h-14 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition">📖</div>
-                <h3 class="text-xl font-bold mb-3 text-light-text dark:text-white">Tahfidz Qur'an</h3>
-                <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">Program hafalan dengan metode mutakhir dan pendampingan intensif oleh asatidz berpengalaman.</p>
+                <div class="w-14 h-14 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition overflow-hidden">
+                    @if($program->icon_path)
+                        <img src="{{ $program->icon_path }}" class="w-full h-full object-contain p-2" alt="icon">
+                    @else
+                        🌟
+                    @endif
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-light-text dark:text-white">{{ $program->title }}</h3>
+                <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ $program->description }}</p>
             </div>
-            <!-- Program 2 -->
-            <div class="p-8 bg-light-main dark:bg-dark-main rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all group">
-                <div class="w-14 h-14 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition">💻</div>
-                <h3 class="text-xl font-bold mb-3 text-light-text dark:text-white">IT & Multimedia</h3>
-                <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">Pengembangan skill digital, coding, dan desain grafis untuk menghadapi tantangan masa depan.</p>
+            @empty
+            <div class="col-span-3 text-center py-8">
+                <p class="text-slate-500 dark:text-slate-400">Belum ada program unggulan.</p>
             </div>
-            <!-- Program 3 -->
-            <div class="p-8 bg-light-main dark:bg-dark-main rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all group">
-                <div class="w-14 h-14 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition">🌍</div>
-                <h3 class="text-xl font-bold mb-3 text-light-text dark:text-white">Bahasa Asing</h3>
-                <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">Penguasaan Bahasa Arab dan Inggris secara aktif sebagai bahasa pengantar dan komunikasi global.</p>
-            </div>
+            @endforelse
         </div>
     </div>
 </section>

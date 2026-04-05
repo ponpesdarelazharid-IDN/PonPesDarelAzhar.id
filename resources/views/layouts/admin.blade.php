@@ -60,6 +60,9 @@
                 <a href="{{ route('admin.ekstrakurikuler.index') }}" class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.ekstrakurikuler.*') ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800' }} rounded-xl font-medium transition">
                     🎨 Ekstrakurikuler
                 </a>
+                <a href="{{ route('admin.programs.index') }}" class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.programs.*') ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800' }} rounded-xl font-medium transition">
+                    🌟 Program Unggulan
+                </a>
                 <a href="{{ route('admin.ppdb-settings.index') }}" class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.ppdb-settings.*') ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800' }} rounded-xl font-medium transition">
                     ⚙️ Pengaturan PPDB
                 </a>

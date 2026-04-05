@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\SchoolProfile;
 use App\Models\Post;
 use App\Models\PpdbSetting;
+use App\Models\Program;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,7 @@ class HomeController extends Controller
         $acara = Post::where('type', 'acara')->whereNotNull('published_at')->latest()->take(3)->get();
         $prestasi = Post::where('type', 'prestasi')->whereNotNull('published_at')->latest()->take(3)->get();
         $ekskul = Post::where('type', 'ekstrakurikuler')->whereNotNull('published_at')->latest()->take(3)->get();
+        $programs = Program::latest()->take(3)->get();
         
         $ppdb = PpdbSetting::where('is_open', true)
             ->where(function ($query) {
@@ -33,6 +35,6 @@ class HomeController extends Controller
             })
             ->first();
 
-        return view('home', compact('profiles', 'berita', 'acara', 'prestasi', 'ekskul', 'ppdb'));
+        return view('home', compact('profiles', 'berita', 'acara', 'prestasi', 'ekskul', 'programs', 'ppdb'));
     }
 }
