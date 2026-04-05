@@ -64,9 +64,6 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/jpeg" href="{{ asset('images/logo-da.png') }}">
 
     <style>
       /* Styling untuk Loading Screen */
@@ -109,11 +106,23 @@
       }
     </style>
 </head>
-<<body class="bg-light-main text-light-text dark:bg-dark-main dark:text-dark-text transition-colors duration-300 font-sans antialiased">
-    <!-- Loading Screen (Preserved) -->
+<body class="bg-light-main text-light-text dark:bg-dark-main dark:text-dark-text transition-colors duration-300 font-sans antialiased">
+    <!-- Loading Screen -->
     <div id="loading-screen" class="fixed inset-0 z-[9999] bg-white dark:bg-dark-main flex flex-col items-center justify-center transition-opacity duration-500">
-      <img src="{{ $profiles['logo'] ?? asset('images/logo-da.png') }}" alt="Logo" class="loading-logo w-32 h-32 object-contain mb-4 animate-pulse">
-      <div class="text-emerald-500 font-bold tracking-widest uppercase animate-bounce">MEMUAT...</div>
+      <div class="relative flex flex-col items-center">
+        <!-- Logo with fallback placeholder if slow -->
+        <img src="{{ $profiles['logo'] ?? asset('images/logo-da.png') }}" 
+             alt="Logo" 
+             onload="this.style.opacity='1'"
+             style="opacity: 0; transition: opacity 0.5s ease;"
+             class="loading-logo w-24 h-24 object-contain mb-6">
+        
+        <!-- CSS Spinner (shows while logo is transparent or loading) -->
+        <div class="absolute inset-x-0 -bottom-2 flex justify-center">
+            <div class="w-8 h-8 border-4 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin"></div>
+        </div>
+      </div>
+      <div class="mt-8 text-emerald-500 font-black tracking-widest uppercase text-xs animate-pulse">MEMUAT...</div>
     </div>
 
     <div class="min-h-screen flex flex-col">
@@ -149,7 +158,7 @@
                         @auth
                             <a href="{{ (auth()->check() && strtolower(auth()->user()->role) === 'admin') ? route('admin.dashboard') : route('dashboard') }}" class="text-sm font-bold px-4 py-2 border-2 border-emerald-500 text-emerald-600 dark:text-emerald-400 rounded-full hover:bg-emerald-500 hover:text-white transition">Dashboard</a>
                         @else
-                            <a href="{{ route('login') }}" class="text-sm font-bold text-slate-600 dark:text-slate-400">Login</a>
+                            <a href="{{ route('login') }}" class="text-sm font-bold px-4 py-2 border-2 border-emerald-500 text-emerald-600 dark:text-emerald-400 rounded-full hover:bg-emerald-500 hover:text-white transition">Login / Daftar</a>
                         @endauth
                     </div>
 
@@ -258,15 +267,23 @@
     
     <!-- Scripts -->
     <script>
+        // Use DOMContentLoaded for faster disappearance or window load for safety
         window.addEventListener('load', function() {
             const loader = document.getElementById('loading-screen');
             if(loader) {
                 loader.style.opacity = '0';
-                setTimeout(function() {
-                    loader.style.display = 'none';
-                }, 500);
+                setTimeout(() => loader.remove(), 600); // More efficient than display:none
             }
         });
+
+        // Fail-safe: Force hide loader after 5 seconds if still visible
+        setTimeout(() => {
+            const loader = document.getElementById('loading-screen');
+            if(loader && loader.style.opacity !== '0') {
+               loader.style.opacity = '0';
+               setTimeout(() => loader.remove(), 600);
+            }
+        }, 5000);
     </script>
 </body>
 </html>
