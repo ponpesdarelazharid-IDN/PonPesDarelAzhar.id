@@ -73,23 +73,24 @@
         </div>
     </div>
 
-    <!-- Charts Section -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
         <!-- Registration Trends -->
-        <div class="lg:col-span-2 bg-white dark:bg-[#1E293B] p-8 rounded-[40px] shadow-2xl shadow-slate-900/5 border border-slate-100 dark:border-slate-800">
-            <h3 class="text-xl font-extrabold text-[#111c3a] dark:text-white mb-6 uppercase tracking-tight">Tren Pendaftaran (6 Bulan)</h3>
-            <canvas id="trendsChart" height="150"></canvas>
+        <div class="lg:col-span-2 bg-white dark:bg-[#1E293B] p-6 rounded-[32px] shadow-xl shadow-slate-900/5 border border-slate-100 dark:border-slate-800">
+            <h3 class="text-sm font-black text-[#111c3a] dark:text-white mb-4 uppercase tracking-wider opacity-80">Tren Pendaftaran (6 Bulan)</h3>
+            <div class="h-[250px] relative">
+                <canvas id="trendsChart"></canvas>
+            </div>
         </div>
 
         <!-- Demographics / Status -->
-        <div class="bg-white dark:bg-[#1E293B] p-8 rounded-[40px] shadow-2xl shadow-slate-900/5 border border-slate-100 dark:border-slate-800">
-            <h3 class="text-xl font-extrabold text-[#111c3a] dark:text-white mb-6 uppercase tracking-tight">Status & Gender</h3>
-            <div class="space-y-10">
-                <div>
-                    <canvas id="statusChart" height="200"></canvas>
+        <div class="bg-white dark:bg-[#1E293B] p-6 rounded-[32px] shadow-xl shadow-slate-900/5 border border-slate-100 dark:border-slate-800">
+            <h3 class="text-sm font-black text-[#111c3a] dark:text-white mb-4 uppercase tracking-wider opacity-80">Status & Gender</h3>
+            <div class="grid grid-cols-2 lg:grid-cols-1 gap-4">
+                <div class="h-[140px] relative">
+                    <canvas id="statusChart"></canvas>
                 </div>
-                <div>
-                    <canvas id="genderChart" height="200"></canvas>
+                <div class="h-[140px] relative">
+                    <canvas id="genderChart"></canvas>
                 </div>
             </div>
         </div>
@@ -278,9 +279,10 @@
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
-                    legend: { position: 'bottom', labels: { usePointStyle: true, padding: 20, font: { weight: 'bold', size: 10 } } },
-                    title: { display: true, text: 'Sebaran Jenis Kelamin', font: { weight: 'black', size: 12 } }
+                    legend: { position: 'bottom', labels: { usePointStyle: true, padding: 10, font: { weight: 'bold', size: 9 } } },
+                    title: { display: true, text: 'Sebaran Jenis Kelamin', font: { weight: 'black', size: 10 } }
                 }
             }
         });
