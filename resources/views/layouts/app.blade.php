@@ -211,9 +211,9 @@
         </main>
 
         <!-- Footer -->
-        <footer class="bg-white dark:bg-dark-card border-t border-slate-200 dark:border-slate-800 py-12 transition-colors">
+        <footer class="bg-white dark:bg-dark-card border-t border-slate-200 dark:border-slate-800 py-6 transition-colors">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div>
                         <div class="font-bold text-xl text-emerald-600 dark:text-emerald-400 mb-4 uppercase">
                             {{ $profiles['nama_sekolah'] ?? 'PonPes Darel Azhar' }}
@@ -239,7 +239,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="mt-6 pt-6 border-t border-slate-100 dark:border-slate-800 text-center text-xs text-slate-400">
+                <div class="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800 text-center text-xs text-slate-400">
                     &copy; {{ date('Y') }} {{ $profiles['nama_sekolah'] ?? 'PonPes Darel Azhar' }}. All Rights Reserved.
                     <!-- Nav links - tampil di semua ukuran layar -->
                     <div style="margin-top:12px;display:flex;flex-wrap:wrap;justify-content:center;gap:16px;">
