@@ -213,7 +213,7 @@
         <!-- Footer -->
         <footer class="bg-white dark:bg-dark-card border-t border-slate-200 dark:border-slate-800 py-6 transition-colors">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                     <div>
                         <div class="font-bold text-xl text-emerald-600 dark:text-emerald-400 mb-4 uppercase">
                             {{ $profiles['nama_sekolah'] ?? 'PonPes Darel Azhar' }}
@@ -238,19 +238,22 @@
                             <div class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center hover:bg-emerald-500 hover:text-white transition cursor-pointer">YT</div>
                         </div>
                     </div>
+                    <!-- Kolom ke-4: Navigasi vertikal -->
+                    <div>
+                        <h4 class="font-bold mb-4 uppercase tracking-wider text-xs text-slate-400">Navigasi</h4>
+                        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;">
+                            <li><a href="{{ route('home') }}" style="color:#94a3b8;text-decoration:none;font-size:14px;" onmouseover="this.style.color='#10B981'" onmouseout="this.style.color='#94a3b8'">Beranda</a></li>
+                            <li><a href="{{ route('berita.index') }}" style="color:#94a3b8;text-decoration:none;font-size:14px;" onmouseover="this.style.color='#10B981'" onmouseout="this.style.color='#94a3b8'">Berita</a></li>
+                            <li><a href="{{ route('acara.index') }}" style="color:#94a3b8;text-decoration:none;font-size:14px;" onmouseover="this.style.color='#10B981'" onmouseout="this.style.color='#94a3b8'">Acara</a></li>
+                            <li><a href="{{ route('prestasi.index') }}" style="color:#94a3b8;text-decoration:none;font-size:14px;" onmouseover="this.style.color='#10B981'" onmouseout="this.style.color='#94a3b8'">Prestasi</a></li>
+                            <li><a href="{{ route('ekstrakurikuler.index') }}" style="color:#94a3b8;text-decoration:none;font-size:14px;" onmouseover="this.style.color='#10B981'" onmouseout="this.style.color='#94a3b8'">Ekskul</a></li>
+                            <li><a href="{{ route('ppdb.landing') }}" style="color:#10B981;text-decoration:none;font-size:14px;font-weight:600;">PPDB</a></li>
+                            <li><a href="{{ route('login') }}" style="color:#94a3b8;text-decoration:none;font-size:14px;" onmouseover="this.style.color='#10B981'" onmouseout="this.style.color='#94a3b8'">Login</a></li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800 text-center text-xs text-slate-400">
                     &copy; {{ date('Y') }} {{ $profiles['nama_sekolah'] ?? 'PonPes Darel Azhar' }}. All Rights Reserved.
-                    <!-- Nav links - tampil di semua ukuran layar -->
-                    <div style="margin-top:12px;display:flex;flex-wrap:wrap;justify-content:center;gap:16px;">
-                        <a href="{{ route('home') }}" style="color:inherit;text-decoration:none;" onmouseover="this.style.color='#10B981'" onmouseout="this.style.color=''">Beranda</a>
-                        <a href="{{ route('berita.index') }}" style="color:inherit;text-decoration:none;" onmouseover="this.style.color='#10B981'" onmouseout="this.style.color=''">Berita</a>
-                        <a href="{{ route('acara.index') }}" style="color:inherit;text-decoration:none;" onmouseover="this.style.color='#10B981'" onmouseout="this.style.color=''">Acara</a>
-                        <a href="{{ route('prestasi.index') }}" style="color:inherit;text-decoration:none;" onmouseover="this.style.color='#10B981'" onmouseout="this.style.color=''">Prestasi</a>
-                        <a href="{{ route('ekstrakurikuler.index') }}" style="color:inherit;text-decoration:none;" onmouseover="this.style.color='#10B981'" onmouseout="this.style.color=''">Ekskul</a>
-                        <a href="{{ route('ppdb.landing') }}" style="color:#10B981;font-weight:600;text-decoration:none;">PPDB</a>
-                        <a href="{{ route('login') }}" style="color:inherit;text-decoration:none;" onmouseover="this.style.color='#10B981'" onmouseout="this.style.color=''">Login</a>
-                    </div>
                 </div>
             </div>
         </footer>
