@@ -76,7 +76,8 @@
         <div class="container">
             <a href="/" class="nav-brand flex items-center gap-3">
                 <img src="{{ asset('images/logo-da.png') }}" alt="Logo Darel Azhar" class="h-10 w-auto">
-                <span class="text-gradient uppercase">{{ $profiles['nama_sekolah'] ?? 'Darel Azhar' }}</span>
+                <span class="text-gradient uppercase hidden md:inline">{{ $profiles['nama_sekolah'] ?? 'Darel Azhar' }}</span>
+                <span class="text-gradient uppercase md:hidden">DAREL AZHAR</span>
             </a>
             <div class="nav-links" id="navLinks">
                 <a href="/">Beranda</a>
@@ -91,10 +92,12 @@
                     <a href="{{ route('login') }}" class="btn btn-outline" style="padding: 0.5rem 1.25rem;">Login / Daftar PPDB</a>
                 @endauth
             </div>
-            <div class="menu-toggle" id="menuToggle">
-                <span></span>
-                <span></span>
-                <span></span>
+            <div class="flex items-center gap-4">
+                <div class="menu-toggle" id="menuToggle" style="z-index: 100; position: relative;">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
         </div>
     </nav>
@@ -158,34 +161,37 @@
 
     <!-- Script to hide loading screen & Toggle Mobile Menu -->
     <script>
-        window.addEventListener('load', function() {
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hide Loader
             const loader = document.getElementById('loading-screen');
             if (loader) {
-                loader.style.opacity = '0';
                 setTimeout(function() {
-                    loader.style.display = 'none';
-                }, 500);
+                    loader.style.opacity = '0';
+                    setTimeout(() => loader.style.display = 'none', 500);
+                }, 300);
+            }
+
+            // Mobile Menu Toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const navLinks = document.getElementById('navLinks');
+
+            if(menuToggle && navLinks) {
+                menuToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                });
+
+                // Close menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    if (!navLinks.contains(event.target) && !menuToggle.contains(event.target)) {
+                        menuToggle.classList.remove('active');
+                        navLinks.classList.remove('active');
+                    }
+                });
             }
         });
-
-        // Mobile Menu Toggle
-        const menuToggle = document.getElementById('menuToggle');
-        const navLinks = document.getElementById('navLinks');
-
-        if(menuToggle && navLinks) {
-            menuToggle.addEventListener('click', () => {
-                menuToggle.classList.toggle('active');
-                navLinks.classList.toggle('active');
-            });
-
-            // Close menu when clicking a link
-            navLinks.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    menuToggle.classList.remove('active');
-                    navLinks.classList.remove('active');
-                });
-            });
-        }
     </script>
 </body>
 </html>
