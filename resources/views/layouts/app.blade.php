@@ -194,10 +194,27 @@
                              <span class="dark:hidden">🌙</span>
                              <span class="hidden dark:inline">☀️</span>
                         </button>
-                        <button class="p-2 text-slate-600 dark:text-slate-400">
+                        <button id="mobile-menu-btn" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="p-2 text-slate-600 dark:text-slate-400">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
                         </button>
                     </div>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu Dropdown -->
+            <div id="mobile-menu" class="hidden md:hidden border-t border-slate-100 dark:border-slate-800 bg-white/95 dark:bg-dark-card/95 backdrop-blur-md absolute w-full shadow-xl">
+                <div class="px-4 py-4 space-y-2 flex flex-col items-center">
+                    <a href="{{ route('home') }}" class="w-full text-center px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 hover:text-emerald-500 font-semibold transition">Beranda</a>
+                    <a href="{{ route('berita.index') }}" class="w-full text-center px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 hover:text-emerald-500 font-semibold transition">Berita</a>
+                    <a href="{{ route('acara.index') }}" class="w-full text-center px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 hover:text-emerald-500 font-semibold transition">Acara</a>
+                    <a href="{{ route('prestasi.index') }}" class="w-full text-center px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 hover:text-emerald-500 font-semibold transition">Prestasi</a>
+                    <a href="{{ route('ekstrakurikuler.index') }}" class="w-full text-center px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 hover:text-emerald-500 font-semibold transition">Ekskul</a>
+                    <a href="{{ route('ppdb.landing') }}" class="w-full text-center px-4 py-3 rounded-xl bg-emerald-500 text-white font-bold hover:bg-emerald-600 transition shadow-lg shadow-emerald-500/20">PPDB</a>
+                    @auth
+                        <a href="{{ (auth()->check() && strtolower(auth()->user()->role) === 'admin') ? route('admin.dashboard') : route('dashboard') }}" class="w-full text-center mt-2 px-4 py-3 border-2 border-emerald-500 text-emerald-600 dark:text-emerald-400 rounded-xl hover:bg-emerald-500 hover:text-white font-bold transition">Dashboard</a>
+                    @else
+                        <a href="{{ route('login') }}" class="w-full text-center mt-2 px-4 py-3 border-2 border-emerald-500 text-emerald-600 dark:text-emerald-400 rounded-xl hover:bg-emerald-500 hover:text-white font-bold transition">Login</a>
+                    @endauth
                 </div>
             </div>
         </nav>
