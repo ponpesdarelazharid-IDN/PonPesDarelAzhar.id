@@ -411,15 +411,19 @@ footer {
         cursor: pointer;
     }
     .menu-toggle span {
-        width: 25px;
-        height: 3px;
-        background: white;
-        border-radius: 3px;
+        width: 30px; /* Lebih lebar */
+        height: 4px; /* Lebih tebal */
+        background: #10B981; /* Warna Emerald Hijau yang kontras */
+        border-radius: 4px;
         transition: var(--transition);
+        display: block;
     }
-    .menu-toggle.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .menu-toggle.active span {
+        background: #ef4444; /* Berubah merah saat aktif agar jelas cara tutupnya */
+    }
+    .menu-toggle.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
     .menu-toggle.active span:nth-child(2) { opacity: 0; }
-    .menu-toggle.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+    .menu-toggle.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
 
     .hero > .container { grid-template-columns: 1fr; text-align: center; }
     .hero-buttons { justify-content: center; }

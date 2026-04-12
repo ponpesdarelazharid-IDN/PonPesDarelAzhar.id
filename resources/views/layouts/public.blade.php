@@ -93,7 +93,7 @@
                 @endauth
             </div>
             <div class="flex items-center gap-4">
-                <div class="menu-toggle" id="menuToggle" style="z-index: 100; position: relative;">
+                <div class="menu-toggle" id="menuToggle" style="z-index: 9999 !important; position: relative; padding: 10px; margin: -10px;">
                     <span></span>
                     <span></span>
                     <span></span>
