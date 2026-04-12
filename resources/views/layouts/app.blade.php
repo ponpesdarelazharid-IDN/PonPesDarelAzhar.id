@@ -124,12 +124,47 @@
         100% { transform: scale(1); }
       }
       /* CSS Safety-net for mobile WebView */
-      body {
-        overflow-x: hidden !important;
-      }
+      <!-- MOBILE BOTTOM NAV STYLE -->
+    <style>
+        .bottom-nav {
+            position: fixed !important;
+            bottom: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 70px !important;
+            background: #10B981 !important;
+            border-top: 3px solid #FBBF24 !important;
+            display: flex !important;
+            justify-content: space-around !important;
+            align-items: center !important;
+            padding: 5px 0 !important;
+            z-index: 9999999 !important;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.8) !important;
+        }
+        .nav-item-mobile {
+            text-align: center !important;
+            color: white !important;
+            text-decoration: none !important;
+            flex: 1 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 10px !important;
+            font-weight: bold !important;
+        }
+        .nav-item-mobile i {
+            font-size: 20px !important;
+            margin-bottom: 2px !important;
+        }
+        @media (min-width: 769px) {
+            .bottom-nav { display: none !important; }
+        }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body class="bg-light-main text-light-text dark:bg-dark-main dark:text-dark-text transition-colors duration-300 font-sans antialiased">
+<body class="bg-light-main text-light-text dark:bg-dark-main dark:text-dark-text transition-colors duration-300 font-sans antialiased pb-[80px] md:pb-0">
+    <div style="background: #10B981; color: white; text-align: center; font-weight: bold; padding: 15px; z-index: 10000; position: fixed; top: 0; width: 100%; border-bottom: 5px solid yellow; font-size: 20px;">VERSI UPDATE 2.1 - FIX FINAL</div>
     <!-- Loading Screen -->
     <div id="loading-screen" class="fixed inset-0 z-[9999] bg-white dark:bg-dark-main flex flex-col items-center justify-center transition-opacity duration-500">
       <div class="relative flex flex-col items-center">
@@ -288,6 +323,30 @@
         initTheme();
     </script>
     
+    <!-- MOBILE BOTTOM NAVIGATION -->
+    <div id="bottom-nav" class="bottom-nav">
+        <a href="{{ route('home') }}" class="nav-item-mobile">
+            <i class="fas fa-home"></i>
+            <span>Beranda</span>
+        </a>
+        <a href="{{ route('berita.index') }}" class="nav-item-mobile">
+            <i class="fas fa-newspaper"></i>
+            <span>Berita</span>
+        </a>
+        <a href="{{ route('acara.index') }}" class="nav-item-mobile">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Acara</span>
+        </a>
+        <a href="{{ route('ppdb.landing') }}" class="nav-item-mobile">
+            <i class="fas fa-user-plus"></i>
+            <span>PPDB</span>
+        </a>
+        <a href="{{ route('login') }}" class="nav-item-mobile" style="background: #065F46; border-radius: 10px; margin: 0 5px;">
+            <i class="fas fa-sign-in-alt"></i>
+            <span>Login</span>
+        </a>
+    </div>
+
     <!-- Scripts -->
     <script>
         // Use DOMContentLoaded for faster disappearance or window load for safety
