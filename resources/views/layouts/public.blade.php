@@ -55,6 +55,50 @@
       body {
         overflow-x: hidden !important;
       }
+      
+      /* NUCLEAR MOBILE CSS - Inlined to bypass cache */
+      @media (max-width: 768px) {
+          .nav-links {
+              position: fixed !important;
+              top: 80px !important;
+              left: -100% !important;
+              width: 100% !important;
+              height: calc(100vh - 80px) !important;
+              background: #0F172A !important;
+              display: flex !important;
+              flex-direction: column !important;
+              padding: 2rem !important;
+              transition: 0.3s ease !important;
+              z-index: 9998 !important;
+          }
+          .nav-links.active {
+              left: 0 !important;
+          }
+          .menu-toggle {
+              display: flex !important;
+              flex-direction: column !important;
+              gap: 5px !important;
+              cursor: pointer !important;
+              z-index: 9999 !important;
+          }
+          .menu-toggle span {
+              width: 30px !important;
+              height: 4px !important;
+              background: #10B981 !important; /* Hijau Emerald Kontras */
+              border-radius: 4px !important;
+              display: block !important;
+          }
+          .menu-toggle.active span:nth-child(1) { transform: translateY(9px) rotate(45deg) !important; background: #ef4444 !important; }
+          .menu-toggle.active span:nth-child(2) { opacity: 0 !important; }
+          .menu-toggle.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg) !important; background: #ef4444 !important; }
+          
+          .nav-brand span.mobile-title { display: inline !important; font-size: 1.1rem !important; }
+          .nav-brand span.desktop-title { display: none !important; }
+      }
+      @media (min-width: 769px) {
+          .nav-brand span.mobile-title { display: none !important; }
+          .nav-brand span.desktop-title { display: inline !important; }
+      }
     </style>
 
     <!-- Fonts -->
@@ -76,8 +120,8 @@
         <div class="container">
             <a href="/" class="nav-brand flex items-center gap-3">
                 <img src="{{ asset('images/logo-da.png') }}" alt="Logo Darel Azhar" class="h-10 w-auto">
-                <span class="text-gradient uppercase hidden md:inline">{{ $profiles['nama_sekolah'] ?? 'Darel Azhar' }}</span>
-                <span class="text-gradient uppercase md:hidden">DAREL AZHAR</span>
+                <span class="text-gradient uppercase desktop-title">{{ $profiles['nama_sekolah'] ?? 'Darel Azhar' }}</span>
+                <span class="text-gradient uppercase mobile-title">DAREL AZHAR</span>
             </a>
             <div class="nav-links" id="navLinks">
                 <a href="/">Beranda</a>
