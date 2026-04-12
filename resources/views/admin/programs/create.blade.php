@@ -1,4 +1,8 @@
-@extends('layouts.admin')
+@section('title', 'Tambah Program')
+
+@section('breadcrumb')
+<a href="{{ route('admin.programs.index') }}" class="hover:text-emerald-500 transition">Program Unggulan</a>
+@endsection
 
 @section('header')
 <div class="flex items-center gap-4">
@@ -98,9 +102,8 @@ document.querySelectorAll('input[type="file"]').forEach(input => {
 
         try {
             const fieldName = e.target.dataset.name;
-            const maxDim = 800; // 800px max for icon
-
-            const base64Data = await compressToBase64(file, maxDim, 0.9);
+            // Use global helper from admin.blade.php
+            const base64Data = await compressImageToBase64(file, 800, 0.9);
             
             let hiddenInput = container.querySelector(`input[name="${fieldName}_base64"]`);
             if (!hiddenInput) {
@@ -137,40 +140,6 @@ document.querySelectorAll('input[type="file"]').forEach(input => {
         }
     });
 });
-
-async function compressToBase64(file, maxDimension, quality) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = (event) => {
-            const img = new Image();
-            img.src = event.target.result;
-            img.onload = () => {
-                const canvas = document.createElement('canvas');
-                let width = img.width;
-                let height = img.height;
-
-                if (width > maxDimension || height > maxDimension) {
-                    if (width > height) {
-                        height = Math.round((height * maxDimension) / width);
-                        width = maxDimension;
-                    } else {
-                        width = Math.round((width * maxDimension) / height);
-                        height = maxDimension;
-                    }
-                }
-
-                canvas.width = width;
-                canvas.height = height;
-                const ctx = canvas.getContext('2d');
-                ctx.imageSmoothingEnabled = true;
-                ctx.imageSmoothingQuality = 'high';
-                ctx.drawImage(img, 0, 0, width, height);
-                resolve(canvas.toDataURL('image/png', quality)); // Better support for transparent icons
-            };
-        };
-        reader.onerror = reject;
-    });
-}
 </script>
+@endsection
 @endsection

@@ -1,5 +1,11 @@
 @extends('layouts.admin')
 
+@section('title', 'Program Unggulan')
+
+@section('breadcrumb')
+<span class="text-slate-400">Program Unggulan</span>
+@endsection
+
 @section('header')
 <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
     <div>

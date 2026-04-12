@@ -78,14 +78,27 @@
     <!-- Page Content -->
     <main class="flex-1 p-6 md:p-12 overflow-y-auto min-h-screen bg-slate-50 dark:bg-dark-main transition-colors duration-500">
         <!-- Breadcrumbs / Top Bar -->
-        <div class="mb-8 flex justify-between items-center">
-            <div class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">
-                Admin <span class="mx-2 opacity-30 text-xs">/</span> Dashboard <span class="mx-2 opacity-30 text-xs">/</span> @yield('title')
+        <div class="mb-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 flex items-center gap-2">
+                <a href="{{ route('admin.dashboard') }}" class="hover:text-emerald-500 transition">Admin</a>
+                <span class="opacity-30 text-xs">/</span>
+                @if(View::hasSection('breadcrumb'))
+                    @yield('breadcrumb')
+                    <span class="opacity-30 text-xs">/</span>
+                @endif
+                <span class="text-emerald-500">@yield('title', 'Overview')</span>
             </div>
             <div class="flex items-center gap-4">
                 <button id="dark-toggle" onclick="document.documentElement.classList.toggle('dark'); localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';" class="w-10 h-10 rounded-xl bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-800 flex items-center justify-center text-lg transition-transform hover:rotate-12">🌓</button>
             </div>
         </div>
+
+        <!-- Page Header Slot -->
+        @if(View::hasSection('header'))
+            <div class="mb-10 animate-fade-in-down">
+                @yield('header')
+            </div>
+        @endif
 
         <!-- Global Notifications (Premium Style) -->
         @if(session('success') || session('error') || $errors->any())
@@ -129,12 +142,59 @@
         </div>
     </main>
 
+    <!-- Global Image Compression Helper -->
+    <script>
+        async function compressImageToBase64(file, maxDimension = 1200, quality = 0.8) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = (event) => {
+                    const img = new Image();
+                    img.src = event.target.result;
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > maxDimension || height > maxDimension) {
+                            if (width > height) {
+                                height = Math.round((height * maxDimension) / width);
+                                width = maxDimension;
+                            } else {
+                                width = Math.round((width * maxDimension) / height);
+                                height = maxDimension;
+                            }
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.imageSmoothingEnabled = true;
+                        ctx.imageSmoothingQuality = 'high';
+                        ctx.drawImage(img, 0, 0, width, height);
+                        
+                        // Use original mime type if possible, default to jpeg
+                        const mimeType = file.type === 'image/png' ? 'image/png' : 'image/jpeg';
+                        resolve(canvas.toDataURL(mimeType, quality));
+                    };
+                };
+                reader.onerror = reject;
+            });
+        }
+    </script>
+
     <style>
         @keyframes slide-in {
             from { transform: translateX(100%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
         }
+        @keyframes fade-in-down {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
         .animate-slide-in { animation: slide-in 0.5s ease-out; }
+        .animate-fade-in-down { animation: fade-in-down 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
     </style>
+
 </body>
 </html>

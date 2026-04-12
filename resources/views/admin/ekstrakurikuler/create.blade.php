@@ -1,5 +1,11 @@
 @extends('layouts.admin')
 
+@section('title', 'Tambah Ekskul')
+
+@section('breadcrumb')
+<a href="{{ route('admin.ekstrakurikuler.index') }}" class="hover:text-emerald-500 transition">Ekstrakurikuler</a>
+@endsection
+
 @section('header')
 <div class="flex items-center gap-4">
     <a href="{{ route('admin.ekstrakurikuler.index') }}" 
@@ -67,14 +73,13 @@
                     <label class="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4 px-1 text-center">Foto Kegiatan</label>
                     
                     <div class="relative group">
-                        <input type="file" name="image_file" id="image_upload" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                        <input type="file" name="image_file" id="image_upload" data-name="image_file" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
                         <div id="image_preview_container" class="aspect-square rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 flex flex-col items-center justify-center group-hover:bg-slate-100 dark:group-hover:bg-emerald-500/5 transition-all overflow-hidden relative">
                             <div id="placeholder" class="flex flex-col items-center justify-center p-4 text-center">
                                 <svg class="w-10 h-10 text-slate-300 dark:text-slate-600 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                                 <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-600">Klik untuk upload</p>
-                                <p class="text-[8px] text-slate-300 mt-1 uppercase tracking-tight">Maksimal 2MB (JPG/PNG)</p>
+                                <p class="text-[8px] text-slate-300 mt-1 uppercase tracking-tight">Otomatis Dikompresi</p>
                             </div>
-                            <img id="image_preview" class="hidden absolute inset-0 w-full h-full object-cover">
                         </div>
                     </div>
                 </div>
@@ -89,13 +94,56 @@
 </div>
 
 <script>
-    document.getElementById('image_upload').onchange = function(evt) {
-        const [file] = this.files
-        if (file) {
-            document.getElementById('image_preview').src = URL.createObjectURL(file)
-            document.getElementById('image_preview').classList.remove('hidden')
-            document.getElementById('placeholder').classList.add('opacity-0')
+document.getElementById('image_upload').addEventListener('change', async function(e) {
+    const file = e.target.files[0];
+    if (!file || !file.type.startsWith('image/')) return;
+    
+    const container = e.target.closest('.group');
+    const overlay = document.createElement('div');
+    overlay.className = "absolute inset-0 bg-slate-950/80 backdrop-blur-sm flex flex-col items-center justify-center z-50 text-white transition-opacity duration-300 rounded-3xl";
+    overlay.innerHTML = `
+        <div class="w-10 h-10 border-4 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin mb-4"></div>
+        <p class="text-[8px] font-black uppercase tracking-[0.2em] animate-pulse text-center px-4">Optimizing Image...</p>
+    `;
+    container.appendChild(overlay);
+
+    try {
+        const fieldName = e.target.dataset.name;
+        // Use global helper from admin.blade.php
+        const base64Data = await compressImageToBase64(file, 1200, 0.8);
+        
+        let hiddenInput = container.querySelector(`input[name="${fieldName}_base64"]`);
+        if (!hiddenInput) {
+            hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = `${fieldName}_base64`;
+            container.appendChild(hiddenInput);
         }
+        hiddenInput.value = base64Data;
+        
+        // Disable original file input to save bandwidth/bypass limits
+        e.target.removeAttribute('name');
+        
+        const previewContainer = document.getElementById('image_preview_container');
+        const placeholder = document.getElementById('placeholder');
+        if (placeholder) placeholder.classList.add('hidden');
+
+        let img = document.getElementById('image_preview');
+        if (!img) {
+            img = document.createElement('img');
+            img.id = 'image_preview';
+            img.className = "absolute inset-0 w-full h-full object-cover rounded-2xl";
+            previewContainer.appendChild(img);
+        }
+        img.src = base64Data;
+        
+    } catch (err) {
+        console.error('Processing failed:', err);
+        alert('Proses gambar gagal. Coba file lain.');
+    } finally {
+        overlay.remove();
     }
+});
 </script>
+@endsection
 @endsection
