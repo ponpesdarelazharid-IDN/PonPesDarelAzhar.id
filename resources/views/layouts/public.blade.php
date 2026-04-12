@@ -147,7 +147,7 @@
 <body class="font-sans antialiased bg-white text-slate-900 dark:bg-[#000000] dark:text-gray-100 transition-colors duration-500">
     <script>console.log('VERSI 1.7 AKTIF');</script>
     <!-- PENANDA VERSI FORCED UPDATE -->
-    <div style="background: #10B981; color: white; text-align: center; font-weight: bold; padding: 15px; z-index: 10000; position: fixed; top: 0; width: 100%; border-bottom: 5px solid yellow; font-size: 20px;">VERSI UPDATE 1.7 - STABIL OK</div>
+    <div style="background: #10B981; color: white; text-align: center; font-weight: bold; padding: 15px; z-index: 10000; position: fixed; top: 0; width: 100%; border-bottom: 5px solid yellow; font-size: 20px;">VERSI UPDATE 2.0 - NUCLEAR REBUILD SUCCESS</div>
     
     <!-- Loading Screen -->
     <div id="loading-screen">
