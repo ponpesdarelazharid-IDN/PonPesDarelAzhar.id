@@ -6,9 +6,17 @@
         "build": "vite build",
         "dev": "vite"
     },
+    "env": {
+        "APP_ENV": "production",
+        "APP_DEBUG": "false",
+        "CACHE_STORE": "array",
+        "SESSION_DRIVER": "cookie",
+        "QUEUE_CONNECTION": "sync",
+        "LOG_CHANNEL": "stderr",
+        "VERCEL_FORCE_BUILD": "1.6"
+    },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.2",
-        "@tailwindcss/vite": "^4.0.0",
         "alpinejs": "^3.4.2",
         "autoprefixer": "^10.4.2",
         "axios": "^1.11.0",
