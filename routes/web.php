@@ -21,6 +21,9 @@ Route::get('/acara', [PostController::class, 'acara'])->name('acara.index');
 Route::get('/prestasi', [PostController::class, 'prestasi'])->name('prestasi.index');
 Route::get('/ekstrakurikuler', [PostController::class, 'ekstrakurikuler'])->name('ekstrakurikuler.index');
 Route::get('/posts/{post:slug}', [PostController::class, 'show'])->name('posts.show');
+Route::get('/test-menu', function() {
+    return view('welcome'); // Or any view that uses public layout
+})->name('test.menu');
 
 // ==== PPDB USER AREA ====
 Route::get('/ppdb', [PpdbController::class, 'landing'])->name('ppdb.landing');
