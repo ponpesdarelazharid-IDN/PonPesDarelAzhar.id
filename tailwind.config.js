@@ -13,8 +13,28 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Inter', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                emerald: {
+                    400: '#34D399',
+                    500: '#10B981',
+                    600: '#059669',
+                    700: '#047857'
+                },
+                slate: {
+                    900: '#1E293B',
+                },
+                dark: {
+                    main: '#0F172A',
+                    card: '#1E293B',
+                    text: '#F1F5F9'
+                },
+                light: {
+                    main: '#F8FAFC',
+                    text: '#1E293B'
+                }
+            }
         },
     },
 
