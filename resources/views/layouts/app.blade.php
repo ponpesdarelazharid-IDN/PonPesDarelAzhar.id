@@ -126,8 +126,8 @@
       /* CSS Safety-net for mobile WebView */
     <!-- MOBILE BOTTOM NAV -->
     <style>
-        @media (max-width: 768px) {
-            body { padding-bottom: 65px; }
+        @media (min-width: 769px) {
+            #mobile-bottom-nav { display: none !important; }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -244,6 +244,30 @@
                 </div>
             </div>
         </footer>
+
+        <!-- MOBILE BOTTOM NAV - di atas footer, hanya mobile -->
+        <div id="mobile-bottom-nav" style="display:flex;flex-direction:row;justify-content:space-around;align-items:center;background:#10B981;border-top:3px solid #FBBF24;height:65px;width:100%;">
+            <a href="{{ route('home') }}" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;text-decoration:none;font-size:10px;font-family:sans-serif;font-weight:bold;padding:5px 0;">
+                <i class="fas fa-home" style="font-size:20px;margin-bottom:3px;"></i>
+                <span>Beranda</span>
+            </a>
+            <a href="{{ route('berita.index') }}" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;text-decoration:none;font-size:10px;font-family:sans-serif;font-weight:bold;padding:5px 0;">
+                <i class="fas fa-newspaper" style="font-size:20px;margin-bottom:3px;"></i>
+                <span>Berita</span>
+            </a>
+            <a href="{{ route('acara.index') }}" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;text-decoration:none;font-size:10px;font-family:sans-serif;font-weight:bold;padding:5px 0;">
+                <i class="fas fa-calendar-alt" style="font-size:20px;margin-bottom:3px;"></i>
+                <span>Acara</span>
+            </a>
+            <a href="{{ route('ppdb.landing') }}" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;text-decoration:none;font-size:10px;font-family:sans-serif;font-weight:bold;padding:5px 0;">
+                <i class="fas fa-user-plus" style="font-size:20px;margin-bottom:3px;"></i>
+                <span>PPDB</span>
+            </a>
+            <a href="{{ route('login') }}" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;text-decoration:none;font-size:10px;font-family:sans-serif;font-weight:bold;padding:5px 0;">
+                <i class="fas fa-sign-in-alt" style="font-size:20px;margin-bottom:3px;"></i>
+                <span>Login</span>
+            </a>
+        </div>
     </div>
    </div>
 
@@ -291,30 +315,6 @@
         initTheme();
     </script>
     
-    <!-- MOBILE BOTTOM NAV -->
-    <div id="mobile-bottom-nav" style="position:fixed;bottom:0;left:0;right:0;width:100%;height:65px;background:#10B981;border-top:4px solid #FBBF24;display:flex;flex-direction:row;justify-content:space-around;align-items:center;z-index:99999;box-shadow:0 -4px 15px rgba(0,0,0,0.4);">
-        <a href="{{ route('home') }}" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;text-decoration:none;font-size:10px;font-family:sans-serif;font-weight:bold;">
-            <i class="fas fa-home" style="font-size:20px;margin-bottom:3px;"></i>
-            <span>Beranda</span>
-        </a>
-        <a href="{{ route('berita.index') }}" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;text-decoration:none;font-size:10px;font-family:sans-serif;font-weight:bold;">
-            <i class="fas fa-newspaper" style="font-size:20px;margin-bottom:3px;"></i>
-            <span>Berita</span>
-        </a>
-        <a href="{{ route('acara.index') }}" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;text-decoration:none;font-size:10px;font-family:sans-serif;font-weight:bold;">
-            <i class="fas fa-calendar-alt" style="font-size:20px;margin-bottom:3px;"></i>
-            <span>Acara</span>
-        </a>
-        <a href="{{ route('ppdb.landing') }}" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;text-decoration:none;font-size:10px;font-family:sans-serif;font-weight:bold;">
-            <i class="fas fa-user-plus" style="font-size:20px;margin-bottom:3px;"></i>
-            <span>PPDB</span>
-        </a>
-        <a href="{{ route('login') }}" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;text-decoration:none;font-size:10px;font-family:sans-serif;font-weight:bold;">
-            <i class="fas fa-sign-in-alt" style="font-size:20px;margin-bottom:3px;"></i>
-            <span>Login</span>
-        </a>
-    </div>
-
     <!-- Scripts -->
     <script>
         // Use DOMContentLoaded for faster disappearance or window load for safety
