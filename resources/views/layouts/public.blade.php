@@ -95,24 +95,20 @@
           .nav-brand span.mobile-title { display: inline !important; font-size: 1.1rem !important; }
           .nav-brand span.desktop-title { display: none !important; }
 
-          /* Bottom Nav Styles */
+          /* Bottom Nav Styles - FORCED RED */
           .bottom-nav {
               position: fixed !important;
-              bottom: 20px !important;
-              left: 50% !important;
-              transform: translateX(-50%) !important;
-              width: 90% !important;
-              background: rgba(15, 23, 42, 0.8) !important;
-              backdrop-filter: blur(15px) !important;
-              -webkit-backdrop-filter: blur(15px) !important;
-              border: 1px solid rgba(255, 255, 255, 0.1) !important;
-              border-radius: 20px !important;
+              bottom: 0 !important; /* Pas di bawah */
+              left: 0 !important;
+              width: 100% !important;
+              background: #ef4444 !important; /* MERAH MENYALA */
+              border-top: 2px solid white !important;
               display: flex !important;
               justify-content: space-around !important;
               align-items: center !important;
-              padding: 10px 5px !important;
-              z-index: 9999 !important;
-              box-shadow: 0 10px 25px rgba(0,0,0,0.5) !important;
+              padding: 15px 0 !important;
+              z-index: 999999 !important;
+              box-shadow: 0 -5px 20px rgba(0,0,0,0.5) !important;
           }
           .bottom-nav-item {
               display: flex !important;
@@ -147,6 +143,9 @@
     <link rel="stylesheet" href="{{ asset('css/landing.css') }}">
 </head>
 <body class="font-sans antialiased bg-white text-slate-900 dark:bg-[#000000] dark:text-gray-100 transition-colors duration-500">
+    <!-- PENANDA VERSI FORCED UPDATE -->
+    <div style="background: red; color: white; text-align: center; font-weight: bold; padding: 5px; z-index: 10000; position: fixed; top: 0; width: 100%;">VERSI UPDATE 1.5 - SEDANG AKTIF</div>
+    
     <!-- Loading Screen -->
     <div id="loading-screen">
       <img src="{{ asset('images/logo-da.png') }}" alt="Logo Darel Azhar" class="loading-logo">
