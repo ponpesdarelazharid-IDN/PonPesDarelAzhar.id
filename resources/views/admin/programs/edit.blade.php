@@ -1,3 +1,5 @@
+@extends('layouts.admin')
+
 @section('title', 'Edit Program')
 
 @section('breadcrumb')

@@ -1,3 +1,5 @@
+@extends('layouts.admin')
+
 @section('title', 'Tambah Program')
 
 @section('breadcrumb')
