@@ -144,7 +144,7 @@
 </head>
 <body class="font-sans antialiased bg-white text-slate-900 dark:bg-[#000000] dark:text-gray-100 transition-colors duration-500">
     <!-- PENANDA VERSI FORCED UPDATE -->
-    <div style="background: red; color: white; text-align: center; font-weight: bold; padding: 5px; z-index: 10000; position: fixed; top: 0; width: 100%;">VERSI UPDATE 1.5 - SEDANG AKTIF</div>
+    <div style="background: #10B981; color: white; text-align: center; font-weight: bold; padding: 10px; z-index: 10000; position: fixed; top: 0; width: 100%; border-bottom: 3px solid white;">VERSI UPDATE 1.6 - SISTEM OK</div>
     
     <!-- Loading Screen -->
     <div id="loading-screen">

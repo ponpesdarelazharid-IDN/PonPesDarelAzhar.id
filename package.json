@@ -4,14 +4,7 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite"
-    },
-    "env": {
-        "APP_ENV": "production",
-        "APP_DEBUG": "false",
-        "CACHE_STORE": "array",
-        "SESSION_DRIVER": "cookie",
-        "QUEUE_CONNECTION": "sync",
+        "dev": "vite",
         "LOG_CHANNEL": "stderr",
         "VERCEL_FORCE_BUILD": "1.6"
     },
