@@ -50,6 +50,13 @@
         50% { transform: scale(1.05); }
         100% { transform: scale(1); }
       }
+
+      /* CSS Safety-net for mobile WebView */
+      html, body {
+        overflow-x: hidden !important;
+        width: 100% !important;
+        position: relative !important;
+      }
     </style>
 
     <!-- Fonts -->

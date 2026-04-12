@@ -34,6 +34,14 @@
             document.documentElement.classList.remove('dark')
         }
     </script>
+    <style>
+      /* CSS Safety-net for mobile WebView */
+      html, body {
+        overflow-x: hidden !important;
+        width: 100% !important;
+        position: relative !important;
+      }
+    </style>
 </head>
 <body class="bg-slate-100 dark:bg-[#0a1128] text-slate-900 dark:text-slate-100 font-sans transition-colors duration-300">
     <div class="flex h-screen overflow-hidden">

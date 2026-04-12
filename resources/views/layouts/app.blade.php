@@ -123,6 +123,12 @@
         50% { transform: scale(1.05); }
         100% { transform: scale(1); }
       }
+      /* CSS Safety-net for mobile WebView */
+      html, body {
+        overflow-x: hidden !important;
+        width: 100% !important;
+        position: relative !important;
+      }
     </style>
 </head>
 <body class="bg-light-main text-light-text dark:bg-dark-main dark:text-dark-text transition-colors duration-300 font-sans antialiased">
