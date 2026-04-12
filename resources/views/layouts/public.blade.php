@@ -95,37 +95,39 @@
           .nav-brand span.mobile-title { display: inline !important; font-size: 1.1rem !important; }
           .nav-brand span.desktop-title { display: none !important; }
 
-          /* Bottom Nav Styles - FORCED RED */
-          .bottom-nav {
-              position: fixed !important;
-              bottom: 0 !important;
-              left: 0 !important;
-              width: 100% !important;
-              background: #10B981 !important; /* HIJAU EMERALD SEPERTI REKOMENDASI */
-              border-top: 2px solid white !important;
-              display: flex !important;
-              justify-content: space-around !important;
-              align-items: center !important;
-              padding: 15px 0 !important;
-              z-index: 999999 !important;
-              box-shadow: 0 -5px 20px rgba(0,0,0,0.5) !important;
-          }
-          .bottom-nav-item {
-              display: flex !important;
-              flex-direction: column !important;
-              align-items: center !important;
-              color: #94a3b8 !important;
-              text-decoration: none !important;
-              font-size: 10px !important;
-              gap: 4px !important;
-              flex: 1 !important;
-          }
-          .bottom-nav-item.active {
-              color: #10B981 !important;
-          }
-          .bottom-nav-item i {
-              font-size: 18px !important;
-          }
+    /* Custom Styles for Bottom Nav */
+    .bottom-nav {
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 70px !important;
+        background: #10B981 !important;
+        border-top: 3px solid #FBBF24 !important;
+        display: flex !important;
+        justify-content: space-around !important;
+        align-items: center !important;
+        padding: 5px 0 !important;
+        z-index: 9999999 !important;
+        box-shadow: 0 -10px 30px rgba(0,0,0,0.8) !important;
+        pointer-events: auto !important;
+    }
+    .nav-item {
+        text-align: center !important;
+        color: white !important;
+        text-decoration: none !important;
+        flex: 1 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 10px !important;
+        font-weight: bold !important;
+    }
+    .nav-item i {
+        font-size: 20px !important;
+        margin-bottom: 2px !important;
+    }
       }
       @media (min-width: 769px) {
           .nav-brand span.mobile-title { display: none !important; }
