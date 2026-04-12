@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth overflow-x-hidden">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -132,7 +132,7 @@
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body class="bg-light-main text-light-text dark:bg-dark-main dark:text-dark-text transition-colors duration-300 font-sans antialiased">
+<body class="bg-light-main text-light-text dark:bg-dark-main dark:text-dark-text transition-colors duration-300 font-sans antialiased overflow-x-hidden">
     <!-- Loading Screen -->
     <div id="loading-screen" class="fixed inset-0 z-[9999] bg-white dark:bg-dark-main flex flex-col items-center justify-center transition-opacity duration-500">
       <div class="relative flex flex-col items-center">
@@ -157,9 +157,9 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center h-20">
                     <!-- Brand -->
-                    <div class="flex items-center gap-3">
-                        <img src="{{ $profiles['logo'] ?? asset('images/logo-da.png') }}" alt="Logo" class="w-10 h-10 object-contain">
-                        <div class="font-bold text-xl text-emerald-600 dark:text-emerald-400 truncate">
+                    <div class="flex items-center gap-3 flex-1 min-w-0 mr-2">
+                        <img src="{{ $profiles['logo'] ?? asset('images/logo-da.png') }}" alt="Logo" class="w-10 h-10 object-contain flex-shrink-0">
+                        <div class="font-bold text-lg sm:text-xl text-emerald-600 dark:text-emerald-400 truncate flex-1 min-w-0">
                             {{ $profiles['nama_sekolah'] ?? 'PonPes Darel Azhar' }}
                         </div>
                     </div>
@@ -189,7 +189,7 @@
                     </div>
 
                     <!-- Mobile Toggle -->
-                    <div class="md:hidden flex items-center gap-4">
+                    <div class="md:hidden flex items-center gap-2 flex-shrink-0">
                         <button onclick="toggleDarkMode()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800">
                              <span class="dark:hidden">🌙</span>
                              <span class="hidden dark:inline">☀️</span>
