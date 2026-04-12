@@ -3,7 +3,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "vite build",
+        "build": "php artisan view:clear && vite build",
         "dev": "vite",
         "LOG_CHANNEL": "stderr",
         "VERCEL_FORCE_BUILD": "1.6"
