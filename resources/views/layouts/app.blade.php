@@ -26,8 +26,36 @@
 
     @yield('meta')
 
-    <!-- Dark Mode Init -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: { 
+                            400: '#34D399', // Mint for Dark Mode
+                            500: '#10B981', // Emerald for Light Mode
+                            600: '#059669', 
+                            700: '#047857'
+                        },
+                        slate: {
+                            900: '#1E293B', // Text Primary Light
+                        },
+                        dark: { 
+                            main: '#0F172A', // Background Dark
+                            card: '#1E293B', // surface/card Dark
+                            text: '#F1F5F9'  // Text Primary Dark
+                        },
+                        light: {
+                            main: '#F8FAFC', // Background Light
+                            text: '#1E293B'  // Text Primary Light
+                        }
+                    }
+                }
+            }
+        }
+        
         // Dark Mode Logic (Persistent)
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark')
@@ -78,6 +106,7 @@
       .loading-logo {
         width: 150px; /* Atur lebar sesuai kebutuhan */
         height: auto; /* Memastikan logo tidak peyang/distorsi */
+        animation: pulse 2s infinite ease-in-out;
       }
 
       .loading-text {
@@ -86,6 +115,13 @@
         font-size: 16px;
         font-weight: bold;
         letter-spacing: 2px;
+      }
+
+      /* Animasi halus membesar-mengecil sedikit */
+      @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
       }
       /* CSS Safety-net for mobile WebView */
     <!-- MOBILE BOTTOM NAV -->
@@ -112,7 +148,7 @@
             <div class="w-8 h-8 border-4 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin"></div>
         </div>
       </div>
-      <div class="mt-8 text-emerald-500 font-black tracking-widest uppercase text-xs">MEMUAT...</div>
+      <div class="mt-8 text-emerald-500 font-black tracking-widest uppercase text-xs animate-pulse">MEMUAT...</div>
     </div>
 
     <div class="min-h-screen flex flex-col">
@@ -287,24 +323,22 @@
     <!-- Scripts -->
     <script>
         // Use DOMContentLoaded for faster disappearance or window load for safety
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(() => {
-                const loader = document.getElementById('loading-screen');
-                if(loader) {
-                    loader.style.opacity = '0';
-                    setTimeout(() => loader.remove(), 400); // Shorter fade
-                }
-            }, 100); // Minimal delay so they just see it blink then gone
+        window.addEventListener('load', function() {
+            const loader = document.getElementById('loading-screen');
+            if(loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => loader.remove(), 600); // More efficient than display:none
+            }
         });
 
-        // Fail-safe: Force hide loader after 3 seconds if still visible
+        // Fail-safe: Force hide loader after 5 seconds if still visible
         setTimeout(() => {
             const loader = document.getElementById('loading-screen');
             if(loader && loader.style.opacity !== '0') {
                loader.style.opacity = '0';
-               setTimeout(() => loader.remove(), 400);
+               setTimeout(() => loader.remove(), 600);
             }
-        }, 3000);
+        }, 5000);
     </script>
 </body>
 </html>

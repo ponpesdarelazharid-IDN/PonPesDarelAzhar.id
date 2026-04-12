@@ -4,7 +4,7 @@
 <!-- Hero Section -->
 <section class="relative py-20 md:py-32 overflow-hidden bg-light-main dark:bg-dark-main transition-colors duration-300">
     <!-- Decorative Blurs -->
-    <div class="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl -z-10"></div>
+    <div class="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl -z-10 animate-pulse"></div>
     <div class="absolute bottom-0 left-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl -z-10"></div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
