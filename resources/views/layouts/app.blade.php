@@ -124,10 +124,8 @@
         100% { transform: scale(1); }
       }
       /* CSS Safety-net for mobile WebView */
-      html, body {
+      body {
         overflow-x: hidden !important;
-        width: 100% !important;
-        position: relative !important;
       }
     </style>
 </head>

@@ -36,10 +36,8 @@
     </script>
     <style>
       /* CSS Safety-net for mobile WebView */
-      html, body {
+      body {
         overflow-x: hidden !important;
-        width: 100% !important;
-        position: relative !important;
       }
     </style>
 </head>
