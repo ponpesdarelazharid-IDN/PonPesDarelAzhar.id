@@ -124,43 +124,51 @@
         100% { transform: scale(1); }
       }
       /* CSS Safety-net for mobile WebView */
-      <!-- MOBILE BOTTOM NAV STYLE - CACHE BUSTER v2.2 -->
-    <style id="mobile-nav-styles-v22">
+      <!-- MOBILE BOTTOM NAV STYLE - v2.3 FIXED LAYOUT -->
+    <style id="mobile-nav-styles-v23">
         #bottom-nav-v22 {
             position: fixed !important;
             bottom: 0 !important;
             left: 0 !important;
+            right: 0 !important;
             width: 100% !important;
-            height: 75px !important;
-            background: #10B981 !important;
-            border-top: 5px solid #FBBF24 !important;
+            height: 65px !important;
+            background-color: #10B981 !important;
+            border-top: 4px solid #FBBF24 !important;
             display: flex !important;
+            flex-direction: row !important;
             justify-content: space-around !important;
             align-items: center !important;
-            padding: 5px 0 !important;
-            z-index: 2147483647 !important; /* MAXIMUM POSSIBLE Z-INDEX */
-            box-shadow: 0 -15px 40px rgba(0,0,0,0.9) !important;
-            visibility: visible !important;
-            opacity: 1 !important;
+            z-index: 2147483647 !important;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.5) !important;
+            padding: 0 !important;
+            margin: 0 !important;
         }
         .nav-item-mobile {
-            text-align: center !important;
-            color: white !important;
-            text-decoration: none !important;
-            flex: 1 !important;
             display: flex !important;
             flex-direction: column !important;
             align-items: center !important;
             justify-content: center !important;
-            font-size: 11px !important;
-            font-weight: 900 !important;
-            text-transform: uppercase !important;
+            color: white !important;
+            text-decoration: none !important;
+            flex: 1 !important;
+            height: 65px !important;
+            font-size: 10px !important;
+            font-weight: 700 !important;
+        }
+        .nav-item-mobile i {
+            font-size: 18px !important;
+            margin-bottom: 3px !important;
+            display: block !important;
+        }
+        .nav-item-mobile span {
+            display: block !important;
+            line-height: 1 !important;
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body class="bg-light-main text-light-text dark:bg-dark-main dark:text-dark-text transition-colors duration-300 font-sans antialiased pb-[80px] md:pb-0">
-    <div style="background: #10B981; color: white; text-align: center; font-weight: bold; padding: 15px; z-index: 10000; position: fixed; top: 0; width: 100%; border-bottom: 5px solid yellow; font-size: 20px;">VERSI UPDATE 2.1 - FIX FINAL</div>
+<body class="bg-light-main text-light-text dark:bg-dark-main dark:text-dark-text transition-colors duration-300 font-sans antialiased" style="padding-bottom: 65px;">
     <!-- Loading Screen -->
     <div id="loading-screen" class="fixed inset-0 z-[9999] bg-white dark:bg-dark-main flex flex-col items-center justify-center transition-opacity duration-500">
       <div class="relative flex flex-col items-center">
