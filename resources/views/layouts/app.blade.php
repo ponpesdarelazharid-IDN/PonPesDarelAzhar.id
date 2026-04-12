@@ -124,22 +124,24 @@
         100% { transform: scale(1); }
       }
       /* CSS Safety-net for mobile WebView */
-      <!-- MOBILE BOTTOM NAV STYLE -->
-    <style>
-        .bottom-nav {
+      <!-- MOBILE BOTTOM NAV STYLE - CACHE BUSTER v2.2 -->
+    <style id="mobile-nav-styles-v22">
+        #bottom-nav-v22 {
             position: fixed !important;
             bottom: 0 !important;
             left: 0 !important;
             width: 100% !important;
-            height: 70px !important;
+            height: 75px !important;
             background: #10B981 !important;
-            border-top: 3px solid #FBBF24 !important;
+            border-top: 5px solid #FBBF24 !important;
             display: flex !important;
             justify-content: space-around !important;
             align-items: center !important;
             padding: 5px 0 !important;
-            z-index: 9999999 !important;
-            box-shadow: 0 -10px 30px rgba(0,0,0,0.8) !important;
+            z-index: 2147483647 !important; /* MAXIMUM POSSIBLE Z-INDEX */
+            box-shadow: 0 -15px 40px rgba(0,0,0,0.9) !important;
+            visibility: visible !important;
+            opacity: 1 !important;
         }
         .nav-item-mobile {
             text-align: center !important;
@@ -150,15 +152,9 @@
             flex-direction: column !important;
             align-items: center !important;
             justify-content: center !important;
-            font-size: 10px !important;
-            font-weight: bold !important;
-        }
-        .nav-item-mobile i {
-            font-size: 20px !important;
-            margin-bottom: 2px !important;
-        }
-        @media (min-width: 769px) {
-            .bottom-nav { display: none !important; }
+            font-size: 11px !important;
+            font-weight: 900 !important;
+            text-transform: uppercase !important;
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -323,8 +319,8 @@
         initTheme();
     </script>
     
-    <!-- MOBILE BOTTOM NAVIGATION -->
-    <div id="bottom-nav" class="bottom-nav">
+    <!-- MOBILE BOTTOM NAVIGATION - CACHE BUSTER v2.2 -->
+    <div id="bottom-nav-v22" class="bottom-nav">
         <a href="{{ route('home') }}" class="nav-item-mobile">
             <i class="fas fa-home"></i>
             <span>Beranda</span>
