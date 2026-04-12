@@ -245,30 +245,18 @@
             </div>
         </footer>
 
-        <!-- MOBILE BOTTOM NAV - di atas footer, hanya mobile -->
-        <div id="mobile-bottom-nav" style="display:flex;flex-direction:row;justify-content:space-around;align-items:center;background:#10B981;border-top:3px solid #FBBF24;height:65px;width:100%;">
-            <a href="{{ route('home') }}" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;text-decoration:none;font-size:10px;font-family:sans-serif;font-weight:bold;padding:5px 0;">
-                <i class="fas fa-home" style="font-size:20px;margin-bottom:3px;"></i>
-                <span>Beranda</span>
-            </a>
-            <a href="{{ route('berita.index') }}" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;text-decoration:none;font-size:10px;font-family:sans-serif;font-weight:bold;padding:5px 0;">
-                <i class="fas fa-newspaper" style="font-size:20px;margin-bottom:3px;"></i>
-                <span>Berita</span>
-            </a>
-            <a href="{{ route('acara.index') }}" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;text-decoration:none;font-size:10px;font-family:sans-serif;font-weight:bold;padding:5px 0;">
-                <i class="fas fa-calendar-alt" style="font-size:20px;margin-bottom:3px;"></i>
-                <span>Acara</span>
-            </a>
-            <a href="{{ route('ppdb.landing') }}" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;text-decoration:none;font-size:10px;font-family:sans-serif;font-weight:bold;padding:5px 0;">
-                <i class="fas fa-user-plus" style="font-size:20px;margin-bottom:3px;"></i>
-                <span>PPDB</span>
-            </a>
-            <a href="{{ route('login') }}" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;text-decoration:none;font-size:10px;font-family:sans-serif;font-weight:bold;padding:5px 0;">
-                <i class="fas fa-sign-in-alt" style="font-size:20px;margin-bottom:3px;"></i>
-                <span>Login</span>
-            </a>
+        <!-- BOTTOM NAV BAR (Mobile style seperti GitHub footer) -->
+        <div id="mobile-bottom-nav" style="background:#10B981;padding:14px 20px;display:flex;flex-direction:row;flex-wrap:wrap;justify-content:center;align-items:center;gap:20px;border-top:2px solid rgba(255,255,255,0.2);">
+            <a href="{{ route('home') }}" style="color:white;text-decoration:none;font-size:13px;font-family:sans-serif;white-space:nowrap;">🏠 Beranda</a>
+            <a href="{{ route('berita.index') }}" style="color:white;text-decoration:none;font-size:13px;font-family:sans-serif;white-space:nowrap;">📰 Berita</a>
+            <a href="{{ route('acara.index') }}" style="color:white;text-decoration:none;font-size:13px;font-family:sans-serif;white-space:nowrap;">📅 Acara</a>
+            <a href="{{ route('prestasi.index') }}" style="color:white;text-decoration:none;font-size:13px;font-family:sans-serif;white-space:nowrap;">🏆 Prestasi</a>
+            <a href="{{ route('ekstrakurikuler.index') }}" style="color:white;text-decoration:none;font-size:13px;font-family:sans-serif;white-space:nowrap;">🎨 Ekskul</a>
+            <a href="{{ route('ppdb.landing') }}" style="color:#FBBF24;text-decoration:none;font-size:13px;font-family:sans-serif;font-weight:bold;white-space:nowrap;">📝 PPDB</a>
+            <a href="{{ route('login') }}" style="color:white;text-decoration:none;font-size:13px;font-family:sans-serif;white-space:nowrap;">🔐 Login</a>
         </div>
     </div>
+
    </div>
 
     <!-- Theme Toggle Script (Enhanced & Persistent) -->
