@@ -187,32 +187,32 @@
         @yield('content')
     </main>
 
-    <!-- Bottom Navigation Mobile -->
-    <div class="bottom-nav md:hidden">
+    <!-- Bottom Navigation Mobile - FORCED VISIBILITY -->
+    <div class="bottom-nav">
         <a href="/" class="bottom-nav-item {{ request()->is('/') ? 'active' : '' }}">
-            <span>🏠</span>
-            <span>Beranda</span>
+            <span style="font-size: 20px;">🏠</span>
+            <span style="font-weight: bold;">Beranda</span>
         </a>
         <a href="{{ route('berita.index') }}" class="bottom-nav-item {{ request()->routeIs('berita.*') ? 'active' : '' }}">
-            <span>📰</span>
+            <span style="font-size: 20px;">📰</span>
             <span>Berita</span>
         </a>
         <a href="{{ route('acara.index') }}" class="bottom-nav-item {{ request()->routeIs('acara.*') ? 'active' : '' }}">
-            <span>📅</span>
+            <span style="font-size: 20px;">📅</span>
             <span>Acara</span>
         </a>
         <a href="{{ route('ppdb.landing') }}" class="bottom-nav-item {{ request()->routeIs('ppdb.*') ? 'active' : '' }}">
-            <span>📝</span>
+            <span style="font-size: 20px;">📝</span>
             <span>PPDB</span>
         </a>
         @auth
             <a href="{{ route('dashboard') }}" class="bottom-nav-item">
-                <span>🔐</span>
+                <span style="font-size: 20px;">🔐</span>
                 <span>Akun</span>
             </a>
         @else
             <a href="{{ route('login') }}" class="bottom-nav-item">
-                <span>🔑</span>
+                <span style="font-size: 20px;">🔑</span>
                 <span>Login</span>
             </a>
         @endauth
