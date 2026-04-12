@@ -98,10 +98,10 @@
           /* Bottom Nav Styles - FORCED RED */
           .bottom-nav {
               position: fixed !important;
-              bottom: 0 !important; /* Pas di bawah */
+              bottom: 0 !important;
               left: 0 !important;
               width: 100% !important;
-              background: #ef4444 !important; /* MERAH MENYALA */
+              background: #10B981 !important; /* HIJAU EMERALD SEPERTI REKOMENDASI */
               border-top: 2px solid white !important;
               display: flex !important;
               justify-content: space-around !important;
@@ -144,7 +144,7 @@
 </head>
 <body class="font-sans antialiased bg-white text-slate-900 dark:bg-[#000000] dark:text-gray-100 transition-colors duration-500">
     <!-- PENANDA VERSI FORCED UPDATE -->
-    <div style="background: #10B981; color: white; text-align: center; font-weight: bold; padding: 10px; z-index: 10000; position: fixed; top: 0; width: 100%; border-bottom: 3px solid white;">VERSI UPDATE 1.6 - SISTEM OK</div>
+    <div style="background: #10B981; color: white; text-align: center; font-weight: bold; padding: 10px; z-index: 10000; position: fixed; top: 0; width: 100%; border-bottom: 3px solid white;">VERSI UPDATE 1.7 - STABIL</div>
     
     <!-- Loading Screen -->
     <div id="loading-screen">
