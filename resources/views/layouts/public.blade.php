@@ -94,10 +94,47 @@
           
           .nav-brand span.mobile-title { display: inline !important; font-size: 1.1rem !important; }
           .nav-brand span.desktop-title { display: none !important; }
+
+          /* Bottom Nav Styles */
+          .bottom-nav {
+              position: fixed !important;
+              bottom: 20px !important;
+              left: 50% !important;
+              transform: translateX(-50%) !important;
+              width: 90% !important;
+              background: rgba(15, 23, 42, 0.8) !important;
+              backdrop-filter: blur(15px) !important;
+              -webkit-backdrop-filter: blur(15px) !important;
+              border: 1px solid rgba(255, 255, 255, 0.1) !important;
+              border-radius: 20px !important;
+              display: flex !important;
+              justify-content: space-around !important;
+              align-items: center !important;
+              padding: 10px 5px !important;
+              z-index: 9999 !important;
+              box-shadow: 0 10px 25px rgba(0,0,0,0.5) !important;
+          }
+          .bottom-nav-item {
+              display: flex !important;
+              flex-direction: column !important;
+              align-items: center !important;
+              color: #94a3b8 !important;
+              text-decoration: none !important;
+              font-size: 10px !important;
+              gap: 4px !important;
+              flex: 1 !important;
+          }
+          .bottom-nav-item.active {
+              color: #10B981 !important;
+          }
+          .bottom-nav-item i {
+              font-size: 18px !important;
+          }
       }
       @media (min-width: 769px) {
           .nav-brand span.mobile-title { display: none !important; }
           .nav-brand span.desktop-title { display: inline !important; }
+          .bottom-nav { display: none !important; }
       }
     </style>
 
@@ -149,6 +186,37 @@
     <main>
         @yield('content')
     </main>
+
+    <!-- Bottom Navigation Mobile -->
+    <div class="bottom-nav md:hidden">
+        <a href="/" class="bottom-nav-item {{ request()->is('/') ? 'active' : '' }}">
+            <span>🏠</span>
+            <span>Beranda</span>
+        </a>
+        <a href="{{ route('berita.index') }}" class="bottom-nav-item {{ request()->routeIs('berita.*') ? 'active' : '' }}">
+            <span>📰</span>
+            <span>Berita</span>
+        </a>
+        <a href="{{ route('acara.index') }}" class="bottom-nav-item {{ request()->routeIs('acara.*') ? 'active' : '' }}">
+            <span>📅</span>
+            <span>Acara</span>
+        </a>
+        <a href="{{ route('ppdb.landing') }}" class="bottom-nav-item {{ request()->routeIs('ppdb.*') ? 'active' : '' }}">
+            <span>📝</span>
+            <span>PPDB</span>
+        </a>
+        @auth
+            <a href="{{ route('dashboard') }}" class="bottom-nav-item">
+                <span>🔐</span>
+                <span>Akun</span>
+            </a>
+        @else
+            <a href="{{ route('login') }}" class="bottom-nav-item">
+                <span>🔑</span>
+                <span>Login</span>
+            </a>
+        @endauth
+    </div>
 
     <footer>
         <div class="container">
