@@ -241,23 +241,20 @@
                 </div>
                 <div class="mt-12 pt-8 border-t border-slate-100 dark:border-slate-800 text-center text-xs text-slate-400">
                     &copy; {{ date('Y') }} {{ $profiles['nama_sekolah'] ?? 'PonPes Darel Azhar' }}. All Rights Reserved.
+                    <!-- Nav links mobile - di dalam footer -->
+                    <div class="mt-4 flex flex-wrap justify-center gap-x-5 gap-y-2 md:hidden">
+                        <a href="{{ route('home') }}" class="hover:text-emerald-500 transition">Beranda</a>
+                        <a href="{{ route('berita.index') }}" class="hover:text-emerald-500 transition">Berita</a>
+                        <a href="{{ route('acara.index') }}" class="hover:text-emerald-500 transition">Acara</a>
+                        <a href="{{ route('prestasi.index') }}" class="hover:text-emerald-500 transition">Prestasi</a>
+                        <a href="{{ route('ekstrakurikuler.index') }}" class="hover:text-emerald-500 transition">Ekskul</a>
+                        <a href="{{ route('ppdb.landing') }}" class="text-emerald-500 font-semibold hover:text-emerald-400 transition">PPDB</a>
+                        <a href="{{ route('login') }}" class="hover:text-emerald-500 transition">Login</a>
+                    </div>
                 </div>
             </div>
         </footer>
-
-        <!-- BOTTOM NAV BAR (Mobile style seperti GitHub footer) -->
-        <div id="mobile-bottom-nav" style="background:#10B981;padding:14px 20px;display:flex;flex-direction:row;flex-wrap:wrap;justify-content:center;align-items:center;gap:20px;border-top:2px solid rgba(255,255,255,0.2);">
-            <a href="{{ route('home') }}" style="color:white;text-decoration:none;font-size:13px;font-family:sans-serif;white-space:nowrap;">🏠 Beranda</a>
-            <a href="{{ route('berita.index') }}" style="color:white;text-decoration:none;font-size:13px;font-family:sans-serif;white-space:nowrap;">📰 Berita</a>
-            <a href="{{ route('acara.index') }}" style="color:white;text-decoration:none;font-size:13px;font-family:sans-serif;white-space:nowrap;">📅 Acara</a>
-            <a href="{{ route('prestasi.index') }}" style="color:white;text-decoration:none;font-size:13px;font-family:sans-serif;white-space:nowrap;">🏆 Prestasi</a>
-            <a href="{{ route('ekstrakurikuler.index') }}" style="color:white;text-decoration:none;font-size:13px;font-family:sans-serif;white-space:nowrap;">🎨 Ekskul</a>
-            <a href="{{ route('ppdb.landing') }}" style="color:#FBBF24;text-decoration:none;font-size:13px;font-family:sans-serif;font-weight:bold;white-space:nowrap;">📝 PPDB</a>
-            <a href="{{ route('login') }}" style="color:white;text-decoration:none;font-size:13px;font-family:sans-serif;white-space:nowrap;">🔐 Login</a>
-        </div>
     </div>
-
-   </div>
 
     <!-- Theme Toggle Script (Enhanced & Persistent) -->
     <script>
