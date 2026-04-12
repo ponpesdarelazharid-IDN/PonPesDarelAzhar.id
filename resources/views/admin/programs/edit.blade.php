@@ -146,4 +146,3 @@ document.querySelectorAll('input[type="file"]').forEach(input => {
 });
 </script>
 @endsection
-@endsection

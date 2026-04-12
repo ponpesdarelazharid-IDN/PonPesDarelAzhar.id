@@ -153,4 +153,3 @@ document.getElementById('image_upload').addEventListener('change', async functio
 });
 </script>
 @endsection
-@endsection
