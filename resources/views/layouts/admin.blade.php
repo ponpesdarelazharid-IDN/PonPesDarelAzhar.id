@@ -42,9 +42,9 @@
     </style>
 </head>
 <body class="bg-slate-100 dark:bg-[#0a1128] text-slate-900 dark:text-slate-100 font-sans transition-colors duration-300">
-    <div class="flex h-screen overflow-hidden">
+    <div class="flex h-screen overflow-hidden relative">
         <!-- Sidebar -->
-        <aside class="w-64 bg-white dark:bg-[#111c3a] border-r border-slate-200 dark:border-slate-800 flex flex-col transition-colors duration-300">
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-white dark:bg-[#111c3a] border-r border-slate-200 dark:border-slate-800 flex flex-col transform -translate-x-full md:translate-x-0 md:relative transition-transform duration-300 ease-in-out">
             <div class="h-20 flex items-center px-8 border-b border-slate-200 dark:border-slate-800">
                 <a href="/" class="text-xl font-bold text-emerald-500 flex items-center gap-2">
                     <span>🕌</span> Admin Panel
@@ -81,11 +81,19 @@
             </div>
         </aside>
 
+    <!-- Overlay for mobile -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-30 hidden md:hidden transition-opacity"></div>
+
     <!-- Page Content -->
     <main class="flex-1 p-6 md:p-12 overflow-y-auto min-h-screen bg-slate-50 dark:bg-dark-main transition-colors duration-500">
         <!-- Breadcrumbs / Top Bar -->
         <div class="mb-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 flex items-center gap-2">
+            <div class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 flex items-center gap-3">
+                <!-- Burger Button for Mobile -->
+                <button id="sidebar-toggle" class="md:hidden p-2 rounded-lg bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-800 text-emerald-500">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+                </button>
+                
                 <a href="{{ route('admin.dashboard') }}" class="hover:text-emerald-500 transition">Admin</a>
                 <span class="opacity-30 text-xs">/</span>
                 @if(View::hasSection('breadcrumb'))
@@ -202,5 +210,28 @@
         .animate-fade-in-down { animation: fade-in-down 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
     </style>
 
+    <!-- Sidebar Toggle Script -->
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+        if(sidebarToggle && sidebar && sidebarOverlay) {
+            function toggleSidebar() {
+                sidebar.classList.toggle('-translate-x-full');
+                sidebarOverlay.classList.toggle('hidden');
+            }
+
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            sidebarOverlay.addEventListener('click', toggleSidebar);
+
+            // Close sidebar when clicking links on mobile
+            sidebar.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if(window.innerWidth < 768) toggleSidebar();
+                });
+            });
+        }
+    </script>
 </body>
 </html>

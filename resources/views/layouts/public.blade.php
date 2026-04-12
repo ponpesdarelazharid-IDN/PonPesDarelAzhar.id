@@ -78,7 +78,7 @@
                 <img src="{{ asset('images/logo-da.png') }}" alt="Logo Darel Azhar" class="h-10 w-auto">
                 <span class="text-gradient uppercase">{{ $profiles['nama_sekolah'] ?? 'Darel Azhar' }}</span>
             </a>
-            <div class="nav-links">
+            <div class="nav-links" id="navLinks">
                 <a href="/">Beranda</a>
                 <a href="/#profil">Profil</a>
                 <a href="{{ route('berita.index') }}">Berita</a>
@@ -90,6 +90,11 @@
                 @else
                     <a href="{{ route('login') }}" class="btn btn-outline" style="padding: 0.5rem 1.25rem;">Login / Daftar PPDB</a>
                 @endauth
+            </div>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
     </nav>
@@ -151,7 +156,7 @@
         </div>
     </footer>
 
-    <!-- Script to hide loading screen -->
+    <!-- Script to hide loading screen & Toggle Mobile Menu -->
     <script>
         window.addEventListener('load', function() {
             const loader = document.getElementById('loading-screen');
@@ -162,6 +167,25 @@
                 }, 500);
             }
         });
+
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        if(menuToggle && navLinks) {
+            menuToggle.addEventListener('click', () => {
+                menuToggle.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+
+            // Close menu when clicking a link
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    menuToggle.classList.remove('active');
+                    navLinks.classList.remove('active');
+                });
+            });
+        }
     </script>
 </body>
 </html>
