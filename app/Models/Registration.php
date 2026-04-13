@@ -107,23 +107,19 @@ class Registration extends Model
     {
         if (!$value) return asset('images/default-avatar.png');
         if (filter_var($value, FILTER_VALIDATE_URL)) return $value;
-        try {
-            return \Illuminate\Support\Facades\Storage::disk('cloudinary')->url($value);
-        } catch (\Exception $e) {
-            return asset('images/default-avatar.png');
-        }
+        
+        // EMERGENCY NUKE
+        return asset('images/default-avatar.png');
     }
 
     public function getBirthCertUrlAttribute()
     {
-        $value = $this->birth_cert_url; // Note: Column in DB is birth_cert_url
+        $value = $this->birth_cert_url;
         if (!$value) return null;
         if (filter_var($value, FILTER_VALIDATE_URL)) return $value;
-        try {
-            return \Illuminate\Support\Facades\Storage::disk('cloudinary')->url($value);
-        } catch (\Exception $e) {
-            return null;
-        }
+        
+        // EMERGENCY NUKE
+        return null;
     }
 
     public function getIjazahUrlAttribute()
@@ -131,11 +127,9 @@ class Registration extends Model
         $value = $this->ijazah_url;
         if (!$value) return null;
         if (filter_var($value, FILTER_VALIDATE_URL)) return $value;
-        try {
-            return \Illuminate\Support\Facades\Storage::disk('cloudinary')->url($value);
-        } catch (\Exception $e) {
-            return null;
-        }
+        
+        // EMERGENCY NUKE
+        return null;
     }
 
     public function getSkhuUrlAttribute()
@@ -143,10 +137,8 @@ class Registration extends Model
         $value = $this->skhu_url;
         if (!$value) return null;
         if (filter_var($value, FILTER_VALIDATE_URL)) return $value;
-        try {
-            return \Illuminate\Support\Facades\Storage::disk('cloudinary')->url($value);
-        } catch (\Exception $e) {
-            return null;
-        }
+        
+        // EMERGENCY NUKE
+        return null;
     }
 }
