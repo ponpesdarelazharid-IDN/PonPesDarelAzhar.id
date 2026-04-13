@@ -22,8 +22,6 @@ class PpdbSettingController extends Controller
             'close_date' => 'nullable|date',
             'quota' => 'nullable|integer',
             'requirements' => 'nullable|string',
-            'online_test_link' => 'nullable|url',
-            'online_test_note' => 'nullable|string',
         ]);
 
         if ($request->has('is_open')) {
@@ -38,8 +36,6 @@ class PpdbSettingController extends Controller
             'close_date' => $validated['close_date'],
             'quota' => $validated['quota'],
             'requirements' => $validated['requirements'],
-            'online_test_link' => $validated['online_test_link'],
-            'online_test_note' => $validated['online_test_note'],
         ]);
 
         return back()->with('success', 'Gelombang PPDB baru berhasil dibuka!');
