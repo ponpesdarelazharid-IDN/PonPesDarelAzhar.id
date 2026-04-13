@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', 'Admin Panel - ' . (isset($profiles['nama_sekolah']) ? $profiles['nama_sekolah'] : 'PonPes Darel Azhar'))</title>
+    <title>@yield('title', 'Admin Panel - ' . (isset($profiles) && isset($profiles['nama_sekolah']) ? $profiles['nama_sekolah'] : 'PonPes Darel Azhar'))</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
