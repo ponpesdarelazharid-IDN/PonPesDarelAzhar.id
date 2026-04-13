@@ -10,6 +10,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+class User extends Authenticatable implements MustVerifyEmail
+{
+    /** @use HasFactory<UserFactory> */
+    use HasFactory, Notifiable;
+
     protected $fillable = [
         'name',
         'email',
@@ -22,10 +27,6 @@ use Illuminate\Notifications\Notifiable;
         'password',
         'remember_token',
     ];
-class User extends Authenticatable implements MustVerifyEmail
-{
-    /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
 
     /**
      * Get the attributes that should be cast.

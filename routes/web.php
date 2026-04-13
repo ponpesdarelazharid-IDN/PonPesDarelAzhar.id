@@ -145,19 +145,5 @@ Route::get('/deploy-sync-db', function() {
     }
 });
 
-Route::get('/error-log', function() {
-    $logPath = storage_path('logs/laravel.log');
-    if (isset($_SERVER['VERCEL_URL'])) {
-        $logPath = '/tmp/storage/logs/laravel.log';
-    }
-    
-    if (!file_exists($logPath)) {
-        return "Log file not found at: " . $logPath;
-    }
-    
-    $log = file_get_contents($logPath);
-    return "<pre>" . substr($log, -5000) . "</pre>";
-});
-
 require __DIR__.'/auth.php';
 
