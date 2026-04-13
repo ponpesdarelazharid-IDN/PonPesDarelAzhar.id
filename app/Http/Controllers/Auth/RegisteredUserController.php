@@ -42,14 +42,15 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => 'pendaftar',
-            'otp_code' => $otpCode,
+            'otp_code' => null,
+            'email_verified_at' => now(), // Auto-verify, skip email OTP
         ]);
 
-        // Kirim Email yang memuat OTP dan Plain Password dengan proteksi Throwable
+        // Coba kirim email notifikasi (tidak wajib berhasil)
         try {
             \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\PsbVerificationMail($user, $request->password));
-        } catch (\Throwable $e) {
-            \Illuminate\Support\Facades\Log::error('Gagal mengirim email pendaftaran PSB (SMTP Error): ' . $e->getMessage());
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Gagal mengirim email pendaftaran PSB: ' . $e->getMessage());
         }
 
         Auth::login($user);

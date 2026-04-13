@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
@@ -49,17 +49,5 @@ class User extends Authenticatable implements MustVerifyEmail
     public function registration()
     {
         return $this->hasOne(Registration::class);
-    }
-
-    /**
-     * Override verification notification to be resilient against SMTP failures.
-     */
-    public function sendEmailVerificationNotification()
-    {
-        try {
-            $this->notify(new \Illuminate\Auth\Notifications\VerifyEmail);
-        } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error('SMTP Error: Gagal mengirim email verifikasi. ' . $e->getMessage());
-        }
     }
 }
