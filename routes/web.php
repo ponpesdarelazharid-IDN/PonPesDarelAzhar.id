@@ -107,20 +107,41 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
 });
 
 
-// Emergency Migration Route for Vercel
+// Emergency Migration & Diagnostic Route for Vercel
 Route::get('/deploy-sync-db', function() {
     try {
-        echo "Starting Migration...<br>";
-        \Artisan::call('migrate', ['--force' => true]);
-        echo "Migration Success!<br>";
+        echo "<h3>--- System Diagnostic ---</h3>";
+        
+        // 1. Test DB Connection
+        echo "Testing DB Connection... ";
+        \DB::connection()->getPdo();
+        echo "<span style='color:green'>SUCCESS</span><br>";
 
-        echo "Clearing Cache...<br>";
+        // 2. Test Cloudinary Disk
+        echo "Testing Cloudinary Disk... ";
+        try {
+            \Storage::disk('cloudinary');
+            echo "<span style='color:green'>SUCCESS</span><br>";
+        } catch (\Exception $e) {
+            echo "<span style='color:red'>FAILED (" . $e->getMessage() . ")</span><br>";
+        }
+
+        // 3. Run Migrations
+        echo "Running Migrations... ";
+        \Artisan::call('migrate', ['--force' => true]);
+        echo "<span style='color:green'>SUCCESS</span><br>";
+
+        // 4. Clear Cache
+        echo "Clearing Cache... ";
         \Artisan::call('config:clear');
         \Artisan::call('route:clear');
         \Artisan::call('view:clear');
-        echo "Sync Completed Successfully!";
+        echo "<span style='color:green'>SUCCESS</span><br>";
+
+        echo "<h4>--- Sync Completed Successfully! ---</h4>";
     } catch (\Exception $e) {
-        return "Error: " . $e->getMessage();
+        echo "<br><b style='color:red'>FATAL ERROR:</b> " . $e->getMessage() . "<br>";
+        echo "<pre>" . $e->getTraceAsString() . "</pre>";
     }
 });
 

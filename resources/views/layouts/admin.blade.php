@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', 'Admin Panel - ' . ($profiles['nama_sekolah'] ?? 'PonPes Darel Azhar'))</title>
+    <title>@yield('title', 'Admin Panel - ' . (isset($profiles['nama_sekolah']) ? $profiles['nama_sekolah'] : 'PonPes Darel Azhar'))</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -73,7 +73,7 @@
     <!-- Loading Screen -->
     <div id="loading-screen" class="fixed inset-0 z-[9999] bg-white dark:bg-dark-main flex flex-col items-center justify-center transition-opacity duration-500">
       <div class="relative flex flex-col items-center">
-        <img src="{{ $profiles['logo'] ?? asset('images/logo-da.png') }}" 
+        <img src="{{ isset($profiles['logo']) ? $profiles['logo'] : asset('images/logo-da.png') }}" 
              alt="Logo" 
              class="loading-logo w-20 h-20 object-contain mb-6">
         
