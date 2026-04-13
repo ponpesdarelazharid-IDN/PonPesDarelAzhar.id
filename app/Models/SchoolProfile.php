@@ -19,7 +19,12 @@ class SchoolProfile extends Model
             if (!$value) return null;
             if (filter_var($value, FILTER_VALIDATE_URL)) return $value;
 
-            return \Illuminate\Support\Facades\Storage::disk('cloudinary')->url($value);
+            try {
+                return \Illuminate\Support\Facades\Storage::disk('cloudinary')->url($value);
+            } catch (\Exception $e) {
+                // Return null if cloudinary fails instead of crashing the whole app
+                return null;
+            }
         }
 
         return $profile->value;
