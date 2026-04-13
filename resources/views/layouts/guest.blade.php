@@ -12,11 +12,27 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <!-- Tailwind CDN -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                darkMode: 'class',
+                theme: {
+                    extend: {
+                        colors: {
+                            emerald: { 
+                                400: '#34D399',
+                                500: '#10B981',
+                                600: '#059669'
+                            }
+                        }
+                    }
+                }
+            }
+        </script>
         
         <!-- Favicon -->
-        <link rel="icon" type="image/jpeg" href="{{ asset('images/logo-da.png') }}">
+        <link rel="icon" type="image/jpeg" href="{{ isset($profiles['logo']) ? $profiles['logo'] : asset('images/logo-da.png') }}">
 
         <script>
             // On page load or when changing themes, best to add inline in `head` to avoid FOUC
@@ -63,7 +79,7 @@
         <!-- Loading Screen -->
         <div id="loading-screen" class="fixed inset-0 z-[9999] bg-white dark:bg-black flex flex-col items-center justify-center transition-opacity duration-500">
           <div class="relative flex flex-col items-center">
-            <img src="{{ asset('images/logo-da.png') }}" 
+            <img src="{{ isset($profiles['logo']) ? $profiles['logo'] : asset('images/logo-da.png') }}" 
                  alt="Logo" 
                  class="loading-logo w-24 h-24 object-contain mb-6">
             
@@ -82,7 +98,7 @@
                     </div>
                 </a>
                 <h2 class="mt-6 text-2xl font-black tracking-tight text-[#1e293b] dark:text-white uppercase">
-                    {{ $title ?? 'PPDB ONLINE' }}
+                    {{ $profiles['nama_sekolah'] ?? 'PPDB ONLINE' }}
                 </h2>
             </div>
 

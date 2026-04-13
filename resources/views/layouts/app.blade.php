@@ -81,8 +81,7 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ $profiles['logo'] ?? asset('images/logo-da.png') }}">
 
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- Scripts (Removed @vite to prevent Vercel 500 errors, using Tailwind CDN instead) -->
 
     <style>
       /* Styling untuk Loading Screen */
