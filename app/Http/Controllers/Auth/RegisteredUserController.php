@@ -45,11 +45,11 @@ class RegisteredUserController extends Controller
             'otp_code' => $otpCode,
         ]);
 
-        // Kirim Email yang memuat OTP dan Plain Password
+        // Kirim Email yang memuat OTP dan Plain Password dengan proteksi Throwable
         try {
             \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\PsbVerificationMail($user, $request->password));
-        } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error('Gagal mengirim email pendaftaran PSB: ' . $e->getMessage());
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error('Gagal mengirim email pendaftaran PSB (SMTP Error): ' . $e->getMessage());
         }
 
         Auth::login($user);

@@ -16,9 +16,7 @@ $app = Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        $exceptions->render(function (\Throwable $e) {
-            return response()->make("DEBUG ERROR: " . $e->getMessage() . "\n\n" . $e->getTraceAsString(), 500, ['Content-Type' => 'text/plain']);
-        });
+        //
     })->create();
 
 if (isset($_ENV['VERCEL']) || isset($_SERVER['VERCEL']) || getenv('VERCEL')) {
