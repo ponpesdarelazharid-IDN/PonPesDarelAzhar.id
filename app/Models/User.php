@@ -50,4 +50,16 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(Registration::class);
     }
+
+    /**
+     * Override verification notification to be resilient against SMTP failures.
+     */
+    public function sendEmailVerificationNotification()
+    {
+        try {
+            $this->notify(new \Illuminate\Auth\Notifications\VerifyEmail);
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('SMTP Error: Gagal mengirim email verifikasi. ' . $e->getMessage());
+        }
+    }
 }
