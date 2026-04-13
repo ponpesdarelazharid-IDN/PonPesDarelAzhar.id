@@ -22,27 +22,35 @@ class RegistrationController extends Controller
             return redirect()->route('ppdb.landing')->with('error', 'Pendaftaran PPDB sedang ditutup.');
         }
 
-        $registration = Registration::where('user_id', auth()->id())->first();
-        if ($registration && $registration->status !== 'draft') {
+        $registration = Registration::firstOrCreate(
+            ['user_id' => auth()->id()],
+            [
+                'ppdb_setting_id' => $setting->id,
+                'status' => 'draft',
+                'full_name' => auth()->user()->name, // Default name from user account
+            ]
+        );
+
+        // Alur Baru: Jika status masih draft (belum divalidasi pembayarannya), arahkan ke dashboard pembayaran
+        if ($registration->status === 'draft') {
             return redirect()->route('ppdb.status');
         }
 
+        // Jika sudah verified (Pembayaran OK), maka boleh isi form Step 1
         return view('ppdb.register.step1', compact('registration'));
     }
 
     public function storeStep1(RegistrationRequest $request)
     {
         $validated = $request->validated();
-        
-        $setting = PpdbSetting::where('is_open', true)->first();
-        if (!$setting) {
-            return back()->with('error', 'Pendaftaran PPDB sedang ditutup.');
-        }
+        $registration = Registration::where('user_id', auth()->id())->firstOrFail();
 
-        $registration = Registration::updateOrCreate(
-            ['user_id' => auth()->id()],
-            array_merge($validated, ['ppdb_setting_id' => $setting->id, 'status' => 'draft'])
-        );
+        // Guard: Pastikan sudah bayar (status verified)
+        if ($registration->status === 'draft') {
+            return redirect()->route('ppdb.status')->with('error', 'Silakan lakukan pembayaran terlebih dahulu.');
+        }
+        
+        $registration->update(array_merge($validated, ['status' => 'verified']));
 
         return redirect()->route('ppdb.register.step2');
     }
@@ -50,6 +58,7 @@ class RegistrationController extends Controller
     public function step2()
     {
         $registration = Registration::where('user_id', auth()->id())->firstOrFail();
+        if ($registration->status === 'draft') return redirect()->route('ppdb.status');
         return view('ppdb.register.step2', compact('registration'));
     }
 
@@ -57,6 +66,7 @@ class RegistrationController extends Controller
     {
         $validated = $request->validated();
         $registration = Registration::where('user_id', auth()->id())->firstOrFail();
+        if ($registration->status === 'draft') return redirect()->route('ppdb.status');
         
         $registration->update($validated);
 
@@ -66,18 +76,25 @@ class RegistrationController extends Controller
     public function step3()
     {
         $registration = Registration::where('user_id', auth()->id())->firstOrFail();
+        if ($registration->status === 'draft') return redirect()->route('ppdb.status');
         return view('ppdb.register.step3', compact('registration'));
     }
 
     public function storeStep3(RegistrationRequest $request)
     {
         $registration = Registration::where('user_id', auth()->id())->firstOrFail();
+        if ($registration->status === 'draft') return redirect()->route('ppdb.status');
+        
         $storage = Storage::disk('cloudinary');
         
-        $fields = ['photo', 'birth_cert', 'ijazah', 'skhu'];
+        $fields = ['photo', 'birth_cert', 'ijazah', 'family_card', 'ktp_parent'];
         foreach ($fields as $field) {
             $compressedKey = $field . '_compressed';
-            $dbKey = ($field == 'photo') ? 'photo_url' : ($field == 'birth_cert' ? 'birth_cert_url' : $field . '_url');
+            $dbKey = match ($field) {
+                'photo' => 'photo_url',
+                'birth_cert' => 'birth_cert_url',
+                default => $field . '_url',
+            };
 
             // 1. Check for Compressed Base64 Data First (Preferred for Vercel)
             if ($request->filled($compressedKey)) {
@@ -109,6 +126,7 @@ class RegistrationController extends Controller
     public function step4()
     {
         $registration = Registration::where('user_id', auth()->id())->with('ppdbSetting')->firstOrFail();
+        if ($registration->status === 'draft') return redirect()->route('ppdb.status');
         return view('ppdb.register.step4', compact('registration'));
     }
 
@@ -116,18 +134,61 @@ class RegistrationController extends Controller
     {
         $registration = Registration::where('user_id', auth()->id())->firstOrFail();
         
-        $registration->status = 'pending';
+        $registration->status = 'pending'; // Form Selesai -> Menunggu Ujian / Hasil
         $registration->save();
 
         // Send Welcome Email
         try {
             Mail::to(auth()->user()->email)->send(new WelcomeMail($registration));
         } catch (\Exception $e) {
-            // Log error but continue
             \Log::error('Gagal mengirim email PPDB: ' . $e->getMessage());
         }
 
-        return redirect()->route('ppdb.status')->with('success', 'Pendaftaran berhasil dikirim! Silakan cek email Anda.');
+        return redirect()->route('ppdb.status')->with('pendaftaran_selesai', true);
+    }
+
+    public function storePayment(Request $request)
+    {
+        $request->validate([
+            'payment_receipt' => 'required|image|max:2048',
+        ]);
+
+        $registration = Registration::where('user_id', auth()->id())->firstOrFail();
+        $storage = \Illuminate\Support\Facades\Storage::disk('cloudinary');
+
+        if ($request->hasFile('payment_receipt')) {
+            $path = $storage->putFile('ppdb/payments', $request->file('payment_receipt'));
+            if ($path) {
+                $registration->payment_receipt_url = $storage->url($path);
+                $registration->save();
+            }
+        }
+
+        return back()->with('success', 'Bukti pembayaran berhasil diunggah! Mohon tunggu validasi admin.');
+    }
+
+    public function storeInstallment(Request $request)
+    {
+        $request->validate([
+            'amount' => 'required|numeric|min:1',
+            'payment_receipt' => 'required|image|max:2048',
+        ]);
+
+        $registration = Registration::where('user_id', auth()->id())->firstOrFail();
+        $storage = \Illuminate\Support\Facades\Storage::disk('cloudinary');
+
+        if ($request->hasFile('payment_receipt')) {
+            $path = $storage->putFile('ppdb/installments', $request->file('payment_receipt'));
+            if ($path) {
+                $registration->payments()->create([
+                    'amount' => $request->amount,
+                    'receipt_url' => $storage->url($path),
+                    'status' => 'pending'
+                ]);
+            }
+        }
+
+        return back()->with('success', 'Bukti cicilan berhasil diunggah! Mohon tunggu konfirmasi admin.');
     }
 
     public function printCard()

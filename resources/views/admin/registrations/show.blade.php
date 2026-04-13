@@ -89,15 +89,15 @@
                 <div class="p-8 md:p-10 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
                     <div class="space-y-1">
                         <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Tempat, Tanggal Lahir</p>
-                        <p class="font-bold text-[#111c3a] dark:text-white uppercase">{{ $registration->birth_place }}, {{ $registration->birth_date->format('d F Y') }}</p>
+                        <p class="font-bold text-[#111c3a] dark:text-white uppercase">{{ $registration->birth_place ?? '-' }}, {{ $registration->birth_date ? $registration->birth_date->format('d F Y') : '-' }}</p>
                     </div>
                     <div class="space-y-1">
                         <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Agama</p>
-                        <p class="font-bold text-[#111c3a] dark:text-white uppercase">{{ $registration->religion }}</p>
+                        <p class="font-bold text-[#111c3a] dark:text-white uppercase">{{ $registration->religion ?? '-' }}</p>
                     </div>
                     <div class="md:col-span-2 space-y-1">
                         <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Alamat Domisili</p>
-                        <p class="font-bold text-[#111c3a] dark:text-white leading-relaxed uppercase">{{ $registration->address }}</p>
+                        <p class="font-bold text-[#111c3a] dark:text-white leading-relaxed uppercase">{{ $registration->address ?? '-' }}</p>
                     </div>
                 </div>
             </div>
@@ -112,19 +112,15 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
                         <div class="space-y-1">
                             <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Asal Sekolah</p>
-                            <p class="font-bold text-[#111c3a] dark:text-white uppercase">{{ $registration->origin_school }}</p>
+                            <p class="font-bold text-[#111c3a] dark:text-white uppercase">{{ $registration->origin_school ?? '-' }}</p>
                         </div>
                         <div class="space-y-1">
                             <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Alamat Sekolah Asal</p>
-                            <p class="font-bold text-[#111c3a] dark:text-white uppercase">{{ $registration->origin_school_address }}</p>
+                            <p class="font-bold text-[#111c3a] dark:text-white uppercase">{{ $registration->origin_school_address ?? '-' }}</p>
                         </div>
                         <div class="space-y-1">
                             <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Nama Ayah / Ibu</p>
-                            <p class="font-bold text-[#111c3a] dark:text-white uppercase">{{ $registration->father_name }} / {{ $registration->mother_name }}</p>
-                        </div>
-                        <div class="space-y-1">
-                            <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Pekerjaan Orang Tua</p>
-                            <p class="font-bold text-[#111c3a] dark:text-white uppercase">{{ $registration->parent_job }}</p>
+                            <p class="font-bold text-[#111c3a] dark:text-white uppercase">{{ $registration->father_name ?? '-' }} / {{ $registration->mother_name ?? '-' }}</p>
                         </div>
                     </div>
                 </div>
@@ -138,26 +134,26 @@
                 </div>
                 <div class="p-8 md:p-10">
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                        <!-- Birth Cert -->
+                        <!-- Bukti Bayar -->
                         <div class="group relative">
-                            <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-3 ml-1">Akta Kelahiran</p>
-                            @if($registration->birth_cert_url)
-                            <a href="{{ $registration->birth_cert_url }}" target="_blank" class="block p-6 rounded-3xl bg-slate-50 dark:bg-dark-main border border-dashed border-slate-200 dark:border-slate-700 hover:border-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/10 transition-all duration-300">
+                            <p class="text-[8px] font-black text-emerald-500 uppercase tracking-widest mb-3 ml-1">Bukti Transfer (PSB)</p>
+                            @if($registration->payment_receipt_url)
+                            <a href="{{ $registration->payment_receipt_url }}" target="_blank" class="block p-6 rounded-3xl bg-emerald-50 dark:bg-emerald-900/10 border-2 border-dashed border-emerald-200 dark:border-emerald-800 hover:border-emerald-500 transition-all duration-300">
                                 <div class="flex items-center gap-4">
-                                    <div class="text-2xl">📜</div>
+                                    <div class="text-2xl">💰</div>
                                     <div class="flex-1">
-                                        <p class="text-[10px] font-black text-[#111c3a] dark:text-white uppercase">Dokumen Tersedia</p>
-                                        <p class="text-[8px] text-slate-400 uppercase mt-0.5">Klik untuk Buka</p>
+                                        <p class="text-[10px] font-black text-emerald-700 dark:text-emerald-400 uppercase">Sudah Bayar</p>
+                                        <p class="text-[8px] text-slate-400 uppercase mt-0.5">Klik untuk Verifikasi</p>
                                     </div>
                                 </div>
                             </a>
                             @else
                             <div class="p-6 rounded-3xl bg-red-50/30 border border-dashed border-red-100 flex items-center gap-4 text-red-300 italic text-[10px] font-bold uppercase tracking-widest">
-                                <span>❌</span> Belum Diunggah
+                                <span>❌</span> Belum Bayar
                             </div>
                             @endif
                         </div>
-                        
+
                         <!-- Ijazah -->
                         <div class="group relative">
                             <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-3 ml-1">Ijazah / SKL</p>
@@ -166,37 +162,119 @@
                                 <div class="flex items-center gap-4">
                                     <div class="text-2xl">🎓</div>
                                     <div class="flex-1">
-                                        <p class="text-[10px] font-black text-[#111c3a] dark:text-white uppercase">Dokumen Tersedia</p>
-                                        <p class="text-[8px] text-slate-400 uppercase mt-0.5">Klik untuk Buka</p>
+                                        <p class="text-[10px] font-black text-[#111c3a] dark:text-white uppercase">Tersedia</p>
+                                        <p class="text-[8px] text-slate-400 uppercase mt-0.5">Lihat Berkas</p>
                                     </div>
                                 </div>
                             </a>
                             @else
-                            <div class="p-6 rounded-3xl bg-red-50/30 border border-dashed border-red-100 flex items-center gap-4 text-red-300 italic text-[10px] font-bold uppercase tracking-widest">
-                                <span>❌</span> Belum Diunggah
+                            <div class="p-6 rounded-3xl bg-slate-50/50 border border-dotted border-slate-200 flex items-center gap-4 text-slate-300 italic text-[10px] font-bold uppercase tracking-widest">
+                                <span>-</span> Kosong
                             </div>
                             @endif
                         </div>
 
-                        <!-- SKHU -->
+                        <!-- KK -->
                         <div class="group relative">
-                            <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-3 ml-1">SKHU / Rapor</p>
-                            @if($registration->skhu_url)
-                            <a href="{{ $registration->skhu_url }}" target="_blank" class="block p-6 rounded-3xl bg-slate-50 dark:bg-dark-main border border-dashed border-slate-200 dark:border-slate-700 hover:border-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/10 transition-all duration-300">
+                            <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-3 ml-1">Kartu Keluarga (KK)</p>
+                            @if($registration->family_card_url)
+                            <a href="{{ $registration->family_card_url }}" target="_blank" class="block p-6 rounded-3xl bg-slate-50 dark:bg-dark-main border border-dashed border-slate-200 dark:border-slate-700 hover:border-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/10 transition-all duration-300">
                                 <div class="flex items-center gap-4">
-                                    <div class="text-2xl">📝</div>
+                                    <div class="text-2xl">👨‍👩‍👧</div>
                                     <div class="flex-1">
-                                        <p class="text-[10px] font-black text-[#111c3a] dark:text-white uppercase">Dokumen Tersedia</p>
-                                        <p class="text-[8px] text-slate-400 uppercase mt-0.5">Klik untuk Buka</p>
+                                        <p class="text-[10px] font-black text-[#111c3a] dark:text-white uppercase">Tersedia</p>
+                                        <p class="text-[8px] text-slate-400 uppercase mt-0.5">Lihat Berkas</p>
                                     </div>
                                 </div>
                             </a>
                             @else
-                            <div class="p-6 rounded-3xl bg-red-50/30 border border-dashed border-red-100 flex items-center gap-4 text-red-300 italic text-[10px] font-bold uppercase tracking-widest">
-                                <span>❌</span> Belum Diunggah
+                            <div class="p-6 rounded-3xl bg-slate-50/50 border border-dotted border-slate-200 flex items-center gap-4 text-slate-300 italic text-[10px] font-bold uppercase tracking-widest">
+                                <span>-</span> Kosong
                             </div>
                             @endif
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NEW SECTION: BIAYA MASUK & CICILAN -->
+            <div class="bg-white dark:bg-dark-card rounded-[40px] shadow-2xl shadow-slate-900/5 border border-slate-100 dark:border-slate-800 overflow-hidden">
+                <div class="px-8 py-6 bg-slate-50 dark:bg-dark-main/50 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                    <h4 class="text-sm font-black text-[#111c3a] dark:text-white uppercase tracking-widest">IV. Administrasi Biaya Masuk</h4>
+                    <span class="w-8 h-8 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-xs">04</span>
+                </div>
+                <div class="p-8 md:p-10">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
+                        <div class="p-6 rounded-3xl bg-slate-50 dark:bg-dark-main border border-slate-100 dark:border-slate-800">
+                            <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Tagihan (Rp)</p>
+                            <p class="text-xl font-black text-[#111c3a] dark:text-white">{{ number_format($registration->total_required, 0, ',', '.') }}</p>
+                        </div>
+                        <div class="p-6 rounded-3xl bg-emerald-50 dark:bg-emerald-900/10 border border-emerald-100 dark:border-emerald-800">
+                            <p class="text-[9px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-1">Total Terbayar (Rp)</p>
+                            <p class="text-xl font-black text-emerald-600 dark:text-emerald-400 font-black">{{ number_format($registration->total_paid, 0, ',', '.') }}</p>
+                        </div>
+                        <div class="p-6 rounded-3xl @if($registration->payment_remaining > 0) bg-red-50 dark:bg-red-900/10 border-red-100 dark:border-red-800 @else bg-emerald-50 dark:bg-emerald-900/10 border-emerald-100 dark:border-emerald-800 @endif">
+                            <p class="text-[9px] font-black @if($registration->payment_remaining > 0) text-red-600 @else text-emerald-600 @endif uppercase tracking-widest mb-1">Sisa Tagihan (Rp)</p>
+                            <p class="text-xl font-black @if($registration->payment_remaining > 0) text-red-600 @else text-emerald-600 @endif">{{ number_format($registration->payment_remaining, 0, ',', '.') }}</p>
+                        </div>
+                    </div>
+
+                    <h5 class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-6">Daftar Bukti Cicilan</h5>
+                    <div class="space-y-4">
+                        @forelse($registration->payments as $payment)
+                        <div class="flex flex-col md:flex-row items-center gap-6 p-6 rounded-3xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-dark-main/50 group transition-all hover:border-emerald-500/30">
+                            <div class="w-16 h-16 rounded-2xl overflow-hidden shadow-inner flex-shrink-0">
+                                <a href="{{ $payment->receipt_url }}" target="_blank">
+                                    <img src="{{ $payment->receipt_url }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+                                </a>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm font-black text-[#111c3a] dark:text-white">Rp {{ number_format($payment->amount, 0, ',', '.') }}</p>
+                                <p class="text-[9px] font-bold text-slate-400 uppercase">{{ $payment->created_at->format('d M Y, H:i') }}</p>
+                                @if($payment->notes)
+                                    <p class="mt-2 text-[9px] bg-red-50 text-red-600 p-2 rounded-lg italic">Catatan: {{ $payment->notes }}</p>
+                                @endif
+                            </div>
+                            <div class="flex gap-2">
+                                @if($payment->status === 'pending')
+                                    <form action="{{ route('admin.installments.verify', $payment) }}" method="POST">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-[9px] font-black uppercase tracking-widest rounded-xl transition-all">Verifikasi ✅</button>
+                                    </form>
+                                    <button onclick="document.getElementById('reject-modal-{{ $payment->id }}').classList.remove('hidden')" class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-[9px] font-black uppercase tracking-widest rounded-xl transition-all">Tolak 🚫</button>
+                                    
+                                    <!-- Simple Reject Modal -->
+                                    <div id="reject-modal-{{ $payment->id }}" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+                                        <div class="bg-white dark:bg-slate-900 rounded-[32px] p-8 max-w-sm w-full shadow-2xl">
+                                            <h3 class="text-lg font-black text-slate-800 dark:text-white mb-4">Alasan Penolakan</h3>
+                                            <form action="{{ route('admin.installments.reject', $payment) }}" method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                <textarea name="notes" required placeholder="Misal: Bukti tidak terbaca / Nominal tidak sesuai..." class="w-full rounded-2xl bg-slate-50 dark:bg-slate-800 border-none px-5 py-4 text-xs font-bold mb-6 focus:ring-2 focus:ring-red-500 transition-all"></textarea>
+                                                <div class="flex gap-3">
+                                                    <button type="button" onclick="document.getElementById('reject-modal-{{ $payment->id }}').classList.add('hidden')" class="flex-1 py-4 bg-slate-100 dark:bg-slate-800 text-slate-600 text-[10px] font-black uppercase tracking-widest rounded-xl">Batal</button>
+                                                    <button type="submit" class="flex-1 py-4 bg-red-500 text-white text-[10px] font-black uppercase tracking-widest rounded-xl shadow-lg shadow-red-500/30">Kirim Penolakan</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                @else
+                                    <span @class([
+                                        'px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest',
+                                        'bg-emerald-50 text-emerald-600' => $payment->status === 'verified',
+                                        'bg-red-50 text-red-600' => $payment->status === 'rejected',
+                                    ])>
+                                        {{ $payment->status === 'verified' ? 'TERVERIFIKASI' : 'DITOLAK' }}
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        @empty
+                        <div class="py-10 text-center text-slate-400 italic font-bold text-[10px] uppercase border-2 border-dashed border-slate-100 dark:border-slate-800 rounded-3xl">
+                            Belum ada riwayat cicilan Biaya Masuk.
+                        </div>
+                        @endforelse
                     </div>
                 </div>
             </div>
@@ -208,8 +286,8 @@
                 <div class="relative flex flex-col md:flex-row gap-10 items-start">
                     <div class="flex-1 space-y-6">
                         <div>
-                            <h4 class="text-2xl font-black uppercase tracking-tight">Keputusan Verifikasi</h4>
-                            <p class="text-slate-400 text-xs mt-2 uppercase tracking-widest font-bold">Tentukan nasib registrasi calon santri ini.</p>
+                            <h4 class="text-2xl font-black uppercase tracking-tight">Keputusan Verifikasi Final</h4>
+                            <p class="text-slate-400 text-xs mt-2 uppercase tracking-widest font-bold">Pastikan pendaftar telah menyelesaikan seluruh administrasi.</p>
                         </div>
                         
                         <form action="{{ route('admin.registrations.update', $registration) }}" method="POST" class="space-y-6">
@@ -220,11 +298,14 @@
                                 <div>
                                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Update Status</label>
                                     <select name="status" class="w-full bg-white/10 border-none rounded-2xl px-6 py-4 text-white font-bold text-sm focus:ring-2 focus:ring-emerald-500 appearance-none cursor-pointer transition-all">
-                                        <option value="pending" class="text-slate-800" {{ $registration->status == 'pending' ? 'selected' : '' }}>⌛ Pending</option>
-                                        <option value="verified" class="text-slate-800" {{ $registration->status == 'verified' ? 'selected' : '' }}>🛡️ Verified (Data Oke)</option>
-                                        <option value="accepted" class="text-slate-800" {{ $registration->status == 'accepted' ? 'selected' : '' }}>🏆 Accepted (Lulus)</option>
+                                        <option value="pending" class="text-slate-800" {{ $registration->status == 'pending' ? 'selected' : '' }}>⌛ Pending (Menunggu Hasil)</option>
+                                        <option value="verified" class="text-slate-800" {{ $registration->status == 'verified' ? 'selected' : '' }}>🛡️ Verified (Validasi Dokumen)</option>
+                                        <option value="accepted" class="text-slate-800" {{ $registration->status == 'accepted' ? 'selected' : '' }}>🏆 Accepted (Lulus & Lunas)</option>
                                         <option value="rejected" class="text-slate-800" {{ $registration->status == 'rejected' ? 'selected' : '' }}>🚫 Rejected (Ditolak)</option>
                                     </select>
+                                    @if($registration->payment_remaining > 0)
+                                        <p class="mt-3 text-[9px] text-amber-400 font-bold uppercase tracking-widest italic animate-pulse">⚠️ Peringatan: Mahasiswa ini belum melunasi biaya masuk (Sisa: Rp {{ number_format($registration->payment_remaining, 0, ',', '.') }}). Anda tidak dapat mengubah status menjadi Lulus (Accepted).</p>
+                                    @endif
                                 </div>
                                 <div class="relative">
                                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Catatan Verifikator</label>
@@ -234,7 +315,7 @@
                             
                             <div class="flex justify-end pt-4">
                                 <button type="submit" class="px-12 py-5 bg-emerald-500 hover:bg-emerald-600 text-white font-black uppercase tracking-widest text-sm rounded-[24px] shadow-xl shadow-emerald-500/30 transition-all hover:-translate-y-1 active:translate-y-0">
-                                    Simpan Perubahan & Notifikasi &rarr;
+                                    Simpan Keputusan Akhir &rarr;
                                 </button>
                             </div>
                         </form>

@@ -172,7 +172,7 @@
                 @auth
                     <a href="{{ route('dashboard') }}" class="btn btn-outline" style="padding: 0.5rem 1.25rem;">Dashboard</a>
                 @else
-                    <a href="{{ route('login') }}" class="btn btn-outline" style="padding: 0.5rem 1.25rem;">Login / Daftar PPDB</a>
+                    <a href="{{ route('login') }}" class="btn btn-outline" style="padding: 0.5rem 1.25rem;">Login / Daftar PSB</a>
                 @endauth
             </div>
             <div class="flex items-center gap-4">
@@ -205,7 +205,7 @@
         </a>
         <a href="{{ route('ppdb.landing') }}" class="bottom-nav-item {{ request()->routeIs('ppdb.*') ? 'active' : '' }}">
             <span style="font-size: 20px;">📝</span>
-            <span>PPDB</span>
+            <span>PSB</span>
         </a>
         @auth
             <a href="{{ route('dashboard') }}" class="bottom-nav-item">
@@ -234,7 +234,7 @@
                     <ul class="footer-links">
                         <li><a href="/">Beranda</a></li>
                         <li><a href="/#profil">Profil Sekolah</a></li>
-                        <li><a href="{{ route('ppdb.landing') }}">Informasi PPDB</a></li>
+                        <li><a href="{{ route('ppdb.landing') }}">Informasi PSB (Pendaftaran)</a></li>
                     </ul>
                 </div>
                 <div>

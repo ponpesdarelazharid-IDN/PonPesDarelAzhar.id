@@ -35,6 +35,34 @@
         }
     </script>
     <style>
+      /* Styling untuk Loading Screen */
+      #loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #ffffff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: opacity 0.5s ease;
+      }
+
+      .loading-logo {
+        width: 100px;
+        height: auto;
+        animation: pulse 2s infinite ease-in-out;
+      }
+
+      @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+      }
+
       /* CSS Safety-net for mobile WebView */
       body {
         overflow-x: hidden !important;
@@ -42,6 +70,19 @@
     </style>
 </head>
 <body class="bg-slate-100 dark:bg-[#0a1128] text-slate-900 dark:text-slate-100 font-sans transition-colors duration-300">
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="fixed inset-0 z-[9999] bg-white dark:bg-dark-main flex flex-col items-center justify-center transition-opacity duration-500">
+      <div class="relative flex flex-col items-center">
+        <img src="{{ $profiles['logo'] ?? asset('images/logo-da.png') }}" 
+             alt="Logo" 
+             class="loading-logo w-20 h-20 object-contain mb-6">
+        
+        <div class="absolute inset-x-0 -bottom-2 flex justify-center">
+            <div class="w-8 h-8 border-4 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin"></div>
+        </div>
+      </div>
+      <div class="mt-8 text-emerald-500 font-black tracking-widest uppercase text-[10px] animate-pulse">ADMIN MEMUAT...</div>
+    </div>
     <div class="flex h-screen overflow-hidden relative">
         <!-- Sidebar -->
         <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-white dark:bg-[#111c3a] border-r border-slate-200 dark:border-slate-800 flex flex-col transform -translate-x-full md:translate-x-0 md:relative transition-transform duration-300 ease-in-out">
@@ -232,6 +273,25 @@
                 });
             });
         }
+    </script>
+    <!-- Scripts -->
+    <script>
+        window.addEventListener('load', function() {
+            const loader = document.getElementById('loading-screen');
+            if(loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => loader.remove(), 600);
+            }
+        });
+
+        // Fail-safe
+        setTimeout(() => {
+            const loader = document.getElementById('loading-screen');
+            if(loader && loader.style.opacity !== '0') {
+               loader.style.opacity = '0';
+               setTimeout(() => loader.remove(), 600);
+            }
+        }, 5000);
     </script>
 </body>
 </html>

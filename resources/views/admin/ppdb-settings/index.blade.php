@@ -57,7 +57,19 @@
                     </div>
 
                     <div>
-                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 px-1">Syarat & Ketentuan</label>
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 px-1">Link Ujian Online</label>
+                        <input type="url" name="online_test_link" placeholder="https://forms.gle/..."
+                            class="w-full bg-slate-50 dark:bg-slate-900/50 border-none rounded-2xl px-5 py-4 text-sm font-bold focus:ring-2 focus:ring-emerald-500 dark:text-white transition-all">
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 px-1">Instruksi / Catatan Ujian</label>
+                        <textarea name="online_test_note" rows="3" placeholder="Contoh: Kerjakan dengan jujur, waktu 60 menit..."
+                            class="w-full bg-slate-50 dark:bg-slate-900/50 border-none rounded-2xl px-5 py-4 text-sm font-medium focus:ring-2 focus:ring-emerald-500 dark:text-white transition-all leading-relaxed"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 px-1">Syarat & Ketentuan Umum</label>
                         <textarea name="requirements" rows="4" placeholder="Tuliskan persyaratan pendaftaran..."
                             class="w-full bg-slate-50 dark:bg-slate-900/50 border-none rounded-2xl px-5 py-4 text-sm font-medium focus:ring-2 focus:ring-emerald-500 dark:text-white transition-all leading-relaxed"></textarea>
                     </div>

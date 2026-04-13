@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <x-slot name="title">BUAT AKUN BARU</x-slot>
+    <x-slot name="title">PEMBUATAN AKUN PSB</x-slot>
 
     <form method="POST" action="{{ route('register') }}" class="space-y-6">
         @csrf
@@ -68,7 +68,7 @@
 
         <div>
             <button type="submit" class="w-full py-5 rounded-2xl bg-[#1e293b] dark:bg-white text-white dark:text-black font-extrabold text-sm uppercase tracking-widest shadow-xl hover:scale-[1.02] active:scale-95 transition-all duration-300">
-                Daftar Akun
+                Lanjut & Verifikasi Email (Kirim OTP)
             </button>
         </div>
 

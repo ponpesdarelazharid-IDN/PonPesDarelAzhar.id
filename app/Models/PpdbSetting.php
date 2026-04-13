@@ -12,6 +12,7 @@ class PpdbSetting extends Model
         'is_open' => 'boolean',
         'open_date' => 'date',
         'close_date' => 'date',
+        'online_test_link' => 'string',
     ];
 
     public function registrations()

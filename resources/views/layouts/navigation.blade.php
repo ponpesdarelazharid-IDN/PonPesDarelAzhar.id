@@ -23,10 +23,10 @@
                             {{ __('Profil Sekolah') }}
                         </x-nav-link>
                         <x-nav-link :href="route('admin.ppdb-settings.index')" :active="request()->routeIs('admin.ppdb-settings.*')">
-                            {{ __('Setting PPDB') }}
+                            {{ __('Pengaturan PSB') }}
                         </x-nav-link>
                         <x-nav-link :href="route('admin.registrations.index')" :active="request()->routeIs('admin.registrations.*')">
-                            {{ __('Pendaftar PPDB') }}
+                            {{ __('Pendaftar PSB') }}
                         </x-nav-link>
                         <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
                             {{ __('Users') }}
@@ -36,7 +36,7 @@
                             {{ __('Dashboard') }}
                         </x-nav-link>
                         <x-nav-link :href="route('ppdb.status')" :active="request()->routeIs('ppdb.status')">
-                            {{ __('Status PPDB') }}
+                            {{ __('Status PSB') }}
                         </x-nav-link>
                     @endif
                 </div>
@@ -102,10 +102,10 @@
                     {{ __('Profil Sekolah') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.ppdb-settings.index')" :active="request()->routeIs('admin.ppdb-settings.*')">
-                    {{ __('Setting PPDB') }}
+                    {{ __('Pengaturan PSB') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.registrations.index')" :active="request()->routeIs('admin.registrations.*')">
-                    {{ __('Pendaftar PPDB') }}
+                    {{ __('Pendaftar PSB') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
                     {{ __('Users') }}
@@ -115,7 +115,7 @@
                     {{ __('Dashboard') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('ppdb.status')" :active="request()->routeIs('ppdb.status')">
-                    {{ __('Status PPDB') }}
+                    {{ __('Status PSB') }}
                 </x-responsive-nav-link>
             @endif
         </div>

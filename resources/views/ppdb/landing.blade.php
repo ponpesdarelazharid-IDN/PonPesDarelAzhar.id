@@ -6,9 +6,9 @@
 <!-- Hero -->
 <div class="bg-gray-50 dark:bg-[#0a0a0a] py-16 sm:py-24 border-b border-gray-100 dark:border-gray-900 transition-colors duration-300 min-h-[50vh] flex flex-col justify-center">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl mb-6 transition-colors duration-300">Informasi PPDB</h1>
+        <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl mb-6 transition-colors duration-300">Informasi PSB</h1>
         <p class="text-xl text-gray-500 dark:text-gray-400 mb-12 transition-colors duration-300">
-            Penerimaan Peserta Didik Baru (PPDB) Tahun Ajaran <span class="font-bold text-gray-900 dark:text-gray-300">{{ $ppdb->academic_year ?? 'Sekarang' }}</span>
+            Pendaftaran Santri Baru (PSB) Tahun Ajaran <span class="font-bold text-gray-900 dark:text-gray-300">{{ $ppdb->academic_year ?? 'Sekarang' }}</span>
         </p>
         
         @if($ppdb && $ppdb->is_open)

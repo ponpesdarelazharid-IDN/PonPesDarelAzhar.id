@@ -27,14 +27,80 @@ class Registration extends Model
         });
     }
 
-    public function user()
+    public function payments()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(Payment::class);
     }
 
-    public function ppdbSetting()
+    public function getTotalRequiredAttribute()
     {
-        return $this->belongsTo(PpdbSetting::class);
+        $isMts = str_contains(strtoupper($this->education_level), 'MTS');
+        $isPutra = strtoupper($this->gender) === 'L';
+
+        if ($isMts) {
+            return $isPutra ? 6900000 : 7000000;
+        } else {
+            return $isPutra ? 6326000 : 6426000;
+        }
+    }
+
+    public function getTotalPaidAttribute()
+    {
+        return $this->payments()->where('status', 'verified')->sum('amount');
+    }
+
+    public function getPaymentRemainingAttribute()
+    {
+        return max(0, $this->total_required - $this->total_paid);
+    }
+
+    public function getPaymentProgressAttribute()
+    {
+        if ($this->total_required <= 0) return 100;
+        return min(100, round(($this->total_paid / $this->total_required) * 100));
+    }
+
+    public function getFeeBreakdownAttribute()
+    {
+        $isMts = str_contains(strtoupper($this->education_level), 'MTS');
+        $isPutra = strtoupper($this->gender) === 'L';
+
+        $items = [
+            ['name' => "Uang Organisasi Santri 1 Tahun", 'price' => 200000],
+            ['name' => "Uang Meja dan Kursi", 'price' => 500000],
+            ['name' => "Dana Perluasan Wakaf (Pondok)", 'price' => 1700000],
+            ['name' => "Uang Ujian 1 Tahun", 'price' => 200000],
+            ['name' => "Almari & Kasur (Pribadi)", 'price' => 1000000],
+            ['name' => "Iuran Makan Bulan Juli", 'price' => 350000],
+            ['name' => "Uang Asrama, Air, Listrik (Juli)", 'price' => 345000],
+            ['name' => "Map Raport", 'price' => 50000],
+            ['name' => "Majalah (Al-Azhar & Wardah)", 'price' => 100000],
+            ['name' => "Cuci Pakaian / Laundry (Pribadi)", 'price' => 90000],
+            ['name' => "Pekan Perkenalan (Ta'aruf)", 'price' => 90000],
+        ];
+
+        // Bookshop
+        if ($isMts) {
+            $items[] = ['name' => "Paket Bookshop MTs", 'price' => 1200000];
+        } else {
+            $items[] = ['name' => "Paket Bookshop SMA/MA", 'price' => 626000];
+        }
+
+        // Uniforms
+        $items[] = ['name' => "Seragam Pramuka", 'price' => $isPutra ? 170000 : 215000];
+        $items[] = ['name' => "Seragam Olahraga", 'price' => 175000];
+        $items[] = ['name' => "Seragam Hitam Putih", 'price' => $isPutra ? 175000 : 215000];
+        $items[] = ['name' => "Seragam Koko/Jubah", 'price' => $isPutra ? 180000 : 195000];
+        $items[] = ['name' => "Seragam Silat", 'price' => 175000];
+
+        // Adjustment factor to reach total (as per requirement total - calculated items)
+        $currentSum = collect($items)->sum('price');
+        $diff = $this->total_required - $currentSum;
+        if ($diff > 0) {
+            $items[] = ['name' => "Biaya Operasional & Pendaftaran", 'price' => $diff];
+        }
+
+        return $items;
     }
 
     public function getPhotoUrlAttribute($value)
@@ -46,7 +112,7 @@ class Registration extends Model
 
     public function getBirthCertUrlAttribute()
     {
-        $value = $this->birth_cert;
+        $value = $this->birth_cert_url; // Note: Column in DB is birth_cert_url
         if (!$value) return null;
         if (filter_var($value, FILTER_VALIDATE_URL)) return $value;
         return \Illuminate\Support\Facades\Storage::disk('cloudinary')->url($value);
@@ -54,7 +120,7 @@ class Registration extends Model
 
     public function getIjazahUrlAttribute()
     {
-        $value = $this->ijazah;
+        $value = $this->ijazah_url;
         if (!$value) return null;
         if (filter_var($value, FILTER_VALIDATE_URL)) return $value;
         return \Illuminate\Support\Facades\Storage::disk('cloudinary')->url($value);
@@ -62,7 +128,7 @@ class Registration extends Model
 
     public function getSkhuUrlAttribute()
     {
-        $value = $this->skhu;
+        $value = $this->skhu_url;
         if (!$value) return null;
         if (filter_var($value, FILTER_VALIDATE_URL)) return $value;
         return \Illuminate\Support\Facades\Storage::disk('cloudinary')->url($value);

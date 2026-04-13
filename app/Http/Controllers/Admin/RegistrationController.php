@@ -47,6 +47,11 @@ class RegistrationController extends Controller
             'notes' => 'nullable|string'
         ]);
 
+        // Proteksi: Hanya bisa accepted jika sudah lunas
+        if ($validated['status'] === 'accepted' && $registration->payment_remaining > 0) {
+            return back()->with('error', 'Pendaftar belum bisa dinyatakan LULUS (Accepted) karena masih memiliki sisa tagihan Rp ' . number_format($registration->payment_remaining, 0, ',', '.'));
+        }
+
         $oldStatus = $registration->status;
         $registration->update($validated);
 
@@ -65,5 +70,21 @@ class RegistrationController extends Controller
         }
 
         return back()->with('success', 'Status pendaftaran berhasil diperbarui!');
+    }
+
+    public function verifyInstallment(\App\Models\Payment $payment)
+    {
+        $payment->update(['status' => 'verified']);
+        return back()->with('success', 'Pembayaran cicilan berhasil diverifikasi!');
+    }
+
+    public function rejectInstallment(Request $request, \App\Models\Payment $payment)
+    {
+        $request->validate(['notes' => 'required|string']);
+        $payment->update([
+            'status' => 'rejected',
+            'notes' => $request->notes
+        ]);
+        return back()->with('success', 'Pembayaran cicilan ditolak dengan catatan.');
     }
 }

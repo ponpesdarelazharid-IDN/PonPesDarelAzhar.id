@@ -35,20 +35,21 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+        $otpCode = sprintf("%06d", mt_rand(1, 999999));
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => 'pendaftar',
+            'otp_code' => $otpCode,
         ]);
 
-        event(new Registered($user));
-
+        // Kirim Email yang memuat OTP dan Plain Password
         try {
-            \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\RegistrationSuccessMail($user));
+            \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\PsbVerificationMail($user, $request->password));
         } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error('Gagal mengirim email pendaftaran: ' . $e->getMessage());
+            \Illuminate\Support\Facades\Log::error('Gagal mengirim email pendaftaran PSB: ' . $e->getMessage());
         }
 
         Auth::login($user);

@@ -41,6 +41,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/ppdb/register/step3', [App\Http\Controllers\RegistrationController::class, 'storeStep3'])->name('ppdb.register.store3');
     Route::get('/ppdb/register/step4', [App\Http\Controllers\RegistrationController::class, 'step4'])->name('ppdb.register.step4');
     Route::post('/ppdb/register/finalize', [App\Http\Controllers\RegistrationController::class, 'storeFinal'])->name('ppdb.register.finalize');
+    Route::post('/ppdb/payment', [App\Http\Controllers\RegistrationController::class, 'storePayment'])->name('ppdb.payment.store');
+    Route::post('/ppdb/installment', [App\Http\Controllers\RegistrationController::class, 'storeInstallment'])->name('ppdb.installment.store');
     Route::get('/ppdb/status', function () {
         $registration = \App\Models\Registration::where('user_id', auth()->id())->first();
         return view('ppdb.status', compact('registration'));
@@ -63,6 +65,8 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
     Route::resource('users', AdminUserController::class);
     Route::resource('ekstrakurikuler', AdminEkstrakurikulerController::class);
     Route::resource('programs', AdminProgramController::class);
+    Route::patch('/installments/{payment}/verify', [AdminRegistrationController::class, 'verifyInstallment'])->name('installments.verify');
+    Route::patch('/installments/{payment}/reject', [AdminRegistrationController::class, 'rejectInstallment'])->name('installments.reject');
 
     // ==== PREVIEW ROUTES (INTERNAL ONLY) ====
     Route::get('/preview-card', function () {

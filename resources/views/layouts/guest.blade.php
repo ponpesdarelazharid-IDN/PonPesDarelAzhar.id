@@ -43,26 +43,15 @@
               justify-content: center;
               align-items: center;
               z-index: 9999;
-              font-family: Arial, sans-serif;
               transition: opacity 0.5s ease;
             }
 
-            /* Ukuran logo diatur proporsional */
             .loading-logo {
-              width: 150px; /* Atur lebar sesuai kebutuhan */
-              height: auto; /* Memastikan logo tidak peyang/distorsi */
+              width: 120px;
+              height: auto;
               animation: pulse 2s infinite ease-in-out;
             }
 
-            .loading-text {
-              margin-top: 20px;
-              color: #333333;
-              font-size: 16px;
-              font-weight: bold;
-              letter-spacing: 2px;
-            }
-
-            /* Animasi halus membesar-mengecil sedikit */
             @keyframes pulse {
               0% { transform: scale(1); }
               50% { transform: scale(1.05); }
@@ -72,9 +61,17 @@
     </head>
     <body class="h-full antialiased bg-slate-50 dark:bg-black transition-colors duration-500">
         <!-- Loading Screen -->
-        <div id="loading-screen">
-          <img src="{{ asset('images/logo-da.png') }}" alt="Logo Darel Azhar" class="loading-logo">
-          <div class="loading-text">MEMUAT...</div>
+        <div id="loading-screen" class="fixed inset-0 z-[9999] bg-white dark:bg-black flex flex-col items-center justify-center transition-opacity duration-500">
+          <div class="relative flex flex-col items-center">
+            <img src="{{ asset('images/logo-da.png') }}" 
+                 alt="Logo" 
+                 class="loading-logo w-24 h-24 object-contain mb-6">
+            
+            <div class="absolute inset-x-0 -bottom-2 flex justify-center">
+                <div class="w-8 h-8 border-4 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin"></div>
+            </div>
+          </div>
+          <div class="mt-8 text-emerald-500 font-black tracking-widest uppercase text-[10px] animate-pulse">MEMUAT...</div>
         </div>
 
         <div class="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -107,10 +104,19 @@
                 if (loader) {
                     loader.style.opacity = '0';
                     setTimeout(function() {
-                        loader.style.display = 'none';
-                    }, 500);
+                        loader.remove();
+                    }, 600);
                 }
             });
+            
+            // Fail-safe
+            setTimeout(() => {
+                const loader = document.getElementById('loading-screen');
+                if(loader && loader.style.opacity !== '0') {
+                   loader.style.opacity = '0';
+                   setTimeout(() => loader.remove(), 600);
+                }
+            }, 5000);
         </script>
     </body>
 </html>

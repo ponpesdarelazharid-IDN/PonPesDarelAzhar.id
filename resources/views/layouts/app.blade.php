@@ -148,7 +148,7 @@
             <div class="w-8 h-8 border-4 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin"></div>
         </div>
       </div>
-      <div class="mt-8 text-emerald-500 font-black tracking-widest uppercase text-xs animate-pulse">MEMUAT...</div>
+      <div class="mt-8 text-emerald-500 font-black tracking-widest uppercase text-[10px] animate-pulse">MEMUAT...</div>
     </div>
 
     <div class="min-h-screen flex flex-col">
