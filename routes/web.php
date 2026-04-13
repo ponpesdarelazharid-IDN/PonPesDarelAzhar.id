@@ -107,5 +107,22 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
 });
 
 
+// Emergency Migration Route for Vercel
+Route::get('/deploy-sync-db', function() {
+    try {
+        echo "Starting Migration...<br>";
+        \Artisan::call('migrate', ['--force' => true]);
+        echo "Migration Success!<br>";
+
+        echo "Clearing Cache...<br>";
+        \Artisan::call('config:clear');
+        \Artisan::call('route:clear');
+        \Artisan::call('view:clear');
+        echo "Sync Completed Successfully!";
+    } catch (\Exception $e) {
+        return "Error: " . $e->getMessage();
+    }
+});
+
 require __DIR__.'/auth.php';
 
