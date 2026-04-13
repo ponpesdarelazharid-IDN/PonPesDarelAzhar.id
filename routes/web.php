@@ -60,7 +60,7 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
     Route::get('/migrate', [AdminDashboardController::class, 'migrate'])->name('migrate');
     Route::resource('posts', AdminPostController::class);
     Route::resource('school-profiles', AdminSchoolProfileController::class)->only(['index', 'store']);
-    Route::resource('ppdb-settings', AdminPpdbSettingController::class)->only(['index', 'store']);
+    Route::resource('ppdb-settings', AdminPpdbSettingController::class)->only(['index', 'store', 'update']);
     Route::resource('registrations', AdminRegistrationController::class)->only(['index', 'show', 'update']);
     Route::resource('users', AdminUserController::class);
     Route::resource('ekstrakurikuler', AdminEkstrakurikulerController::class);

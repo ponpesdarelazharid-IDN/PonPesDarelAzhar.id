@@ -19,9 +19,12 @@ class SchoolProfile extends Model
             if (!$value) return null;
             if (filter_var($value, FILTER_VALIDATE_URL)) return $value;
 
-            // EMERGENCY NUKE: Disable Cloudinary disk access to prevent 500 errors
-            // return \Illuminate\Support\Facades\Storage::disk('cloudinary')->url($value);
-            return null; 
+            try {
+                return \Illuminate\Support\Facades\Storage::disk('cloudinary')->url($value);
+            } catch (\Exception $e) {
+                // Safe fallback if cloudinary config is broken
+                return null;
+            }
         }
 
         return $profile->value;
