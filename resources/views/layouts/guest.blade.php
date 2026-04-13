@@ -94,7 +94,7 @@
             <div class="sm:mx-auto sm:w-full sm:max-w-md text-center">
                 <a href="/" class="inline-block transform hover:scale-110 transition duration-500">
                     <div class="flex items-center justify-center p-4">
-                        <img src="{{ asset('images/logo-da.png') }}" alt="Logo Darel Azhar" class="w-20 h-auto">
+                        <img src="{{ isset($profiles['logo']) ? $profiles['logo'] : asset('images/logo-da.png') }}" alt="Logo Darel Azhar" class="w-20 h-auto">
                     </div>
                 </a>
                 <h2 class="mt-6 text-2xl font-black tracking-tight text-[#1e293b] dark:text-white uppercase">
