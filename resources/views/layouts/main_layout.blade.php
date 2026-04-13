@@ -6,7 +6,8 @@
     <title>@yield('title', 'Beranda') - {{ $profiles['nama_sekolah'] ?? 'Sekolah Kita' }}</title>
     
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Favicon -->
     <link rel="icon" type="image/jpeg" href="{{ asset('images/logo-da.png') }}">
