@@ -95,8 +95,6 @@ Route::prefix('audit')->group(function () {
         ]);
         return view("emails.accepted", compact("registration", "profiles"));
     })->name('audit.preview.email.accepted');
-});
-
     Route::get("/preview-email-verify", function () {
         $profiles = \App\Models\SchoolProfile::pluck('value', 'key')->toArray();
         $user = \App\Models\User::first() ?? new \App\Models\User(["name" => "AISYAH AZ ZAHRA", "email" => "aisyah@example.com"]);
