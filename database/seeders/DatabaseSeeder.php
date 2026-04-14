@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             AdminUserSeeder::class,
             SchoolProfileSeeder::class,
             PostSeeder::class,
+            PpdbSettingSeeder::class,
         ]);
     }
 }
