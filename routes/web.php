@@ -68,36 +68,34 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
     Route::patch('/installments/{payment}/verify', [AdminRegistrationController::class, 'verifyInstallment'])->name('installments.verify');
     Route::patch('/installments/{payment}/reject', [AdminRegistrationController::class, 'rejectInstallment'])->name('installments.reject');
 
-    // ==== PREVIEW ROUTES (INTERNAL ONLY) ====
+});
+
+// ==== PUBLIC AUDIT PREVIEW ROUTES (TEMPORARY) ====
+Route::prefix('audit')->group(function () {
     Route::get('/preview-card', function () {
         $profiles = \App\Models\SchoolProfile::pluck('value', 'key')->toArray();
-        $registration = \App\Models\Registration::first() ?? new \App\Models\Registration([
-            'full_name' => 'Aisyah Az Zahra',
-            'birth_place' => 'Bandung',
+        $registration = \App\Models\Registration::where('status', 'accepted')->first() ?? new \App\Models\Registration([
+            'full_name' => 'AISYAH AZ ZAHRA',
+            'birth_place' => 'BANDUNG',
             'birth_date' => now()->subYears(15),
             'address' => 'Jl. Anggrek No. 12, Cipete, Jakarta Selatan',
-            'registration_number' => '2122.10.045',
+            'registration_number' => 'PPDB-2024.10.999',
             'created_at' => now(),
         ]);
         
-        $school = [
-            'nama_sekolah' => $profiles['nama_sekolah'] ?? 'Pondok Pesantren Modern Darel Azhar',
-            'alamat' => $profiles['alamat'] ?? 'Jl. Pesantren No. 1, Desa Mulia, Kec. Sejahtera, Indonesia',
-            'telepon' => $profiles['tlp'] ?? '08123456789'
-        ];
-        return view('ppdb.card', compact('registration', 'school', 'profiles'));
-    })->name('preview.card');
+        return view('ppdb.card', compact('registration', 'profiles'));
+    })->name('audit.preview.card');
 
     Route::get("/preview-email-accepted", function () {
         $profiles = \App\Models\SchoolProfile::pluck('value', 'key')->toArray();
-        $registration = \App\Models\Registration::first() ?? new \App\Models\Registration([
+        $registration = \App\Models\Registration::where('status', 'accepted')->first() ?? new \App\Models\Registration([
             'id' => 1,
-            "full_name" => "Aisyah Az Zahra", 
-            "registration_number" => "2122.10.045",
-            "previous_school" => "SMP Negeri 1 Jakarta"
+            "full_name" => "AISYAH AZ ZAHRA", 
+            "registration_number" => "PPDB-2024.10.999"
         ]);
         return view("emails.accepted", compact("registration", "profiles"));
-    })->name('preview.email.accepted');
+    })->name('audit.preview.email.accepted');
+});
 
     Route::get("/preview-email-verify", function () {
         $profiles = \App\Models\SchoolProfile::pluck('value', 'key')->toArray();
