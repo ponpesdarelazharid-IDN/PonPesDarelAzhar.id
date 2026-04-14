@@ -99,9 +99,9 @@ Route::prefix('audit')->group(function () {
 
     Route::get("/preview-email-verify", function () {
         $profiles = \App\Models\SchoolProfile::pluck('value', 'key')->toArray();
-        $user = \App\Models\User::first() ?? new \App\Models\User(["name" => "Aisyah Az Zahra", "email" => "aisyah@example.com"]);
+        $user = \App\Models\User::first() ?? new \App\Models\User(["name" => "AISYAH AZ ZAHRA", "email" => "aisyah@example.com"]);
         return view("emails.verify", ["url" => "https://darelazhar.sch.id/verify-email/123", "user" => $user, "profiles" => $profiles]);
-    })->name('preview.email.verify');
+    })->name('audit.preview.email.verify');
 });
 
 
