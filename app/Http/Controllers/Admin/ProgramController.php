@@ -41,6 +41,8 @@ class ProgramController extends Controller
                 $success = Storage::disk('cloudinary')->put($filename, $imageBinary);
                 if ($success) {
                     $data['icon_path'] = Storage::disk('cloudinary')->url($filename);
+                } else {
+                    return back()->with('error', 'Gagal memproses gambar ke Cloud. SIlakan coba lagi.')->withInput();
                 }
             }
         } 
@@ -49,6 +51,8 @@ class ProgramController extends Controller
             $path = Storage::disk('cloudinary')->putFile('programs', $request->file('icon'));
             if ($path) {
                 $data['icon_path'] = Storage::disk('cloudinary')->url($path);
+            } else {
+                return back()->with('error', 'Gagal menyimpan media asli ke server.')->withInput();
             }
         }
 
@@ -83,6 +87,8 @@ class ProgramController extends Controller
                 $success = Storage::disk('cloudinary')->put($filename, $imageBinary);
                 if ($success) {
                     $data['icon_path'] = Storage::disk('cloudinary')->url($filename);
+                } else {
+                    return back()->with('error', 'Gagal memproses gambar ke Cloud. SIlakan coba lagi.')->withInput();
                 }
             }
         } 
@@ -91,6 +97,8 @@ class ProgramController extends Controller
             $path = Storage::disk('cloudinary')->putFile('programs', $request->file('icon'));
             if ($path) {
                 $data['icon_path'] = Storage::disk('cloudinary')->url($path);
+            } else {
+                return back()->with('error', 'Gagal menyimpan media asli ke server.')->withInput();
             }
         }
 

@@ -52,12 +52,12 @@ class DashboardController extends Controller
         // System Health Check
         $health = [];
         $logoPath = public_path('images/logo-da.png');
-        if (file_exists($logoPath)) {
-            $size = filesize($logoPath) / (1024 * 1024); // MB
-            if ($size > 1) {
+        if (file_exists($logoPath) && is_readable($logoPath)) {
+            @$size = filesize($logoPath) / (1024 * 1024); // MB
+            if ($size && $size > 1) {
                 $health[] = [
                     'type' => 'warning',
-                    'message' => "File logo-da.png sangat besar (" . number_format($size, 2) . " MB). Ini memperlambat loading website. Disarankan < 300 KB.",
+                    'message' => "File logo-da.png sangat besar (" . number_format($size, 2) . " MB). Disarankan < 300 KB.",
                 ];
             }
         }

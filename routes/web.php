@@ -28,7 +28,7 @@ Route::get('/test-menu', function() {
 // ==== PPDB USER AREA ====
 Route::get('/ppdb', [PpdbController::class, 'landing'])->name('ppdb.landing');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
@@ -108,7 +108,12 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
 
 
 // Emergency Migration & Diagnostic Route for Vercel
-Route::get('/deploy-sync-db', function() {
+Route::get('/deploy-sync-db', function(\Illuminate\Http\Request $request) {
+    // SECURITY PATCH: Cegah akses publik ke endpoint berbahaya ini
+    if (app()->environment('production') && $request->query('token') !== env('SYNC_TOKEN', 'darelazhar123')) {
+        abort(403, 'Unauthorized Access. Please provide valid token.');
+    }
+
     try {
         echo "<h3>--- System Diagnostic ---</h3>";
         

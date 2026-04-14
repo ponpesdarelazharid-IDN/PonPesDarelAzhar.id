@@ -15,15 +15,13 @@ class PsbVerificationMail extends Mailable
     use Queueable, SerializesModels;
 
     public $user;
-    public $passwordPlain;
-
+    
     /**
      * Create a new message instance.
      */
-    public function __construct(User $user, string $passwordPlain)
+    public function __construct(User $user)
     {
         $this->user = $user;
-        $this->passwordPlain = $passwordPlain;
     }
 
     /**

@@ -44,6 +44,8 @@ class EkstrakurikulerController extends Controller
                 $success = Storage::disk('cloudinary')->put($filename, $imageBinary);
                 if ($success) {
                     $data['image'] = Storage::disk('cloudinary')->url($filename);
+                } else {
+                    return back()->with('error', 'Gagal memproses gambar ke Cloud. SIlakan coba lagi.')->withInput();
                 }
             }
         } 
@@ -52,6 +54,8 @@ class EkstrakurikulerController extends Controller
             $path = Storage::disk('cloudinary')->putFile('sekolah/ekskul', $request->file('image_file'));
             if ($path) {
                 $data['image'] = Storage::disk('cloudinary')->url($path);
+            } else {
+                return back()->with('error', 'Gagal menyimpan media asli ke server.')->withInput();
             }
         }
 
@@ -87,6 +91,8 @@ class EkstrakurikulerController extends Controller
                 $success = Storage::disk('cloudinary')->put($filename, $imageBinary);
                 if ($success) {
                     $data['image'] = Storage::disk('cloudinary')->url($filename);
+                } else {
+                    return back()->with('error', 'Koneksi ke Cloud Storage terputus. Mohon ulangi beberapa saat lagi.')->withInput();
                 }
             }
         } 
@@ -95,6 +101,8 @@ class EkstrakurikulerController extends Controller
             $path = Storage::disk('cloudinary')->putFile('sekolah/ekskul', $request->file('image_file'));
             if ($path) {
                 $data['image'] = Storage::disk('cloudinary')->url($path);
+            } else {
+                return back()->with('error', 'Gagal menyimpan file media asli.')->withInput();
             }
         }
 

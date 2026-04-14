@@ -17,12 +17,7 @@ class EmailVerificationNotificationController extends Controller
             return redirect()->intended(route('dashboard', absolute: false));
         }
 
-        try {
-            $request->user()->sendEmailVerificationNotification();
-        } catch (\Throwable $e) {
-            \Illuminate\Support\Facades\Log::error('SMTP Failure: ' . $e->getMessage());
-            return back()->with('status', 'verification-link-sent-failure');
-        }
+        $request->user()->sendEmailVerificationNotification();
 
         return back()->with('status', 'verification-link-sent');
     }

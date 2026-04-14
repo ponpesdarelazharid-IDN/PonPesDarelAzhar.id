@@ -105,6 +105,8 @@ class RegistrationController extends Controller
                     
                     if ($storage->put($filename, $imageBinary)) {
                         $registration->$dbKey = $storage->url($filename);
+                    } else {
+                        return back()->with('error', 'Dokumen gagal diunggah: Koneksi ke Cloudinary gagal.');
                     }
                 }
             } 
@@ -114,6 +116,8 @@ class RegistrationController extends Controller
                 $path = $storage->putFile($folder, $request->file($field));
                 if ($path) {
                     $registration->$dbKey = $storage->url($path);
+                } else {
+                    return back()->with('error', 'Dokumen asli gagal diunggah. Mohon coba file lain.');
                 }
             }
         }
@@ -161,6 +165,8 @@ class RegistrationController extends Controller
             if ($path) {
                 $registration->payment_receipt_url = $storage->url($path);
                 $registration->save();
+            } else {
+                return back()->with('error', 'Gagal mengunggah bukti pembayaran. Silakan periksa koneksi internet Anda.');
             }
         }
 
@@ -185,6 +191,8 @@ class RegistrationController extends Controller
                     'receipt_url' => $storage->url($path),
                     'status' => 'pending'
                 ]);
+            } else {
+                return back()->with('error', 'Gagal mengunggah bukti cicilan. Mohon coba file lain.');
             }
         }
 

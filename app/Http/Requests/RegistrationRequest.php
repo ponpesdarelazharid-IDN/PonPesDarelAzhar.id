@@ -54,11 +54,11 @@ class RegistrationRequest extends FormRequest
             ]);
         } elseif ($this->step == 3) {
             $rules = array_merge($rules, [
-                'photo' => 'sometimes|required_without:photo_compressed|max:1024',
-                'ijazah' => 'sometimes|required_without:ijazah_compressed|max:1024',
-                'family_card' => 'nullable|max:1024',
-                'birth_cert' => 'nullable|max:1024',
-                'ktp_parent' => 'nullable|max:1024',
+                'photo' => 'sometimes|required_without:photo_compressed|file|image|mimes:jpg,jpeg,png|max:1024',
+                'ijazah' => 'sometimes|required_without:ijazah_compressed|file|mimes:pdf,jpg,jpeg,png|max:1024',
+                'family_card' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:1024',
+                'birth_cert' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:1024',
+                'ktp_parent' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:1024',
                 'photo_compressed' => 'nullable|string',
                 'ijazah_compressed' => 'nullable|string',
                 'family_card_compressed' => 'nullable|string',
