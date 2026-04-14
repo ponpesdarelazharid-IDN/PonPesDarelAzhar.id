@@ -145,6 +145,15 @@ Route::get('/deploy-sync-db', function(\Illuminate\Http\Request $request) {
             echo "<b>$key:</b> $status (" . $preview . ")<br>";
         }
 
+        // 6. JSON Output for machine audit
+        if (request()->get('format') === 'json') {
+            return response()->json([
+                'db_connection' => true,
+                'cloudinary_disk' => $cloudinaryTest,
+                'env_audit' => array_combine($envToAudit, array_map(fn($k) => (bool)env($k), $envToAudit)),
+            ]);
+        }
+
         echo "<h4>--- Sync Completed Successfully! ---</h4>";
     } catch (\Exception $e) {
         echo "<br><b style='color:red'>FATAL ERROR:</b> " . $e->getMessage() . "<br>";
