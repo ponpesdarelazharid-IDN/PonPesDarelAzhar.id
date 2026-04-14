@@ -132,12 +132,18 @@ Route::get('/deploy-sync-db', function(\Illuminate\Http\Request $request) {
         \Artisan::call('migrate', ['--force' => true]);
         echo "<span style='color:green'>SUCCESS</span><br>";
 
-        // 4. Clear Cache
-        echo "Clearing Cache... ";
-        \Artisan::call('config:clear');
-        \Artisan::call('route:clear');
-        \Artisan::call('view:clear');
-        echo "<span style='color:green'>SUCCESS</span><br>";
+        // 5. Audit Env Variables (Sanitized)
+        echo "<h4>--- Env Variable Audit ---</h4>";
+        $envToAudit = [
+            'CLOUDINARY_CLOUD_NAME', 'CLOUDINARY_API_KEY', 'CLOUDINARY_API_SECRET', 'CLOUDINARY_URL',
+            'MAIL_HOST', 'MAIL_PORT', 'MAIL_USERNAME', 'MAIL_PASSWORD', 'MAIL_FROM_ADDRESS'
+        ];
+        foreach ($envToAudit as $key) {
+            $val = env($key);
+            $status = $val ? "<span style='color:green'>PRESENT</span>" : "<span style='color:red'>MISSING</span>";
+            $preview = $val ? (substr($val, 0, 3) . "..." . substr($val, -3)) : "N/A";
+            echo "<b>$key:</b> $status (" . $preview . ")<br>";
+        }
 
         echo "<h4>--- Sync Completed Successfully! ---</h4>";
     } catch (\Exception $e) {
