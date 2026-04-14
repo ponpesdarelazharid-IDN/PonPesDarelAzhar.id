@@ -25,16 +25,21 @@ class AppServiceProvider extends ServiceProvider
             \Illuminate\Support\Facades\URL::forceScheme('https');
         }
 
-        // Hard Override Cloudinary Config (Bypass Vercel Cache)
+        // Hard Override Cloudinary Config (Bypass Vercel Cache & Sanitization)
+        $sanitize = function($val) {
+            if (!$val || str_contains($val, '<') || str_contains($val, 'your_')) return null;
+            return $val;
+        };
+
         config([
             'filesystems.disks.cloudinary' => [
                 'driver' => 'cloudinary',
-                'cloud' => env('CLOUDINARY_CLOUD_NAME'),
-                'key' => env('CLOUDINARY_API_KEY'),
-                'secret' => env('CLOUDINARY_API_SECRET'),
-                'url' => env('CLOUDINARY_URL'),
+                'cloud' => $sanitize(env('CLOUDINARY_CLOUD_NAME')),
+                'key' => $sanitize(env('CLOUDINARY_API_KEY')),
+                'secret' => $sanitize(env('CLOUDINARY_API_SECRET')),
+                'url' => $sanitize(env('CLOUDINARY_URL')),
             ],
-            'cloudinary.cloud_url' => env('CLOUDINARY_URL')
+            'cloudinary.cloud_url' => $sanitize(env('CLOUDINARY_URL'))
         ]);
 
         // Global share school profiles to all views (Bulletproof version)
