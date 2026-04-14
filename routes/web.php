@@ -141,8 +141,19 @@ Route::get('/deploy-sync-db', function(\Illuminate\Http\Request $request) {
         foreach ($envToAudit as $key) {
             $val = env($key);
             $status = $val ? "<span style='color:green'>PRESENT</span>" : "<span style='color:red'>MISSING</span>";
-            $preview = $val ? (substr($val, 0, 3) . "..." . substr($val, -3)) : "N/A";
+            $preview = $val ?: "N/A";
             echo "<b>$key:</b> $status (" . $preview . ")<br>";
+        }
+
+        // Test Mail Delivery
+        echo "<h4>--- Testing Mail Delivery ---</h4>";
+        try {
+            \Illuminate\Support\Facades\Mail::raw('Diagnostic Test Email from Darel Azhar PPDB', function ($message) {
+                $message->to(env('MAIL_FROM_ADDRESS'))->subject('Audit: Mail Connection Test');
+            });
+            echo "<b style='color:green'>MAIL TEST: SUCCESS (Check " . env('MAIL_FROM_ADDRESS') . ")</b><br>";
+        } catch (\Exception $e) {
+            echo "<b style='color:red'>MAIL TEST: FAILED</b> - " . $e->getMessage() . "<br>";
         }
 
         // 6. JSON Output for machine audit
@@ -150,7 +161,7 @@ Route::get('/deploy-sync-db', function(\Illuminate\Http\Request $request) {
             return response()->json([
                 'db_connection' => true,
                 'cloudinary_disk' => $cloudinaryTest,
-                'env_audit' => array_combine($envToAudit, array_map(fn($k) => (bool)env($k), $envToAudit)),
+                'env_audit' => array_combine($envToAudit, array_map(fn($k) => env($k), $envToAudit)),
             ]);
         }
 
