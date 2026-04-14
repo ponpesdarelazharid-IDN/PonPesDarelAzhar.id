@@ -164,6 +164,7 @@ class RegistrationController extends Controller
             $path = $storage->putFile('ppdb/payments', $request->file('payment_receipt'));
             if ($path) {
                 $registration->payment_receipt_url = $storage->url($path);
+                $registration->status = 'pending';
                 $registration->save();
             } else {
                 return back()->with('error', 'Gagal mengunggah bukti pembayaran. Silakan periksa koneksi internet Anda.');
