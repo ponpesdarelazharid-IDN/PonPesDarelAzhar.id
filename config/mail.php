@@ -39,10 +39,9 @@ return [
 
         'smtp' => [
             'transport' => 'smtp',
-            'scheme' => env('MAIL_SCHEME', 'tls'),
-            'url' => env('MAIL_URL'),
             'host' => env('MAIL_HOST', 'smtp-relay.brevo.com'),
             'port' => env('MAIL_PORT', 587),
+            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
             'username' => env('MAIL_USERNAME', 'ponpesdarelazhar.id@gmail.com'),
             'password' => env('MAIL_PASSWORD'),
             'timeout' => 30,
