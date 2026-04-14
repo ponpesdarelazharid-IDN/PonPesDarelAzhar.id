@@ -114,9 +114,8 @@ class Registration extends Model
         }
     }
 
-    public function getBirthCertUrlAttribute()
+    public function getBirthCertUrlAttribute($value)
     {
-        $value = $this->birth_cert_url;
         if (!$value) return null;
         if (filter_var($value, FILTER_VALIDATE_URL)) return $value;
         try {
@@ -126,9 +125,8 @@ class Registration extends Model
         }
     }
 
-    public function getIjazahUrlAttribute()
+    public function getIjazahUrlAttribute($value)
     {
-        $value = $this->ijazah_url;
         if (!$value) return null;
         if (filter_var($value, FILTER_VALIDATE_URL)) return $value;
         try {
@@ -138,9 +136,41 @@ class Registration extends Model
         }
     }
 
-    public function getSkhuUrlAttribute()
+    public function getSkhuUrlAttribute($value)
     {
-        $value = $this->skhu_url;
+        if (!$value) return null;
+        if (filter_var($value, FILTER_VALIDATE_URL)) return $value;
+        try {
+            return \Illuminate\Support\Facades\Storage::disk('cloudinary')->url($value);
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    public function getFamilyCardUrlAttribute($value)
+    {
+        if (!$value) return null;
+        if (filter_var($value, FILTER_VALIDATE_URL)) return $value;
+        try {
+            return \Illuminate\Support\Facades\Storage::disk('cloudinary')->url($value);
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    public function getKtpParentUrlAttribute($value)
+    {
+        if (!$value) return null;
+        if (filter_var($value, FILTER_VALIDATE_URL)) return $value;
+        try {
+            return \Illuminate\Support\Facades\Storage::disk('cloudinary')->url($value);
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    public function getPaymentReceiptUrlAttribute($value)
+    {
         if (!$value) return null;
         if (filter_var($value, FILTER_VALIDATE_URL)) return $value;
         try {

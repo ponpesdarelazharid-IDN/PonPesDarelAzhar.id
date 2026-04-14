@@ -133,23 +133,47 @@
                     <span class="w-8 h-8 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-xs">03</span>
                 </div>
                 <div class="p-8 md:p-10">
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                         <!-- Bukti Bayar -->
                         <div class="group relative">
                             <p class="text-[8px] font-black text-emerald-500 uppercase tracking-widest mb-3 ml-1">Bukti Transfer (PSB)</p>
                             @if($registration->payment_receipt_url)
-                            <a href="{{ $registration->payment_receipt_url }}" target="_blank" class="block p-6 rounded-3xl bg-emerald-50 dark:bg-emerald-900/10 border-2 border-dashed border-emerald-200 dark:border-emerald-800 hover:border-emerald-500 transition-all duration-300">
-                                <div class="flex items-center gap-4">
-                                    <div class="text-2xl">💰</div>
-                                    <div class="flex-1">
-                                        <p class="text-[10px] font-black text-emerald-700 dark:text-emerald-400 uppercase">Sudah Bayar</p>
-                                        <p class="text-[8px] text-slate-400 uppercase mt-0.5">Klik untuk Verifikasi</p>
+                            <div class="space-y-3">
+                                <div class="relative aspect-video rounded-3xl overflow-hidden border-2 border-dashed border-emerald-200 dark:border-emerald-800 group-hover:border-emerald-500 transition-all shadow-sm">
+                                    <img src="{{ $registration->payment_receipt_url }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                        <a href="{{ $registration->payment_receipt_url }}" target="_blank" class="px-4 py-2 bg-white text-[8px] font-black uppercase tracking-widest text-[#111c3a] rounded-xl shadow-xl">Zoom Bukti</a>
                                     </div>
                                 </div>
-                            </a>
+                                <div class="px-2 flex items-center gap-2">
+                                    <span class="text-[10px] font-black text-emerald-600 dark:text-emerald-400 font-black">💰 TERSEDIA</span>
+                                </div>
+                            </div>
                             @else
-                            <div class="p-6 rounded-3xl bg-red-50/30 border border-dashed border-red-100 flex items-center gap-4 text-red-300 italic text-[10px] font-bold uppercase tracking-widest">
-                                <span>❌</span> Belum Bayar
+                            <div class="aspect-video rounded-3xl bg-red-50/30 border border-dashed border-red-100 flex flex-col items-center justify-center gap-2 text-red-300 italic text-[10px] font-bold uppercase tracking-widest">
+                                <span class="text-2xl opacity-50">❌</span> Belum Upload
+                            </div>
+                            @endif
+                        </div>
+
+                        <!-- KTP Orang Tua (NEW) -->
+                        <div class="group relative">
+                            <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-3 ml-1">KTP Orang Tua</p>
+                            @if($registration->ktp_parent_url)
+                            <div class="space-y-3">
+                                <div class="relative aspect-video rounded-3xl overflow-hidden border border-dashed border-slate-200 dark:border-slate-800 group-hover:border-emerald-500 transition-all shadow-sm">
+                                    <img src="{{ $registration->ktp_parent_url }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                        <a href="{{ $registration->ktp_parent_url }}" target="_blank" class="px-4 py-2 bg-white text-[8px] font-black uppercase tracking-widest text-[#111c3a] rounded-xl shadow-xl">Buka KTP</a>
+                                    </div>
+                                </div>
+                                <div class="px-2">
+                                    <span class="text-[10px] font-black text-[#111c3a] dark:text-white uppercase tracking-widest">🪪 TERSEDIA</span>
+                                </div>
+                            </div>
+                            @else
+                            <div class="aspect-video rounded-3xl bg-slate-50/50 border border-dotted border-slate-200 flex flex-col items-center justify-center gap-2 text-slate-300 italic text-[10px] font-bold uppercase tracking-widest">
+                                <span class="text-2xl opacity-50">⚠️</span> Kosong
                             </div>
                             @endif
                         </div>
@@ -158,38 +182,64 @@
                         <div class="group relative">
                             <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-3 ml-1">Ijazah / SKL</p>
                             @if($registration->ijazah_url)
-                            <a href="{{ $registration->ijazah_url }}" target="_blank" class="block p-6 rounded-3xl bg-slate-50 dark:bg-dark-main border border-dashed border-slate-200 dark:border-slate-700 hover:border-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/10 transition-all duration-300">
-                                <div class="flex items-center gap-4">
-                                    <div class="text-2xl">🎓</div>
-                                    <div class="flex-1">
-                                        <p class="text-[10px] font-black text-[#111c3a] dark:text-white uppercase">Tersedia</p>
-                                        <p class="text-[8px] text-slate-400 uppercase mt-0.5">Lihat Berkas</p>
+                            <div class="space-y-3">
+                                <div class="relative aspect-[3/4] rounded-3xl overflow-hidden border border-dashed border-slate-200 dark:border-slate-800 group-hover:border-emerald-500 transition-all shadow-sm">
+                                    <img src="{{ $registration->ijazah_url }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                        <a href="{{ $registration->ijazah_url }}" target="_blank" class="px-4 py-2 bg-white text-[8px] font-black uppercase tracking-widest text-[#111c3a] rounded-xl shadow-xl">Buka Berkas</a>
                                     </div>
                                 </div>
-                            </a>
+                                <div class="px-2">
+                                    <span class="text-[10px] font-black text-[#111c3a] dark:text-white uppercase tracking-widest">🎓 TERSEDIA</span>
+                                </div>
+                            </div>
                             @else
-                            <div class="p-6 rounded-3xl bg-slate-50/50 border border-dotted border-slate-200 flex items-center gap-4 text-slate-300 italic text-[10px] font-bold uppercase tracking-widest">
-                                <span>-</span> Kosong
+                            <div class="aspect-[3/4] rounded-3xl bg-slate-50/50 border border-dotted border-slate-200 flex flex-col items-center justify-center gap-2 text-slate-300 italic text-[10px] font-bold uppercase tracking-widest">
+                                <span class="text-2xl opacity-50">-</span> Kosong
                             </div>
                             @endif
                         </div>
 
-                        <!-- KK -->
+                        <!-- Kartu Keluarga (KK) -->
                         <div class="group relative">
                             <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-3 ml-1">Kartu Keluarga (KK)</p>
                             @if($registration->family_card_url)
-                            <a href="{{ $registration->family_card_url }}" target="_blank" class="block p-6 rounded-3xl bg-slate-50 dark:bg-dark-main border border-dashed border-slate-200 dark:border-slate-700 hover:border-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/10 transition-all duration-300">
-                                <div class="flex items-center gap-4">
-                                    <div class="text-2xl">👨‍👩‍👧</div>
-                                    <div class="flex-1">
-                                        <p class="text-[10px] font-black text-[#111c3a] dark:text-white uppercase">Tersedia</p>
-                                        <p class="text-[8px] text-slate-400 uppercase mt-0.5">Lihat Berkas</p>
+                            <div class="space-y-3">
+                                <div class="relative aspect-video rounded-3xl overflow-hidden border border-dashed border-slate-200 dark:border-slate-800 group-hover:border-emerald-500 transition-all shadow-sm">
+                                    <img src="{{ $registration->family_card_url }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                        <a href="{{ $registration->family_card_url }}" target="_blank" class="px-4 py-2 bg-white text-[8px] font-black uppercase tracking-widest text-[#111c3a] rounded-xl shadow-xl">Buka KK</a>
                                     </div>
                                 </div>
-                            </a>
+                                <div class="px-2">
+                                    <span class="text-[10px] font-black text-[#111c3a] dark:text-white uppercase tracking-widest">👨‍👩‍👧 TERSEDIA</span>
+                                </div>
+                            </div>
                             @else
-                            <div class="p-6 rounded-3xl bg-slate-50/50 border border-dotted border-slate-200 flex items-center gap-4 text-slate-300 italic text-[10px] font-bold uppercase tracking-widest">
-                                <span>-</span> Kosong
+                            <div class="aspect-video rounded-3xl bg-slate-50/50 border border-dotted border-slate-200 flex flex-col items-center justify-center gap-2 text-slate-300 italic text-[10px] font-bold uppercase tracking-widest">
+                                <span class="text-2xl opacity-50">-</span> Kosong
+                            </div>
+                            @endif
+                        </div>
+
+                        <!-- Akta Kelahiran (NEW) -->
+                        <div class="group relative">
+                            <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-3 ml-1">Akta Kelahiran</p>
+                            @if($registration->birth_cert_url)
+                            <div class="space-y-3">
+                                <div class="relative aspect-[3/4] rounded-3xl overflow-hidden border border-dashed border-slate-200 dark:border-slate-800 group-hover:border-emerald-500 transition-all shadow-sm">
+                                    <img src="{{ $registration->birth_cert_url }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                        <a href="{{ $registration->birth_cert_url }}" target="_blank" class="px-4 py-2 bg-white text-[8px] font-black uppercase tracking-widest text-[#111c3a] rounded-xl shadow-xl">Buka Akta</a>
+                                    </div>
+                                </div>
+                                <div class="px-2">
+                                    <span class="text-[10px] font-black text-[#111c3a] dark:text-white uppercase tracking-widest">👶 TERSEDIA</span>
+                                </div>
+                            </div>
+                            @else
+                            <div class="aspect-[3/4] rounded-3xl bg-slate-50/50 border border-dotted border-slate-200 flex flex-col items-center justify-center gap-2 text-slate-300 italic text-[10px] font-bold uppercase tracking-widest">
+                                <span class="text-2xl opacity-50">-</span> Kosong
                             </div>
                             @endif
                         </div>
