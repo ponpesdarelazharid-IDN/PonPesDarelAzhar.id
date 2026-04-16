@@ -111,8 +111,9 @@
             @endif
 
             <div class="pt-10 flex flex-col md:flex-row gap-4">
-                <a href="{{ route('ppdb.register.step1') }}" class="flex-1 py-5 rounded-[20px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-center font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition duration-300">
+                <a href="{{ route('ppdb.register') }}" class="flex-1 py-5 rounded-[20px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-center font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition duration-300">
                     &larr; Kembali (Biodata)
+
                 </a>
                 <button type="submit" class="flex-[2] py-5 rounded-[20px] bg-emerald-500 text-white font-black uppercase tracking-widest text-sm shadow-2xl shadow-emerald-500/30 hover:bg-emerald-600 hover:-translate-y-1 active:translate-y-0 transition-all duration-300">
                     Simpan & Lanjut ke Berkas &rarr;
