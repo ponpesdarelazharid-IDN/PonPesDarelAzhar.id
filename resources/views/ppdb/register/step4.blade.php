@@ -82,19 +82,19 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-y-8 gap-x-12 bg-slate-50 dark:bg-dark-main/50 rounded-[32px] p-8 md:p-10 border border-slate-100 dark:border-slate-800">
                         <div>
                             <label class="block text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] mb-2">Nama Ayah / Ibu Kandung</label>
-                            <p class="text-lg font-bold text-light-text dark:text-white">{{ $registration->father_name }} / {{ $registration->mother_name }}</p>
+                            <p class="text-lg font-bold text-light-text dark:text-white">{{ $registration->father_name ?: '-' }} / {{ $registration->mother_name ?: '-' }}</p>
                         </div>
                         <div>
                             <label class="block text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] mb-2">No. WhatsApp Wali</label>
-                            <p class="text-lg font-bold text-light-text dark:text-white">{{ $registration->parent_phone }}</p>
+                            <p class="text-lg font-bold text-light-text dark:text-white">{{ $registration->father_phone ?: ($registration->mother_phone ?: ($registration->guardian_phone ?: '-')) }}</p>
                         </div>
                         <div>
                             <label class="block text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] mb-2">Asal Sekolah</label>
                             <p class="text-lg font-bold text-light-text dark:text-white">{{ $registration->origin_school }} (Lulus {{ $registration->graduation_year }})</p>
                         </div>
                         <div>
-                            <label class="block text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] mb-2">Pekerjaan Orang Tua</label>
-                            <p class="text-lg font-bold text-light-text dark:text-white">{{ $registration->parent_job }}</p>
+                            <label class="block text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] mb-2">NISN</label>
+                            <p class="text-lg font-bold text-light-text dark:text-white">{{ $registration->nisn }}</p>
                         </div>
                     </div>
                 </div>
@@ -106,13 +106,14 @@
                         <h3 class="text-xl font-bold text-light-text dark:text-white uppercase tracking-wider">Berkas Terlampir</h3>
                         <a href="{{ route('ppdb.register.step3') }}" class="ml-auto text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:gap-2 flex items-center transition-all">Edit <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg></a>
                     </div>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
                         @php
                             $docs = [
                                 ['label' => 'Pas Foto', 'url' => $registration->photo_url, 'icon' => '📸'],
-                                ['label' => 'Akta Lahir', 'url' => $registration->birth_cert_url, 'icon' => '📄'],
+                                ['label' => 'KK', 'url' => $registration->family_card_url, 'icon' => '👨‍👩‍👧‍👦'],
+                                ['label' => 'Akta', 'url' => $registration->birth_cert_url, 'icon' => '📄'],
                                 ['label' => 'Ijazah', 'url' => $registration->ijazah_url, 'icon' => '🎓'],
-                                ['label' => 'SKHU', 'url' => $registration->skhu_url, 'icon' => '📝'],
+                                ['label' => 'KTP Wali', 'url' => $registration->ktp_parent_url, 'icon' => '🆔'],
                             ];
                         @endphp
                         @foreach($docs as $doc)
