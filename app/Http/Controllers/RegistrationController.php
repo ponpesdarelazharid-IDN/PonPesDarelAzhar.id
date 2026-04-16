@@ -105,23 +105,37 @@ class RegistrationController extends Controller
                 $base64Data = $request->input($compressedKey);
                 if (preg_match('/^data:image\/(\w+);base64,/', $base64Data, $type)) {
                     $imageBinary = base64_decode(substr($base64Data, strpos($base64Data, ',') + 1));
-                    $filename = 'ppdb/' . ($field == 'photo' ? 'photos' : 'documents') . '/' . uniqid() . '.jpg';
+                    $folder = 'ppdb/' . ($field == 'photo' ? 'photos' : 'documents');
+                    $tmpPath = sys_get_temp_dir() . '/' . uniqid() . '.jpg';
+                    file_put_contents($tmpPath, $imageBinary);
                     
-                    if ($storage->put($filename, $imageBinary)) {
-                        $registration->$dbKey = $storage->url($filename);
-                    } else {
-                        return back()->with('error', 'Dokumen gagal diunggah: Koneksi ke Cloudinary gagal.');
+                    try {
+                        $fileObj = new \Illuminate\Http\UploadedFile($tmpPath, $field.'.jpg', 'image/jpeg', null, true);
+                        $path = $storage->putFile($folder, $fileObj);
+                        @unlink($tmpPath);
+                        if ($path) {
+                            $registration->$dbKey = $storage->url($path);
+                        } else {
+                            return back()->with('error', 'Gagal menyimpan foto di Cloudinary.');
+                        }
+                    } catch (\Exception $e) {
+                        @unlink($tmpPath);
+                        return back()->with('error', 'Koneksi Cloudinary Gagal: ' . $e->getMessage());
                     }
                 }
             } 
             // 2. Fallback to Standard File Upload (e.g. for PDFs or if compression failed)
             elseif ($request->hasFile($field) && $request->file($field)->isValid()) {
                 $folder = ($field == 'photo' ? 'ppdb/photos' : 'ppdb/documents');
-                $path = $storage->putFile($folder, $request->file($field));
-                if ($path) {
-                    $registration->$dbKey = $storage->url($path);
-                } else {
-                    return back()->with('error', 'Dokumen asli gagal diunggah. Mohon coba file lain.');
+                try {
+                    $path = $storage->putFile($folder, $request->file($field));
+                    if ($path) {
+                        $registration->$dbKey = $storage->url($path);
+                    } else {
+                        return back()->with('error', 'Dokumen asli gagal diunggah.');
+                    }
+                } catch (\Exception $e) {
+                    return back()->with('error', 'Cloudinary Error: ' . $e->getMessage());
                 }
             }
         }
@@ -165,13 +179,17 @@ class RegistrationController extends Controller
         $storage = \Illuminate\Support\Facades\Storage::disk('cloudinary');
 
         if ($request->hasFile('payment_receipt')) {
-            $path = $storage->putFile('ppdb/payments', $request->file('payment_receipt'));
-            if ($path) {
-                $registration->payment_receipt_url = $storage->url($path);
-                $registration->status = 'pending';
-                $registration->save();
-            } else {
-                return back()->with('error', 'Gagal mengunggah bukti pembayaran. Silakan periksa koneksi internet Anda.');
+            try {
+                $path = $storage->putFile('ppdb/payments', $request->file('payment_receipt'));
+                if ($path) {
+                    $registration->payment_receipt_url = $storage->url($path);
+                    $registration->status = 'pending';
+                    $registration->save();
+                } else {
+                    return back()->with('error', 'Gagal mengunggah bukti pembayaran. Silakan periksa koneksi internet Anda.');
+                }
+            } catch (\Exception $e) {
+                return back()->with('error', 'Cloudinary Error: ' . $e->getMessage());
             }
         }
 
@@ -189,15 +207,19 @@ class RegistrationController extends Controller
         $storage = \Illuminate\Support\Facades\Storage::disk('cloudinary');
 
         if ($request->hasFile('payment_receipt')) {
-            $path = $storage->putFile('ppdb/installments', $request->file('payment_receipt'));
-            if ($path) {
-                $registration->payments()->create([
-                    'amount' => $request->amount,
-                    'receipt_url' => $storage->url($path),
-                    'status' => 'pending'
-                ]);
-            } else {
-                return back()->with('error', 'Gagal mengunggah bukti cicilan. Mohon coba file lain.');
+            try {
+                $path = $storage->putFile('ppdb/installments', $request->file('payment_receipt'));
+                if ($path) {
+                    $registration->payments()->create([
+                        'amount' => $request->amount,
+                        'receipt_url' => $storage->url($path),
+                        'status' => 'pending'
+                    ]);
+                } else {
+                    return back()->with('error', 'Gagal mengunggah bukti cicilan. Mohon coba file lain.');
+                }
+            } catch (\Exception $e) {
+                return back()->with('error', 'Cloudinary Error: ' . $e->getMessage());
             }
         }
 
