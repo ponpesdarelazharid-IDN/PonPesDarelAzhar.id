@@ -138,7 +138,7 @@
                 <div class="mb-12">
                     <label class="flex items-start gap-5 cursor-pointer group">
                         <div class="relative mt-1">
-                            <input type="checkbox" name="confirmation" value="1" class="peer hidden" required>
+                            <input type="checkbox" name="confirmation" value="1" class="peer sr-only" required>
                             <div class="w-7 h-7 rounded-lg border-2 border-slate-200 dark:border-slate-700 peer-checked:bg-emerald-500 peer-checked:border-emerald-500 transition-all flex items-center justify-center text-white">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
                             </div>
