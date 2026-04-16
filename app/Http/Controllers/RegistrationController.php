@@ -149,7 +149,10 @@ class RegistrationController extends Controller
     {
         $registration = Registration::where('user_id', auth()->id())->with('ppdbSetting')->firstOrFail();
         if ($registration->status === 'draft') return redirect()->route('ppdb.status');
-        return view('ppdb.register.step4', compact('registration'));
+        
+        $profiles = SchoolProfile::pluck('value', 'key')->toArray();
+
+        return view('ppdb.register.step4', compact('registration', 'profiles'));
     }
 
     public function storeFinal(RegistrationRequest $request)
@@ -232,8 +235,8 @@ class RegistrationController extends Controller
             ->where('status', 'accepted')
             ->firstOrFail();
 
-        $school = SchoolProfile::whereIn('key', ['nama_sekolah', 'alamat', 'email', 'tlp'])->get()->pluck('value', 'key');
+        $profiles = SchoolProfile::pluck('value', 'key')->toArray();
         
-        return view('ppdb.card', compact('registration', 'school'));
+        return view('ppdb.card', compact('registration', 'profiles'));
     }
 }

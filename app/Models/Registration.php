@@ -32,6 +32,16 @@ class Registration extends Model
         return $this->hasMany(Payment::class);
     }
 
+    public function ppdbSetting()
+    {
+        return $this->belongsTo(PpdbSetting::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function getTotalRequiredAttribute()
     {
         $isMts = str_contains(strtoupper($this->education_level), 'MTS');
