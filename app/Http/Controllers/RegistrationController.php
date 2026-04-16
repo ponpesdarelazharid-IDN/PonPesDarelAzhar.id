@@ -43,6 +43,8 @@ class RegistrationController extends Controller
     public function storeStep1(RegistrationRequest $request)
     {
         $validated = $request->validated();
+        unset($validated['step']);
+        
         $registration = Registration::where('user_id', auth()->id())->firstOrFail();
 
         // Guard: Pastikan sudah bayar (status verified)
@@ -65,6 +67,8 @@ class RegistrationController extends Controller
     public function storeStep2(RegistrationRequest $request)
     {
         $validated = $request->validated();
+        unset($validated['step']);
+        
         $registration = Registration::where('user_id', auth()->id())->firstOrFail();
         if ($registration->status === 'draft') return redirect()->route('ppdb.status');
         
