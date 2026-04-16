@@ -46,6 +46,23 @@
             <input type="hidden" name="birth_cert_compressed" id="birth_cert_compressed">
             <input type="hidden" name="ktp_parent_compressed" id="ktp_parent_compressed">
 
+            <!-- Pesan Error Dinamis & Session -->
+            @if ($errors->any())
+                <div class="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl">
+                    <ul class="list-disc list-inside text-xs font-bold text-red-600 dark:text-red-400">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            @if (session('error'))
+                <div class="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl text-xs font-bold text-red-600 dark:text-red-400">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Data Wajib -->
                 <div class="lg:col-span-3">
@@ -250,6 +267,15 @@
     });
 
     form.addEventListener('submit', () => {
+        // Cegah upload file asli (yang besar) jika sudah ada versi kompresinya
+        fileInputs.forEach(input => {
+            const targetId = input.getAttribute('data-target');
+            const targetInput = document.getElementById(targetId);
+            if (targetInput && targetInput.value) {
+                input.removeAttribute('name');
+            }
+        });
+        
         loadingOverlay.classList.remove('hidden');
         loadingOverlay.classList.add('flex');
     });
