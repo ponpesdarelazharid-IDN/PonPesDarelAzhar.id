@@ -136,6 +136,23 @@
                 @csrf
                 <input type="hidden" name="step" value="4">
                 
+                <!-- Pesan Error Dinamis & Session -->
+                @if ($errors->any())
+                    <div class="mb-8 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl">
+                        <ul class="list-disc list-inside text-xs font-bold text-red-600 dark:text-red-400">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                @if (session('error'))
+                    <div class="mb-8 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl text-xs font-bold text-red-600 dark:text-red-400">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
+                
                 <div class="mb-12">
                     <label class="flex items-start gap-5 cursor-pointer group">
                         <div class="relative mt-1">

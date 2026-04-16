@@ -17,7 +17,7 @@ class RegistrationRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'step' => 'required|integer|in:1,2,3',
+            'step' => 'required|integer|in:1,2,3,4',
         ];
 
         if ($this->step == 1) {
