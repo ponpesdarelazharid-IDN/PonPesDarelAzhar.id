@@ -8,6 +8,30 @@
     <!-- Scripts -->
     <!-- Tailwind CSS (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                deep: '#2D5A27',
+                sage: '#5E8B4E',
+                light: '#FDFEF8',
+                cream: '#F0F4ED',
+                dark: '#1B2E1A',
+              },
+              emerald: {
+                50: '#f0f4ed',
+                100: '#dde4d8',
+                500: '#2D5A27',
+                600: '#1E3D1A',
+              }
+            }
+          }
+        }
+      }
+    </script>
     
     <!-- Favicon -->
     <link rel="icon" type="image/jpeg" href="{{ asset('images/logo-da.png') }}">
@@ -65,7 +89,7 @@
               left: -100% !important;
               width: 100% !important;
               height: calc(100vh - 80px) !important;
-              background: #0F172A !important;
+              background: #FDFEF8 !important;
               display: flex !important;
               flex-direction: column !important;
               padding: 2rem !important;
@@ -85,7 +109,7 @@
           .menu-toggle span {
               width: 30px !important;
               height: 4px !important;
-              background: #10B981 !important; /* Hijau Emerald Kontras */
+              background: #2D5A27 !important; /* Forest Green */
               border-radius: 4px !important;
               display: block !important;
           }
@@ -103,8 +127,8 @@
         left: 0 !important;
         width: 100% !important;
         height: 70px !important;
-        background: #10B981 !important;
-        border-top: 3px solid #FBBF24 !important;
+        background: #2D5A27 !important;
+        border-top: 3px solid #A8B89C !important;
         display: flex !important;
         justify-content: space-around !important;
         align-items: center !important;
@@ -145,10 +169,10 @@
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/landing.css') }}">
 </head>
-<body class="font-sans antialiased bg-white text-slate-900 dark:bg-[#000000] dark:text-gray-100 transition-colors duration-500">
+<body class="font-sans antialiased bg-brand-light text-brand-dark dark:bg-[#000000] dark:text-gray-100 transition-colors duration-500">
     <script>console.log('VERSI 1.7 AKTIF');</script>
     <!-- PENANDA VERSI FORCED UPDATE -->
-    <div style="background: #10B981; color: white; text-align: center; font-weight: bold; padding: 15px; z-index: 10000; position: fixed; top: 0; width: 100%; border-bottom: 5px solid yellow; font-size: 20px;">VERSI UPDATE 2.0 - NUCLEAR REBUILD SUCCESS</div>
+    <div style="background: #2D5A27; color: white; text-align: center; font-weight: bold; padding: 15px; z-index: 10000; position: fixed; top: 0; width: 100%; border-bottom: 5px solid #A8B89C; font-size: 20px;">VERSI UPDATE 2.1 - NEW BRANDING SUCCESS</div>
     
     <!-- Loading Screen -->
     <div id="loading-screen">

@@ -4,13 +4,13 @@
 <!-- Hero Section -->
 <section class="relative py-20 md:py-32 overflow-hidden bg-light-main dark:bg-dark-main transition-colors duration-300">
     <!-- Decorative Blurs -->
-    <div class="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl -z-10 animate-pulse"></div>
-    <div class="absolute bottom-0 left-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl -z-10"></div>
+    <div class="absolute top-0 right-0 w-96 h-96 bg-brand-sage/10 rounded-full blur-3xl -z-10 animate-pulse"></div>
+    <div class="absolute bottom-0 left-0 w-96 h-96 bg-brand-sage/10 rounded-full blur-3xl -z-10"></div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 class="text-4xl md:text-7xl font-extrabold tracking-tight mb-8 leading-tight text-light-text dark:text-white">
+        <h1 class="text-4xl md:text-7xl font-extrabold tracking-tight mb-8 leading-tight text-brand-dark dark:text-white">
             Membangun Generasi <br>
-            <span class="text-emerald-500 dark:text-emerald-400">Berakhlak & Berprestasi</span>
+            <span class="text-brand-deep dark:text-emerald-400">Berakhlak & Berprestasi</span>
         </h1>
         <p class="mt-4 text-lg md:text-xl text-slate-500 dark:text-slate-400 max-w-3xl mx-auto mb-12 leading-relaxed">
             {{ $profiles['visi'] ?? 'Pondok Pesantren modern dengan fasilitas lengkap, kurikulum terintegrasi, dan program ekstrakurikuler unggulan untuk masa depan umat.' }}
@@ -32,13 +32,13 @@
 <section class="py-24 bg-white dark:bg-dark-card border-y border-slate-100 dark:border-slate-800 transition-colors">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-light-text dark:text-white">Program Unggulan</h2>
-            <div class="w-20 h-1.5 bg-emerald-500 mx-auto rounded-full"></div>
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-brand-dark dark:text-white">Program Unggulan</h2>
+            <div class="w-20 h-1.5 bg-brand-deep mx-auto rounded-full"></div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             @forelse($programs as $program)
             <div class="p-8 bg-light-main dark:bg-dark-main rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all group">
-                <div class="w-14 h-14 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition overflow-hidden">
+                <div class="w-14 h-14 bg-brand-cream dark:bg-emerald-900/50 text-brand-deep dark:text-emerald-400 rounded-2xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition overflow-hidden">
                     @if($program->icon_path)
                         <img src="{{ $program->icon_path }}" class="w-full h-full object-contain p-2" alt="icon">
                     @else
@@ -60,7 +60,7 @@
 </section>
 
 <!-- Tentang Kami (Sejarah & Profil) -->
-<section id="profil" class="py-16 bg-gray-50 dark:bg-[#0a0a0a] transition-colors duration-300 border-b border-gray-100 dark:border-gray-900">
+<section id="profil" class="py-16 bg-brand-cream dark:bg-[#0a0a0a] transition-colors duration-300 border-b border-brand-cream dark:border-gray-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="lg:flex lg:items-center lg:gap-12">
             <div class="lg:w-1/2 mb-10 lg:mb-0 text-center lg:text-left">
@@ -78,7 +78,7 @@
             <div class="lg:w-1/2">
                 <div class="relative rounded-2xl overflow-hidden shadow-2xl transition transform hover:scale-[1.02]">
                     <img src="{{ $profiles['secondary_image'] ?? 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' }}" alt="Gedung Sekolah" class="w-full h-80 object-cover">
-                    <div class="absolute inset-0 bg-blue-600/10 dark:bg-black/20"></div>
+                    <div class="absolute inset-0 bg-brand-deep/10 dark:bg-black/20"></div>
                 </div>
             </div>
         </div>
@@ -89,11 +89,11 @@
 <section class="py-16 bg-white dark:bg-black transition-colors duration-300 border-b border-gray-100 dark:border-gray-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16 uppercase tracking-tighter">
-            <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-5xl">Visi & Misi</h2>
+            <h2 class="text-3xl font-extrabold text-brand-dark dark:text-white sm:text-5xl">Visi & Misi</h2>
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-            <div class="relative p-10 bg-gray-50 dark:bg-[#0a0a0a] rounded-3xl border border-gray-100 dark:border-gray-800 group hover:-translate-y-2 transition duration-500 shadow-xl">
+            <div class="relative p-10 bg-brand-cream dark:bg-[#0a0a0a] rounded-3xl border border-brand-cream dark:border-gray-800 group hover:-translate-y-2 transition duration-500 shadow-xl">
                 <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-14 h-14 bg-[#1e293b] dark:bg-white rounded-2xl flex items-center justify-center text-white dark:text-black shadow-lg">
                     <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
                 </div>
@@ -142,7 +142,7 @@
 <section class="py-16 bg-white dark:bg-black transition-colors duration-300 border-b border-gray-100 dark:border-gray-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
-            <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white transition-colors duration-300">Berita & Artikel</h2>
+            <h2 class="text-3xl font-extrabold text-brand-dark dark:text-white transition-colors duration-300">Berita & Artikel</h2>
         </div>
         
         <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
@@ -186,7 +186,7 @@
 <section class="py-16 bg-white dark:bg-black transition-colors duration-300 border-b border-gray-100 dark:border-gray-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
-            <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white transition-colors duration-300">Acara Mendatang</h2>
+            <h2 class="text-3xl font-extrabold text-brand-dark dark:text-white transition-colors duration-300">Acara Mendatang</h2>
             <p class="mt-4 text-gray-500 dark:text-gray-400">Ikuti berbagai agenda dan kegiatan seru di sekolah kami.</p>
         </div>
         
@@ -232,7 +232,7 @@
 <section class="py-16 bg-gray-50 dark:bg-[#0a0a0a] transition-colors duration-300 border-b border-gray-100 dark:border-gray-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
-            <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white transition-colors duration-300">Prestasi Unggulan</h2>
+            <h2 class="text-3xl font-extrabold text-brand-dark dark:text-white transition-colors duration-300">Prestasi Unggulan</h2>
             <p class="mt-4 text-gray-500 dark:text-gray-400">Fasilitas dan pencapaian terbaik putra-putri didik kami.</p>
         </div>
         
@@ -321,8 +321,8 @@
 <section class="py-16 bg-white dark:bg-black transition-colors duration-300 border-b border-gray-100 dark:border-gray-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
-            <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white transition-colors duration-300">Lokasi Sekolah</h2>
-            <p class="mt-4 text-gray-500 dark:text-gray-400 transition-colors">{{ $profiles['alamat'] ?? 'Jl. Komp. Pendidikan No.RT 08/09, Muara Ciujung Tim., Kec. Rangkasbitung, Kabupaten Lebak, Banten 42314' }}</p>
+            <h2 class="text-3xl font-extrabold text-brand-dark dark:text-white transition-colors duration-300">Lokasi Sekolah</h2>
+            <p class="mt-4 text-brand-dark/70 dark:text-gray-400 transition-colors">{{ $profiles['alamat'] ?? 'Jl. Komp. Pendidikan No.RT 08/09, Muara Ciujung Tim., Kec. Rangkasbitung, Kabupaten Lebak, Banten 42314' }}</p>
         </div>
         
         <div class="relative w-full h-96 rounded-2xl overflow-hidden shadow-sm dark:shadow-md dark:shadow-white/5 border border-gray-100 dark:border-gray-800 group">
@@ -352,7 +352,7 @@
 </section>
 
 <!-- PPDB CTA -->
-<section class="py-24 bg-emerald-600 dark:bg-emerald-900 transition-colors duration-300">
+<section class="py-24 bg-brand-deep dark:bg-emerald-900 transition-colors duration-300">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 class="text-4xl font-extrabold text-white mb-6">Penerimaan Peserta Didik Baru</h2>
         @if(isset($ppdb) && $ppdb->is_open)

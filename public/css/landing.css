@@ -1,16 +1,29 @@
 /* Modern Premium Landing CSS */
 :root {
-    --primary: #4F46E5;
-    --primary-hover: #4338CA;
-    --secondary: #10B981;
-    --dark: #0F172A;
-    --darker: #020617;
+    --primary: #2D5A27; /* Forest Green */
+    --primary-hover: #1E3D1A;
+    --secondary: #5E8B4E; /* Sage Green */
+    --dark: #FDFEF8; /* Background Light */
+    --darker: #F0F4ED; /* Section Alt Background */
+    --light: #1B2E1A; /* Text Dark */
+    --gray: #4A5D49;
+    --gray-light: #DDE4D8;
+    --glass-bg: rgba(253, 254, 248, 0.85);
+    --glass-border: rgba(45, 90, 39, 0.1);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark {
+    --primary: #10B981;
+    --primary-hover: #059669;
+    --secondary: #34D399;
+    --dark: #020617;
+    --darker: #000000;
     --light: #F8FAFC;
-    --gray: #64748B;
-    --gray-light: #E2E8F0;
+    --gray: #94A3B8;
+    --gray-light: #1E293B;
     --glass-bg: rgba(15, 23, 42, 0.7);
     --glass-border: rgba(255, 255, 255, 0.1);
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 * {

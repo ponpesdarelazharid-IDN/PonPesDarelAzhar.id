@@ -34,13 +34,22 @@
                 extend: {
                     colors: {
                         emerald: { 
-                            400: '#34D399', // Mint for Dark Mode
-                            500: '#10B981', // Emerald for Light Mode
-                            600: '#059669', 
+                            50: '#f0f4ed',
+                            100: '#dde4d8',
+                            400: '#5E8B4E', // Sage
+                            500: '#2D5A27', // Forest Green
+                            600: '#1E3D1A', 
                             700: '#047857'
                         },
+                        brand: {
+                            deep: '#2D5A27',
+                            sage: '#5E8B4E',
+                            light: '#FDFEF8',
+                            cream: '#F0F4ED',
+                            dark: '#1B2E1A',
+                        },
                         slate: {
-                            900: '#1E293B', // Text Primary Light
+                            900: '#1B2E1A', // Text Primary Light
                         },
                         dark: { 
                             main: '#0F172A', // Background Dark
@@ -48,8 +57,8 @@
                             text: '#F1F5F9'  // Text Primary Dark
                         },
                         light: {
-                            main: '#F8FAFC', // Background Light
-                            text: '#1E293B'  // Text Primary Light
+                            main: '#FDFEF8', // Background Light
+                            text: '#1B2E1A'  // Text Primary Light
                         }
                     }
                 }
@@ -131,7 +140,7 @@
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body class="bg-light-main text-light-text dark:bg-dark-main dark:text-dark-text transition-colors duration-300 font-sans antialiased overflow-x-hidden">
+<body class="bg-brand-light text-brand-dark dark:bg-dark-main dark:text-dark-text transition-colors duration-300 font-sans antialiased overflow-x-hidden">
     <!-- Loading Screen -->
     <div id="loading-screen" class="fixed inset-0 z-[9999] bg-white dark:bg-dark-main flex flex-col items-center justify-center transition-opacity duration-500">
       <div class="relative flex flex-col items-center">

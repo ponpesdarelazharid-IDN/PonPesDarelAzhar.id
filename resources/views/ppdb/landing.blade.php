@@ -4,7 +4,7 @@
 
 @section('content')
 <!-- Hero -->
-<div class="bg-gray-50 dark:bg-[#0a0a0a] py-16 sm:py-24 border-b border-gray-100 dark:border-gray-900 transition-colors duration-300 min-h-[50vh] flex flex-col justify-center">
+<div class="bg-brand-cream dark:bg-[#0a0a0a] py-16 sm:py-24 border-b border-brand-cream dark:border-gray-900 transition-colors duration-300 min-h-[50vh] flex flex-col justify-center">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl mb-6 transition-colors duration-300">Informasi PSB</h1>
         <p class="text-xl text-gray-500 dark:text-gray-400 mb-12 transition-colors duration-300">
@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 
-                <a href="{{ route('ppdb.register') }}" class="w-full flex justify-center py-4 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition">
+                <a href="{{ route('ppdb.register') }}" class="w-full flex justify-center py-4 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-brand-deep hover:bg-brand-sage focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-deep transition">
                     Mulai Pendaftaran Sekarang
                 </a>
             </div>
@@ -57,7 +57,7 @@
             <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white transition-colors duration-300">Syarat & Ketentuan</h2>
         </div>
         
-        <div class="bg-gray-50 dark:bg-[#0a0a0a] rounded-2xl p-8 border border-gray-100 dark:border-gray-800 shadow-sm dark:shadow-white/5 transition-colors duration-300">
+        <div class="bg-brand-cream dark:bg-[#0a0a0a] rounded-2xl p-8 border border-brand-cream dark:border-gray-800 shadow-sm dark:shadow-white/5 transition-colors duration-300">
             <div class="prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300">
                 {!! nl2br(e($ppdb->requirements)) !!}
             </div>
