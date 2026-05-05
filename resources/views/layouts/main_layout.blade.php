@@ -159,9 +159,10 @@
     <nav class="navbar">
         <div class="container">
             <a href="/" class="nav-brand flex items-center gap-3">
-                <img src="{{ asset('images/logo-da.png') }}" alt="Logo Darel Azhar" class="h-10 w-auto">
-                <span class="text-gradient uppercase desktop-title">{{ $profiles['nama_sekolah'] ?? 'Darel Azhar' }}</span>
-                <span class="text-gradient uppercase mobile-title">DAREL AZHAR</span>
+                <!-- Logo untuk Light Mode -->
+                <img src="{{ asset('images/logo-light.png') }}" alt="Logo Pondok Pesantren Modern Darel Azhar" class="h-10 sm:h-12 w-auto block dark:hidden">
+                <!-- Logo untuk Dark Mode -->
+                <img src="{{ asset('images/logo-dark.png') }}" alt="Logo Pondok Pesantren Modern Darel Azhar" class="h-10 sm:h-12 w-auto hidden dark:block">
             </a>
             <div class="nav-links" id="navLinks">
                 <a href="/">Beranda</a>

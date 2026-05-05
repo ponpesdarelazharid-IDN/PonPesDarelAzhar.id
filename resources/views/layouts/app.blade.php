@@ -156,12 +156,12 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center h-20">
                     <!-- Brand -->
-                    <div class="flex items-center gap-3 flex-1 min-w-0 mr-2">
-                        <img src="{{ $profiles['logo'] ?? asset('images/logo-da.png') }}" alt="Logo" class="w-10 h-10 object-contain flex-shrink-0">
-                        <div class="font-bold text-lg sm:text-xl text-emerald-600 dark:text-emerald-400 truncate flex-1 min-w-0">
-                            {{ $profiles['nama_sekolah'] ?? 'PonPes Darel Azhar' }}
-                        </div>
-                    </div>
+                    <a href="/" class="flex items-center gap-3 flex-1 min-w-0 mr-2">
+                        <!-- Logo untuk Light Mode -->
+                        <img src="{{ asset('images/logo-light.png') }}" alt="Logo Pondok Pesantren Modern Darel Azhar" class="h-10 sm:h-12 w-auto object-contain flex-shrink-0 block dark:hidden">
+                        <!-- Logo untuk Dark Mode -->
+                        <img src="{{ asset('images/logo-dark.png') }}" alt="Logo Pondok Pesantren Modern Darel Azhar" class="h-10 sm:h-12 w-auto object-contain flex-shrink-0 hidden dark:block">
+                    </a>
 
                     <!-- Links -->
                     <div class="hidden md:flex items-center space-x-8">

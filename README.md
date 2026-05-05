@@ -1,58 +1,186 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Sistem Informasi Profil Pondok Pesantren & PPDB Online
+### 🛡️ Pondok Pesantren Modern Darul Azhar
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+[![Framework](https://img.shields.io/badge/Framework-Laravel%2011-red?style=for-the-badge&logo=laravel)](https://laravel.com)
+[![Database](https://img.shields.io/badge/Database-TiDB%20Cloud-blue?style=for-the-badge&logo=mysql)](https://pingcap.com/products/tidb)
+[![Storage](https://img.shields.io/badge/Storage-Cloudinary-blueviolet?style=for-the-badge&logo=cloudinary)](https://cloudinary.com)
+[![Deployment](https://img.shields.io/badge/Deploy-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com)
 
-## About Laravel
+Aplikasi ini merupakan solusi digitalisasi modern untuk Pondok Pesantren, mencakup pengelolaan profil lembaga hingga sistem Penerimaan Peserta Didik Baru (PPDB) yang terintegrasi. Dikembangkan dengan konsep **Hybrid App (WebView)**, memungkinkan akses cepat melalui browser maupun aplikasi Android.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🚀 Fitur Utama
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Profil Ponpes Dinamis**: Informasi lengkap mengenai sejarah, visi-misi, program unggulan, dan fasilitas pesantren.
+- **Sistem PPDB Online**: Alur pendaftaran mandiri dari registrasi, pembayaran, hingga pengisian formulir multi-step.
+- **Manajemen Dokumen**: Upload dokumen persyaratan (Ijazah, KK, Akta) secara digital.
+- **Admin Dashboard**: Panel kontrol untuk validasi pembayaran, verifikasi data pendaftar, dan publikasi pengumuman hasil seleksi.
+- **Mobile Optimized**: Antarmuka responsif yang dioptimalkan untuk akses via WebView di perangkat Android.
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 🏗️ Arsitektur Cloud (Modern Architecture)
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Proyek ini menggunakan arsitektur *Cloud-Native* untuk memastikan skalabilitas dan efisiensi resource:
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+```mermaid
+graph TD
+    A[GitHub Repo] -->|CI/CD| B(Vercel Platform)
+    B --> C{Laravel 11 App}
+    C --> D[TiDB Cloud - MySQL Serverless]
+    C --> E[Cloudinary - Media CDN]
+    C --> F[Gmail SMTP - Notifikasi]
+    G[Android App WebView] -->|Requests| B
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+### Alur Integrasi:
+1.  **CI/CD**: Setiap perubahan kode di **GitHub** akan otomatis di-deploy oleh **Vercel**.
+2.  **Database**: Menggunakan **TiDB Cloud** (Serverless MySQL) yang menjamin data tetap aman dan *highly available* tanpa pusing manajemen infrastruktur database.
+3.  **Storage**: Foto profil dan dokumen pendaftar disimpan secara eksternal di **Cloudinary** untuk mengurangi beban server utama.
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 🛠️ Teknologi yang Digunakan
 
-## Code of Conduct
+| Komponen | Teknologi | Keterangan |
+| :--- | :--- | :--- |
+| **Backend** | Laravel 11 | Framework PHP modern dengan keamanan tingkat tinggi. |
+| **Database** | TiDB Cloud | MySQL Compatible Serverless Database. |
+| **Media Storage** | Cloudinary | API-based Image & Video Management. |
+| **Deployment** | Vercel | Serverless hosting untuk performa ultra cepat. |
+| **Frontend** | Blade & Tailwind CSS | Template engine Laravel & Utility-first CSS. |
+| **Android App** | Java/Kotlin WebView | Wrapper Android untuk akses mobile yang ringan. |
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## 💡 Alasan Pemilihan Stack
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- **TiDB Cloud (Scalability)**: Memilih database Serverless memastikan aplikasi siap menangani lonjakan pendaftar PPDB kapan saja tanpa perlu menyewa server VPS mahal di awal.
+- **Cloudinary (Optimized Media)**: Penanganan upload dokumen dan foto seringkali membebani server. Cloudinary secara otomatis melakukan kompresi hibrida dan optimasi format (WebP/AVIF) agar aplikasi tetap ringan diakses dari HP.
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 🔄 Logic Flow (Alur Sistem PPDB)
+
+Berikut adalah alur pendaftaran siswa baru dalam sistem ini:
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant System
+    participant Admin
+    participant Cloudinary
+
+    User->>System: Registrasi & Login
+    User->>System: Upload Bukti Pembayaran
+    System->>Cloudinary: Simpan Gambar Pembayaran
+    Admin->>System: Validasi Pembayaran
+    System->>User: Akses Form Pendaftaran Terbuka
+    User->>System: Isi Data (Step 1-4) & Upload Dokumen
+    System->>Cloudinary: Simpan Ijazah, KK, dll
+    User->>System: Submit Final
+    Admin->>System: Verifikasi Data & Pengumuman
+```
+
+---
+
+## ⌨️ Cuplikan Program (Technical Implementation)
+
+### 1. Konfigurasi TiDB Cloud (Serverless)
+Koneksi database dilakukan melalui SSL untuk menjamin keamanan transmisi data ke Cloud.
+```php
+// configuration in .env
+DB_CONNECTION=mysql
+DB_HOST=gateway01.ap-southeast-1.prod.aws.tidbcloud.com
+DB_PORT=4000
+DB_DATABASE=db_ponpes
+MYSQL_ATTR_SSL_CA=tidb-ca.pem
+```
+
+### 2. Integrasi Cloudinary Storage
+Logika penyimpanan dokumen pendaftar menggunakan Cloudinary Laravel package:
+```php
+public function storeStep3(Request $request) {
+    if ($request->hasFile('photo')) {
+        $storage = Storage::disk('cloudinary');
+        $path = $storage->putFile('ppdb/photos', $request->file('photo'));
+        $registration->photo_url = $storage->url($path);
+    }
+    $registration->save();
+}
+```
+
+### 3. Deployment Konfigurasi (vercel.json)
+Konfigurasi entry point untuk menjalankan Laravel di lingkungan Serverless PHP Vercel.
+```json
+{
+  "version": 2,
+  "builds": [
+    { "src": "api/index.php", "use": "vercel-php@latest" },
+    { "src": "/public/**", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "/api/index.php" }
+  ]
+}
+```
+
+### 4. Hybrid App Implementation (Android WebView)
+Wrapper Android menggunakan Java untuk menampilkan aplikasi web dalam format aplikasi mobile.
+```java
+// android/app/src/main/java/com/darelazhar/app/MainActivity.java
+public class MainActivity extends AppCompatActivity {
+    private final String targetUrl = "https://pon-pes-darel-azhar-id.vercel.app";
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.loadUrl(targetUrl);
+    }
+}
+```
+
+### 5. CI/CD Pipeline (GitHub Actions)
+Automasi pengujian unit sebelum kode didorong ke heroku/vercel untuk menjaga stabilitas.
+```yaml
+# .github/workflows/laravel-ci.yml
+name: Laravel CI
+on: [push]
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Tests
+        run: php artisan test
+```
+
+---
+
+## 🛠️ Instalasi Lokal
+
+1.  **Clone Repository**
+    ```bash
+    git clone https://github.com/username/sekolah-app.git
+    cd sekolah-app
+    ```
+2.  **Install Dependencies**
+    ```bash
+    composer install
+    npm install && npm run build
+    ```
+3.  **Konfigurasi Environment**
+    Salin `.env.example` ke `.env` dan lengkapi API Key berikut:
+    - `DB_HOST`, `DB_PASSWORD` (Dari TiDB Console)
+    - `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` (Dari Cloudinary Dashboard)
+4.  **Generate Key & Migrate**
+    ```bash
+    php artisan key:generate
+    php artisan migrate
+    ```
+
+---
+
+**Dibuat oleh [Nama Anda/Tim] - Tugas Kuliah Pengembangan Aplikasi Berbasis Web.**
