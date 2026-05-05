@@ -160,9 +160,9 @@
         <div class="container">
             <a href="/" class="nav-brand flex items-center gap-3">
                 <!-- Logo untuk Light Mode -->
-                <img src="{{ asset('images/logo-light.png') }}" alt="Logo Pondok Pesantren Modern Darel Azhar" class="h-10 sm:h-12 w-auto block dark:hidden">
+                <img src="{{ asset('images/logo-light.png') }}" alt="Logo Pondok Pesantren Modern Darel Azhar" class="h-16 sm:h-20 w-auto block dark:hidden">
                 <!-- Logo untuk Dark Mode -->
-                <img src="{{ asset('images/logo-dark.png') }}" alt="Logo Pondok Pesantren Modern Darel Azhar" class="h-10 sm:h-12 w-auto hidden dark:block">
+                <img src="{{ asset('images/logo-dark.png') }}" alt="Logo Pondok Pesantren Modern Darel Azhar" class="h-16 sm:h-20 w-auto hidden dark:block">
             </a>
             <div class="nav-links" id="navLinks">
                 <a href="/">Beranda</a>
