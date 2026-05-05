@@ -32,35 +32,41 @@
             darkMode: 'class',
             theme: {
                 extend: {
-                    colors: {
-                        emerald: { 
-                            50: '#f0f4ed',
-                            100: '#dde4d8',
-                            400: '#5E8B4E', // Sage
-                            500: '#2D5A27', // Forest Green
-                            600: '#1E3D1A', 
-                            700: '#047857'
+                        fontFamily: {
+                            sans: ['Outfit', 'sans-serif'],
+                            serif: ['Playfair Display', 'serif'],
                         },
-                        brand: {
-                            deep: '#2D5A27',
-                            sage: '#5E8B4E',
-                            light: '#FDFEF8',
-                            cream: '#F0F4ED',
-                            dark: '#1B2E1A',
-                        },
-                        slate: {
-                            900: '#1B2E1A', // Text Primary Light
-                        },
-                        dark: { 
-                            main: '#0F172A', // Background Dark
-                            card: '#1E293B', // surface/card Dark
-                            text: '#F1F5F9'  // Text Primary Dark
-                        },
-                        light: {
-                            main: '#FDFEF8', // Background Light
-                            text: '#1B2E1A'  // Text Primary Light
+                        colors: {
+                            emerald: { 
+                                50: '#f0f4ed',
+                                100: '#dde4d8',
+                                400: '#5E8B4E', // Sage
+                                500: '#1D4D2D', // Deep Green
+                                600: '#123524', 
+                                700: '#047857'
+                            },
+                            brand: {
+                                deep: '#123524',
+                                primary: '#1D4D2D',
+                                gold: '#C5A021',
+                                sage: '#5E8B4E',
+                                light: '#FAF9F1',
+                                cream: '#F4F2E9',
+                                dark: '#1A2421',
+                            },
+                            slate: {
+                                900: '#1A2421', // Text Primary Light
+                            },
+                            dark: { 
+                                main: '#0F172A', // Background Dark
+                                card: '#1E293B', // surface/card Dark
+                                text: '#F1F5F9'  // Text Primary Dark
+                            },
+                            light: {
+                                main: '#FAF9F1', // Background Light
+                                text: '#1A2421'  // Text Primary Light
+                            }
                         }
-                    }
                 }
             }
         }
@@ -85,7 +91,7 @@
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=inter:300,400,500,600,700,800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.bunny.net/css?family=playfair-display:700,800|outfit:300,400,500,600,700" rel="stylesheet" />
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ $profiles['logo'] ?? asset('images/logo-da.png') }}">

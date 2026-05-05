@@ -1,15 +1,15 @@
 /* Modern Premium Landing CSS */
 :root {
-    --primary: #2D5A27; /* Forest Green */
-    --primary-hover: #1E3D1A;
-    --secondary: #5E8B4E; /* Sage Green */
-    --dark: #FDFEF8; /* Background Light */
-    --darker: #F0F4ED; /* Section Alt Background */
-    --light: #1B2E1A; /* Text Dark */
+    --primary: #1D4D2D; /* Islamic Green */
+    --primary-hover: #123524;
+    --secondary: #C5A021; /* Gold */
+    --dark: #FAF9F1; /* Background Light */
+    --darker: #F4F2E9; /* Section Alt Background */
+    --light: #1A2421; /* Text Dark */
     --gray: #4A5D49;
     --gray-light: #DDE4D8;
-    --glass-bg: rgba(253, 254, 248, 0.85);
-    --glass-border: rgba(45, 90, 39, 0.1);
+    --glass-bg: rgba(250, 249, 241, 0.85);
+    --glass-border: rgba(29, 77, 45, 0.1);
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 

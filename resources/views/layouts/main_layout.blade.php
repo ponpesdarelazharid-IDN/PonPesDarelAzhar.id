@@ -13,19 +13,29 @@
         darkMode: 'class',
         theme: {
           extend: {
+            fontFamily: {
+              sans: ['Outfit', 'sans-serif'],
+              serif: ['Playfair Display', 'serif'],
+            },
             colors: {
               brand: {
-                deep: '#2D5A27',
+                deep: '#123524',
+                primary: '#1D4D2D',
+                gold: '#C5A021',
                 sage: '#5E8B4E',
-                light: '#FDFEF8',
-                cream: '#F0F4ED',
-                dark: '#1B2E1A',
+                light: '#FAF9F1',
+                cream: '#F4F2E9',
+                dark: '#1A2421',
               },
               emerald: {
                 50: '#f0f4ed',
                 100: '#dde4d8',
-                500: '#2D5A27',
-                600: '#1E3D1A',
+                500: '#1D4D2D',
+                600: '#123524',
+              },
+              gold: {
+                500: '#C5A021',
+                600: '#A68519',
               }
             }
           }
@@ -162,9 +172,8 @@
     </style>
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=playfair-display:700,800|outfit:300,400,500,600,700" rel="stylesheet" />
     
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/landing.css') }}">
@@ -172,7 +181,7 @@
 <body class="font-sans antialiased bg-brand-light text-brand-dark dark:bg-[#000000] dark:text-gray-100 transition-colors duration-500">
     <script>console.log('VERSI 1.7 AKTIF');</script>
     <!-- PENANDA VERSI FORCED UPDATE -->
-    <div style="background: #2D5A27; color: white; text-align: center; font-weight: bold; padding: 15px; z-index: 10000; position: fixed; top: 0; width: 100%; border-bottom: 5px solid #A8B89C; font-size: 20px;">VERSI UPDATE 2.1 - NEW BRANDING SUCCESS</div>
+    <div style="background: #123524; color: #C5A021; text-align: center; font-weight: bold; padding: 15px; z-index: 10000; position: fixed; top: 0; width: 100%; border-bottom: 5px solid #C5A021; font-size: 20px; font-family: 'Playfair Display', serif;">VERSI UPDATE 2.2 - ISLAMIC IDENTITY SUCCESS</div>
     
     <!-- Loading Screen -->
     <div id="loading-screen">

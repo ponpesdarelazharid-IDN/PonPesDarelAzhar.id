@@ -8,16 +8,16 @@
     <div class="absolute bottom-0 left-0 w-96 h-96 bg-brand-sage/10 rounded-full blur-3xl -z-10"></div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 class="text-4xl md:text-7xl font-extrabold tracking-tight mb-8 leading-tight text-brand-dark dark:text-white">
+        <h1 class="text-4xl md:text-7xl font-serif font-extrabold tracking-tight mb-8 leading-tight text-brand-dark dark:text-white">
             Membangun Generasi <br>
-            <span class="text-brand-deep dark:text-emerald-400">Berakhlak & Berprestasi</span>
+            <span class="text-brand-gold dark:text-emerald-400">Berakhlak & Berprestasi</span>
         </h1>
         <p class="mt-4 text-lg md:text-xl text-slate-500 dark:text-slate-400 max-w-3xl mx-auto mb-12 leading-relaxed">
             {{ $profiles['visi'] ?? 'Pondok Pesantren modern dengan fasilitas lengkap, kurikulum terintegrasi, dan program ekstrakurikuler unggulan untuk masa depan umat.' }}
         </p>
         <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
             @if(isset($ppdb) && $ppdb->is_open)
-                <a href="{{ route('ppdb.landing') }}" class="w-full sm:w-auto px-10 py-5 bg-emerald-500 text-white rounded-full font-bold shadow-2xl shadow-emerald-500/30 hover:bg-emerald-600 hover:-translate-y-1 transition duration-300">
+                <a href="{{ route('ppdb.landing') }}" class="w-full sm:w-auto px-10 py-5 bg-brand-primary text-white rounded-full font-bold shadow-2xl shadow-brand-primary/30 hover:bg-brand-deep hover:-translate-y-1 transition duration-300 border-2 border-brand-gold/20">
                     Mulai Pendaftaran PPDB
                 </a>
             @endif
@@ -32,13 +32,13 @@
 <section class="py-24 bg-white dark:bg-dark-card border-y border-slate-100 dark:border-slate-800 transition-colors">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-brand-dark dark:text-white">Program Unggulan</h2>
-            <div class="w-20 h-1.5 bg-brand-deep mx-auto rounded-full"></div>
+            <h2 class="text-3xl md:text-5xl font-serif font-bold mb-4 text-brand-dark dark:text-white">Program Unggulan</h2>
+            <div class="w-24 h-1.5 bg-brand-gold mx-auto rounded-full"></div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             @forelse($programs as $program)
             <div class="p-8 bg-light-main dark:bg-dark-main rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all group">
-                <div class="w-14 h-14 bg-brand-cream dark:bg-emerald-900/50 text-brand-deep dark:text-emerald-400 rounded-2xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition overflow-hidden">
+                <div class="w-14 h-14 bg-brand-gold/10 dark:bg-emerald-900/50 text-brand-gold dark:text-emerald-400 rounded-2xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition overflow-hidden border border-brand-gold/20">
                     @if($program->icon_path)
                         <img src="{{ $program->icon_path }}" class="w-full h-full object-contain p-2" alt="icon">
                     @else
@@ -64,7 +64,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="lg:flex lg:items-center lg:gap-12">
             <div class="lg:w-1/2 mb-10 lg:mb-0 text-center lg:text-left">
-                <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl transition-colors duration-300 mb-6">Tentang Kami</h2>
+                <h2 class="text-4xl font-serif font-extrabold text-brand-dark dark:text-white sm:text-5xl transition-colors duration-300 mb-6">Tentang Kami</h2>
                 <div class="prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-400">
                     <p class="mb-4 text-justify">
                         {{ $profiles['tentang_kami'] ?? 'Sekolah kami adalah lembaga pendidikan yang berdedikasi untuk mencetak generasi pemimpin masa depan yang bertaqwa, cerdas, dan kompetitif.' }}
@@ -89,12 +89,12 @@
 <section class="py-16 bg-white dark:bg-black transition-colors duration-300 border-b border-gray-100 dark:border-gray-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16 uppercase tracking-tighter">
-            <h2 class="text-3xl font-extrabold text-brand-dark dark:text-white sm:text-5xl">Visi & Misi</h2>
+            <h2 class="text-3xl font-serif font-extrabold text-brand-dark dark:text-white sm:text-6xl">Visi & Misi</h2>
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-            <div class="relative p-10 bg-brand-cream dark:bg-[#0a0a0a] rounded-3xl border border-brand-cream dark:border-gray-800 group hover:-translate-y-2 transition duration-500 shadow-xl">
-                <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-14 h-14 bg-[#1e293b] dark:bg-white rounded-2xl flex items-center justify-center text-white dark:text-black shadow-lg">
+            <div class="relative p-10 bg-brand-cream dark:bg-[#0a0a0a] rounded-3xl border border-brand-gold/10 dark:border-gray-800 group hover:-translate-y-2 transition duration-500 shadow-xl">
+                <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-14 h-14 bg-brand-deep dark:bg-white rounded-2xl flex items-center justify-center text-brand-gold dark:text-black shadow-lg border-2 border-brand-gold">
                     <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
                 </div>
                 <h3 class="text-3xl font-black text-center mt-6 mb-6 text-[#1e293b] dark:text-white uppercase tracking-tight">Visi</h3>
@@ -142,7 +142,7 @@
 <section class="py-16 bg-white dark:bg-black transition-colors duration-300 border-b border-gray-100 dark:border-gray-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
-            <h2 class="text-3xl font-extrabold text-brand-dark dark:text-white transition-colors duration-300">Berita & Artikel</h2>
+            <h2 class="text-4xl font-serif font-extrabold text-brand-dark dark:text-white transition-colors duration-300">Berita & Artikel</h2>
         </div>
         
         <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
@@ -352,12 +352,13 @@
 </section>
 
 <!-- PPDB CTA -->
-<section class="py-24 bg-brand-deep dark:bg-emerald-900 transition-colors duration-300">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-4xl font-extrabold text-white mb-6">Penerimaan Peserta Didik Baru</h2>
+<section class="py-24 bg-brand-deep dark:bg-emerald-900 transition-colors duration-300 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#C5A021 1px, transparent 1px); background-size: 20px 20px;"></div>
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <h2 class="text-5xl font-serif font-extrabold text-brand-gold mb-6">Penerimaan Peserta Didik Baru</h2>
         @if(isset($ppdb) && $ppdb->is_open)
             <p class="text-xl text-emerald-100 mb-10 leading-relaxed font-medium">Pendaftaran PPDB Tahun Ajaran {{ $ppdb->academic_year }} telah dibuka secara online. Mari Bergabung bersama keluarga besar {{ $profiles['nama_sekolah'] ?? 'kami' }}.</p>
-            <a href="{{ route('ppdb.landing') }}" class="inline-flex items-center justify-center px-12 py-5 border border-transparent text-lg font-bold rounded-full text-emerald-600 bg-white hover:bg-emerald-50 shadow-2xl transition transform hover:-translate-y-1">
+            <a href="{{ route('ppdb.landing') }}" class="inline-flex items-center justify-center px-12 py-5 border-2 border-brand-gold text-lg font-bold rounded-full text-brand-deep bg-brand-gold hover:bg-white transition transform hover:-translate-y-1 shadow-2xl">
                 Informasi & Pendaftaran PPDB
             </a>
         @else
