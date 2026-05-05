@@ -154,13 +154,13 @@
         <!-- Navigation -->
         <nav class="sticky top-0 z-50 bg-white/80 dark:bg-dark-card/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-all">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between items-center h-20">
+                <div class="flex justify-between items-center h-28 sm:h-36">
                     <!-- Brand -->
-                    <a href="/" class="flex items-center gap-3 flex-1 min-w-0 mr-2">
+                    <a href="/" class="flex items-center gap-3 flex-1 min-w-0 mr-2 py-2">
                         <!-- Logo untuk Light Mode -->
-                        <img src="{{ asset('images/logo-light.png') }}" alt="Logo Pondok Pesantren Modern Darel Azhar" class="h-16 sm:h-20 w-auto object-contain flex-shrink-0 block dark:hidden">
+                        <img src="{{ asset('images/logo-light.png') }}" alt="Logo Pondok Pesantren Modern Darel Azhar" class="h-24 sm:h-32 w-auto object-contain flex-shrink-0 block dark:hidden">
                         <!-- Logo untuk Dark Mode -->
-                        <img src="{{ asset('images/logo-dark.png') }}" alt="Logo Pondok Pesantren Modern Darel Azhar" class="h-16 sm:h-20 w-auto object-contain flex-shrink-0 hidden dark:block">
+                        <img src="{{ asset('images/logo-dark.png') }}" alt="Logo Pondok Pesantren Modern Darel Azhar" class="h-24 sm:h-32 w-auto object-contain flex-shrink-0 hidden dark:block">
                     </a>
 
                     <!-- Links -->
