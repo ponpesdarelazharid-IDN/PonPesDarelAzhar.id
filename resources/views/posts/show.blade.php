@@ -4,9 +4,9 @@
 
 @section('content')
 <!-- Header -->
-<div class="bg-gray-50 dark:bg-[#0a0a0a] py-16 sm:py-24 border-b border-gray-100 dark:border-gray-900 transition-colors duration-300">
+<div class="bg-brand-cream dark:bg-[#0a0a0a] py-16 sm:py-24 border-b border-brand-cream dark:border-gray-900 transition-colors duration-300">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <a href="javascript:history.back()" class="inline-flex items-center text-blue-600 dark:text-gray-400 hover:text-blue-800 dark:hover:text-white font-medium mb-8 transition-colors">
+        <a href="javascript:history.back()" class="inline-flex items-center text-brand-deep dark:text-gray-400 hover:text-brand-sage dark:hover:text-white font-medium mb-8 transition-colors">
             <svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
@@ -14,7 +14,7 @@
         </a>
         
         <div class="flex items-center text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4 transition-colors">
-            <span class="text-blue-600 dark:text-gray-300">{{ $post->type }}</span>
+            <span class="text-brand-deep dark:text-gray-300">{{ $post->type }}</span>
             <span class="mx-2">&bull;</span>
             <time datetime="{{ $post->published_at ? $post->published_at->toIso8601String() : '' }}">
                 {{ $post->published_at ? $post->published_at->format('d F Y') : 'Draft' }}
