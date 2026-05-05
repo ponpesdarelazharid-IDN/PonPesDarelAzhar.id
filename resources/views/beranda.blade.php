@@ -147,7 +147,7 @@
         
         <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
             @forelse($berita as $post)
-            <a href="{{ route('posts.show', $post) }}" class="group block bg-white dark:bg-dark-card rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-800 hover:shadow-2xl hover:shadow-emerald-500/10 transition-all duration-300">
+            <a href="{{ route('posts.show', $post) }}" class="group block bg-brand-cream dark:bg-dark-card rounded-2xl overflow-hidden border border-brand-gold/10 dark:border-slate-800 hover:shadow-2xl hover:shadow-brand-gold/10 transition-all duration-300">
                 @if($post->image_url)
                     <div class="aspect-w-16 aspect-h-9 w-full bg-slate-100 dark:bg-slate-800">
                         <img src="{{ $post->image_url }}" alt="{{ $post->title }}" class="object-cover w-full h-48 group-hover:scale-105 transition duration-500">
@@ -158,8 +158,8 @@
                     </div>
                 @endif
                 <div class="p-6">
-                    <div class="text-xs text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-wider mb-2">{{ $post->published_at->format('d M Y') }}</div>
-                    <h3 class="text-lg font-bold text-light-text dark:text-white mb-3 group-hover:text-emerald-500 transition-colors">{{ $post->title }}</h3>
+                    <div class="text-xs text-brand-gold dark:text-emerald-400 font-bold uppercase tracking-wider mb-2">{{ $post->published_at->format('d M Y') }}</div>
+                    <h3 class="text-lg font-bold text-brand-dark dark:text-white mb-3 group-hover:text-brand-gold transition-colors">{{ $post->title }}</h3>
                     <p class="text-slate-500 dark:text-slate-400 text-sm line-clamp-2">{{ Str::limit($post->excerpt ?? strip_tags($post->content), 80) }}</p>
                 </div>
             </a>
@@ -174,7 +174,7 @@
         
         @if($berita->count() > 0)
         <div class="mt-12 text-center">
-            <a href="{{ route('berita.index') }}" class="inline-flex items-center px-6 py-3 border border-gray-300 dark:border-gray-700 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 dark:bg-transparent dark:text-gray-300 dark:hover:bg-gray-900 transition">
+            <a href="{{ route('berita.index') }}" class="inline-flex items-center px-10 py-4 border-2 border-brand-gold text-base font-bold rounded-full text-white bg-brand-deep hover:bg-brand-primary transition shadow-xl">
                 Lihat Semua Berita
             </a>
         </div>
@@ -183,7 +183,7 @@
 </section>
 
 <!-- Acara Mendatang -->
-<section class="py-16 bg-white dark:bg-black transition-colors duration-300 border-b border-gray-100 dark:border-gray-900">
+<section class="py-16 bg-brand-cream dark:bg-black transition-colors duration-300 border-b border-brand-gold/10 dark:border-gray-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
             <h2 class="text-3xl font-extrabold text-brand-dark dark:text-white transition-colors duration-300">Acara Mendatang</h2>
@@ -192,19 +192,19 @@
         
         <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
             @forelse($acara as $post)
-            <div class="group relative bg-white dark:bg-dark-card rounded-3xl p-8 border border-slate-100 dark:border-slate-800 hover:border-emerald-500 transition-all duration-300">
+            <div class="group relative bg-white dark:bg-dark-card rounded-3xl p-8 border border-brand-gold/10 dark:border-slate-800 hover:border-brand-gold transition-all duration-300">
                 <div class="flex items-center gap-5 mb-6">
-                    <div class="flex-shrink-0 w-16 h-16 bg-emerald-50 dark:bg-emerald-900/30 rounded-2xl flex flex-col items-center justify-center text-emerald-600 dark:text-emerald-400">
+                    <div class="flex-shrink-0 w-16 h-16 bg-brand-gold/10 dark:bg-emerald-900/30 rounded-2xl flex flex-col items-center justify-center text-brand-gold dark:text-emerald-400 border border-brand-gold/20">
                         <span class="text-xl font-bold leading-none">{{ $post->published_at->format('d') }}</span>
                         <span class="text-[10px] uppercase font-black mt-1">{{ $post->published_at->format('M') }}</span>
                     </div>
                     <div>
-                        <h3 class="text-xl font-bold text-light-text dark:text-white group-hover:text-emerald-500 transition-colors">{{ $post->title }}</h3>
+                        <h3 class="text-xl font-bold text-brand-dark dark:text-white group-hover:text-brand-gold transition-colors">{{ $post->title }}</h3>
                         <p class="text-xs text-slate-400 mt-1 uppercase tracking-widest">{{ $post->event_date ? $post->event_date->format('H:i') . ' WIB' : 'Waktu menyusul' }}</p>
                     </div>
                 </div>
                 <p class="text-slate-500 dark:text-slate-400 text-sm line-clamp-3 mb-6 leading-relaxed">{{ Str::limit(strip_tags($post->content), 120) }}</p>
-                <a href="{{ route('posts.show', $post) }}" class="inline-flex items-center text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:gap-3 transition-all">
+                <a href="{{ route('posts.show', $post) }}" class="inline-flex items-center text-sm font-bold text-brand-gold dark:text-emerald-400 hover:gap-3 transition-all">
                     Lihat Detail 
                     <svg class="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                 </a>
@@ -220,7 +220,7 @@
         
         @if($acara->count() > 0)
         <div class="mt-12 text-center">
-            <a href="{{ route('acara.index') }}" class="inline-flex items-center px-6 py-3 border border-gray-300 dark:border-gray-700 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 dark:bg-transparent dark:text-gray-300 dark:hover:bg-gray-900 transition">
+            <a href="{{ route('acara.index') }}" class="inline-flex items-center px-10 py-4 border-2 border-brand-gold text-base font-bold rounded-full text-white bg-brand-deep hover:bg-brand-primary transition shadow-xl">
                 Lihat Semua Acara
             </a>
         </div>
@@ -229,7 +229,7 @@
 </section>
 
 <!-- Prestasi Unggulan -->
-<section class="py-16 bg-gray-50 dark:bg-[#0a0a0a] transition-colors duration-300 border-b border-gray-100 dark:border-gray-900">
+<section class="py-16 bg-white dark:bg-[#0a0a0a] transition-colors duration-300 border-b border-brand-gold/10 dark:border-gray-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
             <h2 class="text-3xl font-extrabold text-brand-dark dark:text-white transition-colors duration-300">Prestasi Unggulan</h2>
@@ -238,12 +238,12 @@
         
         <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
             @forelse($prestasi as $post)
-            <div class="bg-white dark:bg-black rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 group border border-gray-100 dark:border-gray-800">
+            <div class="bg-brand-cream dark:bg-black rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 group border border-brand-gold/10 dark:border-gray-800">
                 <div class="relative h-64 overflow-hidden">
                     @if($post->image_url)
                         <img src="{{ $post->image_url }}" alt="{{ $post->title }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
                     @else
-                        <div class="w-full h-full bg-blue-600 flex items-center justify-center text-6xl">🏆</div>
+                        <div class="w-full h-full bg-brand-deep flex items-center justify-center text-6xl">🏆</div>
                     @endif
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
                         <h3 class="text-xl font-bold text-white">{{ $post->title }}</h3>
@@ -251,7 +251,7 @@
                 </div>
                 <div class="p-6">
                     <p class="text-gray-500 dark:text-gray-400 text-sm mb-4 line-clamp-2">{{ $post->excerpt ?? Str::limit(strip_tags($post->content), 100) }}</p>
-                    <a href="{{ route('posts.show', $post) }}" class="text-blue-600 dark:text-gray-300 font-semibold hover:underline">Baca Selengkapnya &rarr;</a>
+                    <a href="{{ route('posts.show', $post) }}" class="text-brand-gold dark:text-gray-300 font-bold hover:underline">Baca Selengkapnya &rarr;</a>
                 </div>
             </div>
             @empty
@@ -265,7 +265,7 @@
         
         @if($prestasi->count() > 0)
         <div class="mt-12 text-center">
-            <a href="{{ route('prestasi.index') }}" class="inline-flex items-center px-6 py-3 border border-gray-300 dark:border-gray-700 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 dark:bg-transparent dark:text-gray-300 dark:hover:bg-gray-900 transition">
+            <a href="{{ route('prestasi.index') }}" class="inline-flex items-center px-10 py-4 border-2 border-brand-gold text-base font-bold rounded-full text-white bg-brand-deep hover:bg-brand-primary transition shadow-xl">
                 Lihat Semua Prestasi
             </a>
         </div>
